@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+// use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +24,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Google Authentication
-Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+// User Profile
+// Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'getUser']);
+// Route::get('/user/edit/$user', [App\Http\Controllers\UserController::class, 'editUser']);

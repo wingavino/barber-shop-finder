@@ -24,7 +24,7 @@ class User extends Authenticatable
         'mobile',
         'provider_id',
         'avatar',
-        'type',
+        // 'type',
     ];
 
     /**
