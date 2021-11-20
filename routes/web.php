@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\User;
 // use App\Http\Controllers\UserController;
 
 /*
@@ -22,6 +23,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+// Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 
 // Google Authentication
 Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
