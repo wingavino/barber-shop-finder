@@ -23,7 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile')->middleware('auth');
 // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 
 // Google Authentication
