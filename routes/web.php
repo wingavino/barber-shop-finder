@@ -24,6 +24,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile')->middleware('auth');
+Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit')->middleware('auth');
+Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit')->middleware('auth');
+Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password')->middleware('auth');
+Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password')->middleware('auth');
 // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 
 // Google Authentication
