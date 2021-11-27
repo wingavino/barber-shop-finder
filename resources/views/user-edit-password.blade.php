@@ -6,15 +6,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><h3>{{ __('Edit Password') }}</h3></div>
-
                 <div class="card-body">
+                  @if (!Auth::user()->provider_id)
                   <form method="POST" action="{{ route('profile.edit.password') }}">
                       @csrf
                       <div class="form-group row">
                           <label for="oldpassword" class="col-md-4 col-form-label text-md-right">{{ __('Old Password') }}</label>
 
                           <div class="col-md-6">
-                              <input id="oldpassword" type="oldpassword" class="form-control @error('oldpassword') is-invalid @enderror" name="oldpassword" required autocomplete="old-password">
+                              <input id="oldpassword" type="password" class="form-control @error('oldpassword') is-invalid @enderror" name="oldpassword" autocomplete="old-password">
 
                               @error('oldpassword')
                                   <span class="invalid-feedback" role="alert">
@@ -39,10 +39,10 @@
                       </div>
 
                       <div class="form-group row">
-                          <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                          <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                           <div class="col-md-6">
-                              <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                              <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                           </div>
                       </div>
 
@@ -54,6 +54,9 @@
                           </div>
                       </div>
                   </form>
+                  @else
+                  <i><h4>You are logged in with {{ ucfirst(Auth::user()->provider_id) }}. Please change your password at their respective site.</h4></i>
+                  @endif
                 </div>
             </div>
         </div>

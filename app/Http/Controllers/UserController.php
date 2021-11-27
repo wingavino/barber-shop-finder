@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class UserController extends Controller
@@ -37,5 +38,12 @@ class UserController extends Controller
     public function editUserPassword(Request $request)
     {
       $user = Auth::user();
+      $validated = $request->validate([
+        'oldpassword' => 'nullable|current_password',
+        'password' => 'required|string|min:8|confirmed'
+      ]);
+      $user->password = Hash::make($request->password);
+      $user->save();
+      return redirect('user');
     }
 }

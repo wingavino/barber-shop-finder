@@ -51,12 +51,12 @@ class LoginController extends Controller
     public function handleGoogleCallback()
     {
       $user = Socialite::driver('google')->user();
-
-      $this->_registerOrLoginUser($user);
+      $provider_id = 'google';
+      $this->_registerOrLoginUser($user, $provider_id);
       return redirect()->route('home');
     }
 
-    protected function _registerOrLoginUser($data)
+    protected function _registerOrLoginUser($data, $provider_id)
     {
       $user = User::where('email', '=', $data->email)->first();
 
@@ -64,7 +64,7 @@ class LoginController extends Controller
         $user = new User();
         $user->name = $data->name;
         $user->email = $data->email;
-        //$user->provider_id = $data->provider_id;
+        $user->provider_id = $provider_id;
         //$user->avatar = $data->avatar;
         $user->save();
       }
