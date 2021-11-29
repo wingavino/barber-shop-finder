@@ -30,6 +30,9 @@ Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, '
 Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password')->middleware('auth');
 // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 
+// Admin Routes
+Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
+
 // Google Authentication
 Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
