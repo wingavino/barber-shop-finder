@@ -53,7 +53,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                  @if (Auth::user()->type == 'admin')
+                  @if (Auth::user() && Auth::user()->type == 'admin')
                     Admin Home Page
                   @else
                     {{ config('app.name', 'Laravel') }}
@@ -66,9 +66,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                      @if (Auth::user() && Auth::user()->type == 'admin')
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Admin Controls</a>
+                        <a class="nav-link" href="{{ route('admin.shopowners') }}">{{ __('Shop Owners') }}</a>
                       </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.shops') }}">{{ __('Shops') }}</a>
+                      </li>
+                      @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -16,27 +16,38 @@ use App\Models\User;
 |
 */
 
+
+// Index/Landing Page
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Laravel Auth Routes
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile')->middleware('auth');
-Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit')->middleware('auth');
-Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit')->middleware('auth');
-Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password')->middleware('auth');
-Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password')->middleware('auth');
-// Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+// User Routes
+Route::middleware('auth')->group(function (){
+  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+  Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit');
+  Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit');
+  Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password');
+  Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password');
+  // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+});
+
+// Shop Owner Routes
+Route::middleware('isShopOwner')->group(function(){
+
+});
 
 // Admin Routes
-Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
+Route::middleware('isAdmin')->group(function(){
+  Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
+  Route::get('/admin/shopowners', [App\Http\Controllers\AdminController::class, 'showShopOwners'])->name('admin.shopowners');
+  Route::get('/admin/shops', [App\Http\Controllers\AdminController::class, 'showShops'])->name('admin.shops');
+});
 
 // Google Authentication
 Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
-
-// User Profile
-// Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'getUser']);
-// Route::get('/user/edit/$user', [App\Http\Controllers\UserController::class, 'editUser']);
