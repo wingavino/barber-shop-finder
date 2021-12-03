@@ -45,7 +45,9 @@ Route::middleware('isShopOwner')->group(function(){
 Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
   Route::get('/admin/shopowners', [App\Http\Controllers\AdminController::class, 'showShopOwners'])->name('admin.shopowners');
+  Route::get('/admin/shopowners/add', [App\Http\Controllers\AdminController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add');
   Route::get('/admin/shops', [App\Http\Controllers\AdminController::class, 'showShops'])->name('admin.shops');
+  Route::get('/admin/shops/add', [App\Http\Controllers\AdminController::class, 'showShopsAdd'])->name('admin.shops.add');
 });
 
 // Google Authentication

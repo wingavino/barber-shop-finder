@@ -9,8 +9,8 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <button class="btn btn-success col-md-2" type="button" name="button">Add New Shop</button>
-                      <button class="btn btn-info col-md-2" type="button" name="button">Edit Existing Shop</button>
+                      <a class="btn btn-success col-md-2" href="#" type="button" role="button" name="button">Add New Shop</a>
+                      <a class="btn btn-info col-md-2" href="#" type="button" role="button" name="button">Edit Existing Shop</a>
                     </div>
                   </div>
 
@@ -21,8 +21,6 @@
                           <tr>
                             <th scope="col">ID #</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Mobile</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
@@ -32,8 +30,6 @@
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
-                              <td>{{ $value->email}}</td>
-                              <td>{{ $value->mobile}}</td>
                               <td></td>
                             </tr>
                             @endforeach
