@@ -9,7 +9,7 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <a class="btn btn-success col-md-2" href="#" type="button" role="button" name="button">Add New Shop</a>
+                      <a class="btn btn-success col-md-2" href="{{ route('admin.shops.add') }}" type="button" role="button" name="button">Add New Shop</a>
                       <a class="btn btn-info col-md-2" href="#" type="button" role="button" name="button">Edit Existing Shop</a>
                     </div>
                   </div>
@@ -30,7 +30,9 @@
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
-                              <td></td>
+                              <td>
+                                <a class="btn btn-danger col-md-2" href="{{ route('admin.shops.delete', ['id' => $value->id]) }}" type="button" role="button" name="button">Delete</a>
+                              </td>
                             </tr>
                             @endforeach
                           @endisset

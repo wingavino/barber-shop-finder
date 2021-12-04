@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Add New Shop') }}</div>
 
                 <div class="card-body text-center">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('admin.shops.add') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Shop Name') }}</label>
@@ -24,7 +24,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }} (Optional)</label>
 
                             <div class="col-md-6">
@@ -50,12 +50,12 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        
+                        </div> -->
+
                         <div class="form-group row mb-0 justify-content-center">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-primary col-md-12">
-                                    {{ __('Register') }}
+                                    {{ __('Save') }}
                                 </button>
                             </div>
                         </div>
