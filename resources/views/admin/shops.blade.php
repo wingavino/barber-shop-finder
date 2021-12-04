@@ -10,7 +10,6 @@
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
                       <a class="btn btn-success col-md-2" href="{{ route('admin.shops.add') }}" type="button" role="button" name="button">Add New Shop</a>
-                      <a class="btn btn-info col-md-2" href="#" type="button" role="button" name="button">Edit Existing Shop</a>
                     </div>
                   </div>
 
@@ -31,6 +30,7 @@
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
                               <td>
+                                <a class="btn btn-primary col-md-2" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
                                 <a class="btn btn-danger col-md-2" href="{{ route('admin.shops.delete', ['id' => $value->id]) }}" type="button" role="button" name="button">Delete</a>
                               </td>
                             </tr>

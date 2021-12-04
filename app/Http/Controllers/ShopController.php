@@ -48,6 +48,35 @@ class ShopController extends Controller
     }
   }
 
+  public function showEditShop($id, Request $request)
+  {
+    $shop = Shop::where('id', '=', $id)->first();
+    if ($shop) {
+      return view('shops-edit', ['shop' => $shop]);
+    }else {
+      return redirect()->route('home');
+    }
+  }
+
+  public function editShop($id, Request $request)
+  {
+    $shop = Shop::where('id', '=', $id)->first();
+    if ($shop) {
+      $shop->name = $request->name;
+      $shop->save();
+    }
+
+    switch (Auth::user()->type) {
+      case 'admin':
+      return redirect()->route('admin.shops');
+      break;
+
+      default:
+      return redirect()->route('home');
+      break;
+    }
+  }
+
   public function showDeleteShop($id, Request $request)
   {
     $shop = Shop::where('id', '=', $id)->first();
