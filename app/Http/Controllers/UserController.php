@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -45,5 +46,15 @@ class UserController extends Controller
       $user->password = Hash::make($request->password);
       $user->save();
       return redirect('user');
+    }
+
+    public function changeUserType($id, $type, Request $request)
+    {
+      $user = User::where('id', '=', $id)->first();
+      if ($request->confirm == $type) {
+        $user->type = $type;
+        $user->save();
+      }
+      return redirect()->route('admin.shopowners');
     }
 }

@@ -46,6 +46,8 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
   Route::get('/admin/shopowners', [App\Http\Controllers\AdminController::class, 'showShopOwners'])->name('admin.shopowners');
   Route::get('/admin/shopowners/add', [App\Http\Controllers\AdminController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add');
+  Route::get('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\AdminController::class, 'showEditShopOwners'])->name('admin.shopowners.edit');
+  Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit');
   Route::get('/admin/shops', [App\Http\Controllers\ShopController::class, 'showShops'])->name('admin.shops');
   Route::post('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('admin.shops.add');
   Route::get('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'showShopsAdd'])->name('admin.shops.add');

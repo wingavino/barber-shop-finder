@@ -9,8 +9,7 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <button class="btn btn-success col-md-2" type="button" name="button">Add New Shop Owner</button>
-                      <button class="btn btn-info col-md-2" type="button" name="button">Edit Existing User</button>
+                      <button class="btn btn-success col-md-2" type="button" role="button" name="button">Add New Shop Owner (In Progress)</button>
                     </div>
                   </div>
 
@@ -23,6 +22,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mobile</th>
+                            <th scope="col">Type</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
@@ -34,7 +34,15 @@
                               <td>{{ $value->name }}</td>
                               <td>{{ $value->email}}</td>
                               <td>{{ $value->mobile}}</td>
-                              <td></td>
+                              <td>{{ $value->type }}</td>
+                              <td>
+                                @if ($value->type == 'user')
+                                <a class="btn btn-info col-md-6" href="{{ route('admin.shopowners.edit', [$value->id, 'shopowner']) }}" type="button" role="button" name="button">Change User Type to Shop Owner</a>
+                                @endif
+                                @if ($value->type == 'shopowner')
+                                <a class="btn btn-info col-md-6" href="{{ route('admin.shopowners.edit', [$value->id, 'user']) }}" type="button" role="button" name="button">Change User Type to Regular User</a>
+                                @endif
+                              </td>
                             </tr>
                             @endforeach
                           @endisset

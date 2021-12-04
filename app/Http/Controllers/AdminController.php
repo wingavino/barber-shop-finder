@@ -17,12 +17,18 @@ class AdminController extends Controller
 
   public function showShopOwners()
   {
-    $data = DB::table('users')->where('type', 'shopowner')->get();
+    $data = DB::table('users')->get();
     return view('admin/shop-owners', ['data' => $data]);
   }
 
   public function showShopOwnersAdd()
   {
     return view('admin/shop-owners-add');
+  }
+
+  public function showEditShopOwners($id, $type)
+  {
+    $user = User::where('id', '=', $id)->first();
+    return view('admin/shop-owners-edit', ['user' => $user, 'type' => $type]);
   }
 }
