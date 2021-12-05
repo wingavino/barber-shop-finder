@@ -43,6 +43,9 @@ class ShopController extends Controller
     if (!$shop) {
       $shop = new Shop();
       $shop->name = $request->name;
+      $shop->lat = $request->lat;
+      $shop->lng = $request->lng;
+      // $shop->location = DB::raw('GeomFromText(POINT($request->lat, $request->lng))');
       $shop->save();
       return redirect()->route('admin.shops');
     }

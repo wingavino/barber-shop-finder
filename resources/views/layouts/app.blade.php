@@ -25,9 +25,24 @@
       let map;
 
       function initMap() {
+        const philippines = { lat: 15.5000569, lng: 120.9109837 };
+
         map = new google.maps.Map(document.getElementById("map"), {
           center: { lat: 15.5000569, lng: 120.9109837 },
           zoom: 8,
+        });
+
+        var marker = new google.maps.Marker({
+          position: philippines,
+          draggable: true,
+          map: map,
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function(event){
+          // When marker is dragged, do this
+          // window.location.href = "http://localhost:8000/admin/shops/add/" + event.latLng.lat() + "/" + event.latLng.lng();
+          document.getElementById("lat").value = event.latLng.lat();
+          document.getElementById("lng").value = event.latLng.lng();
         });
       }
     </script>

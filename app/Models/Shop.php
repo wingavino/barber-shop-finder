@@ -19,5 +19,6 @@ class Shop extends Model
         'owner_name',
         'lat',
         'lng',
+        'location',
     ];
 }

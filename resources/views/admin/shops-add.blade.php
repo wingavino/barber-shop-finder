@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card col-md">
                 <div class="card-header">{{ __('Add New Shop') }}</div>
 
                 <div class="card-body text-center">
@@ -22,6 +22,45 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lat" class="col-md-4 col-form-label text-md-right">{{ __('Latitude') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="lat" type="text" class="form-control @error('lat') is-invalid @enderror" name="lat" value="{{ old('lat') }}" required autocomplete="name" readonly>
+
+                                @error('lat')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lng" class="col-md-4 col-form-label text-md-right">{{ __('Longitude') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="lng" type="text" class="form-control @error('lng') is-invalid @enderror" name="lng" value="{{ old('lng') }}" required autocomplete="name" readonly>
+
+                                @error('lng')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-md-12">
+                            <!-- <label for="location" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label> -->
+                            <p>Drag the marker to the appropriate location</p>
+                            <div class="col-md-12" style="width: 100%; height: 500px">
+                              <div id="map" style="width:100%;height:100%"></div>
+                              <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+                              <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
+                            </div>
+                          </div>
                         </div>
 
                         <!-- <div class="form-group row">
