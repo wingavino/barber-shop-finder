@@ -17,7 +17,7 @@ class ShopController extends Controller
     public function index()
     {
         $shops = Shop::all();
-        
+
         return response([
           'shops' => ShopResource::collection($shops),
           'message' => 'Shop List retrieved successfully',
@@ -54,7 +54,13 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        //
+      $shops = Shop::findOrFail($id);
+
+      return response([
+        'shops' => new ShopResource($shops),
+        'message' => 'Shop List retrieved successfully',
+        200
+      ]);
     }
 
     /**

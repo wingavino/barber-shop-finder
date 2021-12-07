@@ -19,7 +19,7 @@
             </div>
         </div> -->
         <div class="col-md-3" style="max-height:500px; overflow-y:auto;">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 100%;">
             <div class="card-header">
               Barber Shops List
             </div>

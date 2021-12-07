@@ -66,6 +66,8 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
+      $shop->lat = $request->lat;
+      $shop->lng = $request->lng;
       $shop->save();
     }
 
