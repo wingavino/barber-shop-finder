@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card col-md">
+            <div class="card">
                 <div class="card-header">{{ __('Add New Shop') }}</div>
 
                 <div class="card-body text-center">
@@ -57,6 +57,33 @@
                             <p>Drag the marker to the appropriate location</p>
                             <div class="col-md-12" style="width: 100%; height: 500px">
                               <div id="map" style="width:100%;height:100%"></div>
+                              <script type="text/javascript">
+                              let map;
+
+                              const philippines = { lat: 15.5000569, lng: 120.9109837 };
+                              document.getElementById("lat").value = philippines.lat;
+                              document.getElementById("lng").value = philippines.lng;
+
+                              function initMap() {
+
+                                map = new google.maps.Map(document.getElementById("map"), {
+                                  center: { lat: 15.5000569, lng: 120.9109837 },
+                                  zoom: 8,
+                                });
+
+                                var marker = new google.maps.Marker({
+                                  position: philippines,
+                                  draggable: true,
+                                  map: map
+                                });
+
+                                google.maps.event.addListener(marker, 'dragend', function(event){
+                                  // When marker is dragged, do this
+                                  document.getElementById("lat").value = event.latLng.lat();
+                                  document.getElementById("lng").value = event.latLng.lng();
+                                });
+                              }
+                              </script>
                               <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
                               <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
                             </div>

@@ -22,29 +22,30 @@
     <!-- Google Maps -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script type="text/javascript">
-      let map;
-
-      function initMap() {
-        const philippines = { lat: 15.5000569, lng: 120.9109837 };
-
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 15.5000569, lng: 120.9109837 },
-          zoom: 8,
-        });
-
-        var marker = new google.maps.Marker({
-          position: philippines,
-          draggable: true,
-          map: map,
-        });
-
-        google.maps.event.addListener(marker, 'dragend', function(event){
-          // When marker is dragged, do this
-          // window.location.href = "http://localhost:8000/admin/shops/add/" + event.latLng.lat() + "/" + event.latLng.lng();
-          document.getElementById("lat").value = event.latLng.lat();
-          document.getElementById("lng").value = event.latLng.lng();
-        });
-      }
+      // let map;
+      // var shops = [];
+      // const philippines = { lat: 15.5000569, lng: 120.9109837 };
+      //
+      // function initMap() {
+      //
+      //   map = new google.maps.Map(document.getElementById("map"), {
+      //     center: { lat: 15.5000569, lng: 120.9109837 },
+      //     zoom: 8,
+      //   });
+      //
+      //   console.log(shops);
+      //   shops.forEach((shop) => {
+      //     var marker = new google.maps.Marker(shop);
+      //     marker.setMap(map);
+      //   });
+      //
+      //
+      //   google.maps.event.addListener(marker, 'dragend', function(event){
+      //     // When marker is dragged, do this
+      //     document.getElementById("lat").value = event.latLng.lat();
+      //     document.getElementById("lng").value = event.latLng.lng();
+      //   });
+      // }
     </script>
     <style media="screen">
       /* Always set the map height explicitly to define the size of the div

@@ -30,8 +30,8 @@
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
                               <td>
-                                <a class="btn btn-primary col-md-2" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <a class="btn btn-danger col-md-2" href="{{ route('admin.shops.delete', ['id' => $value->id]) }}" type="button" role="button" name="button">Delete</a>
+                                <a class="btn btn-primary col-md-3" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
+                                <a class="btn btn-danger col-md-3" href="{{ route('admin.shops.delete', ['id' => $value->id]) }}" type="button" role="button" name="button">Delete</a>
                               </td>
                             </tr>
                             @endforeach
