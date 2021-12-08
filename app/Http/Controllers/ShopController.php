@@ -28,7 +28,8 @@ class ShopController extends Controller
   {
     switch (Auth::user()->type) {
       case 'admin':
-        return view('admin/shops-add');
+        $shopowners = User::where('type', '=', 'shopowner')->get();
+        return view('admin/shops-add', ['shopowners' => $shopowners]);
         break;
 
       default:
@@ -43,6 +44,7 @@ class ShopController extends Controller
     if (!$shop) {
       $shop = new Shop();
       $shop->name = $request->name;
+      $shop->owner_name = $request->owner_name;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       // $shop->location = DB::raw('GeomFromText(POINT($request->lat, $request->lng))');

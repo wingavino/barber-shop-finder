@@ -65,14 +65,58 @@
                 zoom: 8,
               });
 
+              var infowindow = new google.maps.InfoWindow();
               for (var i = 0; i < shops.length; i++) {
                 var shop = shops[i];
                 var latlng = new google.maps.LatLng(shop.position.lat, shop.position.lng);
+
+                // var infowindow = new google.maps.InfoWindow({
+                //   content: contentString,
+                // });
+
                 var marker = new google.maps.Marker({
                   position: latlng,
                   map: map,
                   title: shop.title
                 });
+
+                var contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
+                  '<div id="bodyContent">' +
+                  "<p><b>"+ shop.title +"</b>" +
+                  "</div>" +
+                  "</div>";
+
+                attachInfoWindow(marker, contentString);
+                function attachInfoWindow(marker, info) {
+                  const infowindow = new google.maps.InfoWindow({
+                    content: info,
+                  });
+
+                  marker.addListener("click", () => {
+                    infowindow.open(marker.get("map"), marker);
+                  });
+                }
+
+                // google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                //   return function() {
+                //     // close all the other infowindows that opened on load
+                //     google.maps.event.trigger(map, 'click')
+                //     infowindow.setContent(contentString);
+                //     infowindow.open(map, marker);
+                //   }
+                // })(marker, i));
+
+                // marker.addListener("click", () => {
+                //   infowindow.open({
+                //     anchor: marker,
+                //     map,
+                //     shouldFocus: false,
+                //   });
+                // });
                 console.log(marker);
               }
               // marker.setMap(map);
