@@ -21,4 +21,9 @@ class Shop extends Model
         'lng',
         'location',
     ];
+
+    public function user()
+    {
+      return $this->belongsTo(User::class, 'owner_id');
+    }
 }

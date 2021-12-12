@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-class AdminController extends Controller
+class ShopOwnerController extends Controller
 {
   /*
   |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class AdminController extends Controller
    *
    * @var string
    */
-  protected $redirectTo = 'admin/admins';
+  protected $redirectTo = 'admin/shopowners';
 
   /**
    * Get a validator for an incoming registration request.
@@ -61,27 +61,22 @@ class AdminController extends Controller
           'email' => $data['email'],
           'password' => Hash::make($data['password']),
           'mobile' => $data['mobile'],
-          'type' => 'admin',
+          'type' => 'shopowner',
       ]);
   }
 
-  public function index()
+  public function showShopOwners()
   {
-    return view('admin/home');
+    $data = DB::table('users')->where('type' , '!=', 'admin')->get();
+    return view('admin/shop-owners', ['data' => $data]);
   }
 
-  public function admins()
+  public function showShopOwnersAdd()
   {
-    $data = DB::table('users')->where('type', '=', 'admin')->get();
-    return view('admin/admins', ['data' => $data]);
+    return view('admin/shop-owners-add');
   }
 
-  public function showAddAdmin()
-  {
-    return view('admin/admins-add');
-  }
-
-  public function addAdmin(Request $request)
+  public function addShopOwner(Request $request)
   {
     $user = User::where('email', '=', $request->email)->first();
 
@@ -93,5 +88,11 @@ class AdminController extends Controller
       //$user->avatar = $data->avatar;
       $user->save();
     }
+  }
+
+  public function showEditShopOwners($id, $type)
+  {
+    $user = User::where('id', '=', $id)->first();
+    return view('admin/shop-owners-edit', ['user' => $user, 'type' => $type]);
   }
 }

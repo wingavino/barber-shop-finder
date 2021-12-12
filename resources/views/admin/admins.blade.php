@@ -15,7 +15,7 @@
 
                   <div class="row">
                     <div class="col-md-12">
-                      <table class="table table-hover">
+                      <table class="table table-hover col-sm-12">
                         <thead>
                           <tr>
                             <th scope="col">ID #</th>
@@ -37,7 +37,7 @@
                               <td>{{ $value->type }}</td>
                               <td>
                                 @if (Auth::user()->type == 'admin' && Auth::user()->id == 1 && $value->id != 1)
-                                <a class="btn btn-danger col-md-6" href="" type="button" role="button" name="button">Delete</a>
+                                <a class="btn btn-danger col-md-12" href="" type="button" role="button" name="button">Delete</a>
                                 @endif
                               </td>
                             </tr>

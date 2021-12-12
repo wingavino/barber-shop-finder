@@ -16,7 +16,8 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('owner_name')->nullable();
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->foreign('owner_id')->references('id')->on('users')->nullOnDelete();
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
             $table->timestamps();

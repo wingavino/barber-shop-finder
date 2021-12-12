@@ -12,7 +12,10 @@ class ShopController extends Controller
 {
   public function showShops()
   {
-    $data = DB::table('shops')->get();
+    $data = DB::table('shops')
+                ->join('users', 'shops.owner_id', '=', 'users.id')
+                ->select('shops.*', 'users.id as owner_id', 'users.name as owner_name', 'users.mobile')
+                ->get();
     switch (Auth::user()->type) {
       case 'admin':
         return view('admin/shops', ['data' => $data]);
@@ -44,7 +47,7 @@ class ShopController extends Controller
     if (!$shop) {
       $shop = new Shop();
       $shop->name = $request->name;
-      $shop->owner_name = $request->owner_name;
+      $shop->owner_id = $request->owner_id;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       // $shop->location = DB::raw('GeomFromText(POINT($request->lat, $request->lng))');
@@ -77,6 +80,7 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
+      $shop->owner_id = $request->owner_id;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       $shop->save();

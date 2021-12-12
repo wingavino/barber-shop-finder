@@ -25,11 +25,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="owner_name" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
+                            <label for="owner_id" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
 
                             <div class="col-md-6">
                                 <!-- <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ old('owner_name') }}" required autocomplete="owner_name"> -->
-                                <select class="custom-select" id="owner_name" name="owner_name" aria-label="Select Owner Name">
+                                <select class="custom-select" id="owner_id" name="owner_id" aria-label="Select Owner Name">
+                                  <option value="">None</option>
                                   <option value="1">Admin</option>
                                   @foreach($shopowners as $shopowner)
                                   <option value="{{$shopowner->id}}">{{$shopowner->id . ' - ' . $shopowner->name}}</option>

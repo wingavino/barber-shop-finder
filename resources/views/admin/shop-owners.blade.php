@@ -9,7 +9,7 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <button class="btn btn-success col-md-2" type="button" role="button" name="button">Add New Shop Owner (In Progress)</button>
+                      <a class="btn btn-success col-md-2" href="{{ route('admin.shopowners.add') }}" type="button" role="button" name="button">Add New Shop Owner</a>
                     </div>
                   </div>
 
