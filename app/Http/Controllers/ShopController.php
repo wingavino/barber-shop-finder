@@ -57,7 +57,16 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
-      return view('shops-edit', ['shop' => $shop]);
+      switch (Auth::user()->type) {
+        case 'admin':
+          $shopowners = User::where('type', '=', 'shopowner')->get();
+          return view('admin/shops-edit', ['shop' => $shop, 'shopowners' => $shopowners]);
+          break;
+
+        default:
+          return view('shops-edit', ['shop' => $shop]);
+          break;
+      }
     }else {
       return redirect()->route('home');
     }

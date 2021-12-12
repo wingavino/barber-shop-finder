@@ -90,6 +90,10 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.shops') }}">{{ __('Shops') }}</a>
                       </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.admins') }}">{{ __('Admins') }}</a>
+                      </li>
                       @endif
                     </ul>
 
