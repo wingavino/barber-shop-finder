@@ -31,6 +31,7 @@
           <script type="text/javascript">
           let map;
           var shops = [];
+          var markers = [];
           const philippines = { lat: 15.5000569, lng: 120.9109837 };
 
           async function getShops() {
@@ -39,10 +40,23 @@
             return data;
           };
 
+          var marker
+
           function listShops(data) {
             // console.log(data);
             Object.entries(data.shops).forEach(([key, value]) => {
-              document.getElementById("shops-list").innerHTML += '<li class="list-group-item">' + value.name +'</li>'
+              var listItem = document.createElement('a');
+              listItem.href = '#';
+              listItem.classList.add('list-group-item', 'list-group-item-action');
+              var listItemContent = document.createTextNode(value.name.toString());
+              listItem.appendChild(listItemContent);
+
+              listItem.addEventListener("click", () => {
+                // map.panTo(new google.maps.LatLng(value.lat, value.lng));
+                new google.maps.event.trigger( markers[key], 'click' );
+              });
+
+              document.getElementById("shops-list").appendChild(listItem);
               shops.push({
                 'title':  value.name,
                 'position': {lat: value.lat, lng: value.lng},
@@ -51,8 +65,7 @@
             });
           }
 
-
-
+          var infowindow;
             async function initMap() {
               await getShops()
               .then(
@@ -64,7 +77,7 @@
                 zoom: 8,
               });
 
-              var infowindow = new google.maps.InfoWindow();
+              infowindow = new google.maps.InfoWindow();
               for (var i = 0; i < shops.length; i++) {
                 var shop = shops[i];
                 var latlng = new google.maps.LatLng(shop.position.lat, shop.position.lng);
@@ -79,6 +92,8 @@
                   title: shop.title
                 });
 
+                markers.push(marker);
+
                 var contentString =
                   '<div id="content">' +
                   '<div id="siteNotice">' +
@@ -90,35 +105,24 @@
                   "</div>";
 
                 attachInfoWindow(marker, contentString);
+
                 function attachInfoWindow(marker, info) {
-                  const infowindow = new google.maps.InfoWindow({
-                    content: info,
-                  });
+                  // const infowindow = new google.maps.InfoWindow({
+                  //   content: info,
+                  // });
 
                   marker.addListener("click", () => {
+                    infowindow.setContent(info);
                     infowindow.open(marker.get("map"), marker);
+                    map.panTo(marker.getPosition());
                   });
                 }
-
-                // google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                //   return function() {
-                //     // close all the other infowindows that opened on load
-                //     google.maps.event.trigger(map, 'click')
-                //     infowindow.setContent(contentString);
-                //     infowindow.open(map, marker);
-                //   }
-                // })(marker, i));
-
-                // marker.addListener("click", () => {
-                //   infowindow.open({
-                //     anchor: marker,
-                //     map,
-                //     shouldFocus: false,
-                //   });
-                // });
                 console.log(marker);
               }
-              // marker.setMap(map);
+
+              map.addListener('click', function() {
+                if (infowindow) infowindow.close();
+              });
 
 
 
