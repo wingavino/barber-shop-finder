@@ -65,7 +65,7 @@
                 zoom: 8,
               });
 
-              var infowindow = new google.maps.InfoWindow();
+              // var infowindow = new google.maps.InfoWindow();
               for (var i = 0; i < shops.length; i++) {
                 var shop = shops[i];
                 var latlng = new google.maps.LatLng(shop.position.lat, shop.position.lng);
@@ -99,24 +99,9 @@
                   marker.addListener("click", () => {
                     infowindow.open(marker.get("map"), marker);
                   });
+
                 }
 
-                // google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                //   return function() {
-                //     // close all the other infowindows that opened on load
-                //     google.maps.event.trigger(map, 'click')
-                //     infowindow.setContent(contentString);
-                //     infowindow.open(map, marker);
-                //   }
-                // })(marker, i));
-
-                // marker.addListener("click", () => {
-                //   infowindow.open({
-                //     anchor: marker,
-                //     map,
-                //     shouldFocus: false,
-                //   });
-                // });
                 console.log(marker);
               }
               // marker.setMap(map);

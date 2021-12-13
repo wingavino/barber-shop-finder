@@ -12,8 +12,31 @@
                         @csrf
                         <div class="form-group row justify-content-center">
                             <label for="confirm" class=" col-form-label text-md-right">{{ __('') }}</label>
-                            <p>Please type '<b>{{$name}}</b>' to confirm that you want to delete this shop.</p>
+                            <div class="col-md-12">
+                              <p>Please type '<b>{{$shop->name}}</b>' to confirm that you want to delete this shop.</p>
+                            </div>
+
+                            <div class="col-md-12">
+                              <p>
+                                <b>ID:</b> {{$shop->id}} <b>Name:</b> {{$shop->name}}
+                                <b>Owner ID:</b>
+                                @isset($shop->user->id)
+                                  {{$shop->user->id}}
+                                @else
+                                  None
+                                @endisset
+
+                                <b>Owner Name:</b>
+                                @isset($shop->user->name)
+                                  {{$shop->user->name}}
+                                @else
+                                  None
+                                @endisset
+                              </p>
+                            </div>
+
                             <div class="col-md-6">
+
                                 <input id="confirm" type="text" class="form-control @error('confirm') is-invalid @enderror" name="confirm" value="{{ old('confirm') }}" required autocomplete="confirm" autofocus>
 
                                 @error('confirm')

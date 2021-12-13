@@ -30,10 +30,18 @@
                           <div class="col-md-6">
                               <!-- <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ old('owner_name') }}" required autocomplete="owner_name"> -->
                               <select class="custom-select" id="owner_id" name="owner_id" aria-label="Select Owner Name">
-                                <option value="null">None</option>
-                                <option value="1">Admin</option>
+                                <option value="">None</option>
+                                @if ($shop->owner_id == 1)
+                                  <option value="1" selected>Admin</option>
+                                @else
+                                  <option value="1">Admin</option>
+                                @endif
                                 @foreach($shopowners as $shopowner)
-                                <option value="{{$shopowner->id}}">{{$shopowner->id . ' - ' . $shopowner->name}}</option>
+                                  @if (isset($shop->user->id) && $shop->user->id == $shopowner->id)
+                                    <option value="{{$shopowner->id}}" selected>{{$shopowner->id . ' - ' . $shopowner->name}}</option>
+                                  @else
+                                    <option value="{{$shopowner->id}}">{{$shopowner->id . ' - ' . $shopowner->name}}</option>
+                                  @endif
                                 @endforeach
                               </select>
 

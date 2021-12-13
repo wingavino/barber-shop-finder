@@ -13,7 +13,7 @@ class ShopController extends Controller
   public function showShops()
   {
     $data = DB::table('shops')
-                ->join('users', 'shops.owner_id', '=', 'users.id')
+                ->leftJoin('users', 'shops.owner_id', '=', 'users.id')
                 ->select('shops.*', 'users.id as owner_id', 'users.name as owner_name', 'users.mobile')
                 ->get();
     switch (Auth::user()->type) {
@@ -101,7 +101,7 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
-      return view('shops-delete', ['name' => $shop->name, 'id' => $id]);
+      return view('shops-delete', ['shop' => $shop, 'id' => $id]);
     }else {
       return redirect()->route('home');
     }
@@ -123,6 +123,8 @@ class ShopController extends Controller
           return redirect()->route('shops');
           break;
         }
+      }else {
+        return redirect()->back()->withErrors(['confirm' => 'Incorrect']);
       }
     }
   }
