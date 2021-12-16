@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
       return $this->hasOne(Shop::class, 'owner_id');
     }
+
+    public function pending_request()
+    {
+      return $this->hasMany(PendingRequest::class);
+    }
 }

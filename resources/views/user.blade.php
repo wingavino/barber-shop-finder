@@ -25,10 +25,24 @@
                       </div>
 
                       <div class="form-group row">
-                          <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
+                          <label for="account_type" class="col-md-4 col-form-label text-md-right">{{ __('Account Type') }}</label>
 
                           <div class="col-md-6">
-                              <input id="name" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ __(Auth::user()->mobile) }}" autocomplete="mobile" disabled>
+                              <input id="account_type" type="text" class="form-control @error('account_type') is-invalid @enderror" name="account_type" value="{{ __(Auth::user()->type) }}" autocomplete="type" disabled>
+
+                              @error('type')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
+
+                      <div class="form-group row">
+                          <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
+
+                          <div class="col-md-6">
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ __(Auth::user()->mobile) }}" autocomplete="mobile" disabled>
 
                               @error('mobile')
                                   <span class="invalid-feedback" role="alert">
@@ -67,6 +81,15 @@
                               </a>
                           </div>
                       </div>
+                      @if(Auth::user()->type == 'user')
+                      <div class="form-group row justify-content-center">
+                          <div class="col-md-6 offset-md-2">
+                              <a class="btn btn-primary col-md-12" href="{{ Route('profile.edit.password') }}">
+                                  {{ __('Request to become a Shop Owner') }}
+                              </a>
+                          </div>
+                      </div>
+                      @endif
                   </form>
                 </div>
             </div>
