@@ -25,7 +25,7 @@ Route::get('/', function () {
 // Laravel Auth Routes
 Auth::routes();
 
-// User Routes
+// End User Routes
 Route::middleware('auth')->group(function (){
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
   Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile');

@@ -111,20 +111,16 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
-      if ($request->confirm == $shop->name) {
-        $shop->delete();
+      $shop->delete();
 
-        switch (Auth::user()->type) {
-          case 'admin':
-          return redirect()->route('admin.shops');
-          break;
+      switch (Auth::user()->type) {
+        case 'admin':
+        return redirect()->route('admin.shops');
+        break;
 
-          default:
-          return redirect()->route('shops');
-          break;
-        }
-      }else {
-        return redirect()->back()->withErrors(['confirm' => 'Incorrect']);
+        default:
+        return redirect()->route('shops');
+        break;
       }
     }
   }
