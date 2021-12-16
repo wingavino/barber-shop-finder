@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function (){
   Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit');
   Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password');
   Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password');
+  Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request');
   // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 });
 
@@ -48,6 +49,8 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'showAddAdmin'])->name('admin.add');
   Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add');
   Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete');
+
+  Route::get('/admin/pending-requests', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests');
 
   Route::get('/admin/shopowners', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwners'])->name('admin.shopowners');
   Route::get('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add');

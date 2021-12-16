@@ -72,6 +72,9 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.admins') }}">{{ __('Admins') }}</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.pending-requests') }}">{{ __('Requests') }}</a>
+                      </li>
                       @endif
                     </ul>
 

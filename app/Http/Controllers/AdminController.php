@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shop;
+use App\Models\PendingRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
@@ -102,5 +103,11 @@ class AdminController extends Controller
       $admin->delete();
     }
     return redirect()->route('admin.admins');
+  }
+
+  public function showPendingRequestsPage()
+  {
+    $data = DB::table('pending_requests')->get();
+    return view('admin/pending-requests', ['data' => $data]);
   }
 }

@@ -15,9 +15,9 @@ class PendingRequest extends Model
      * @var string[]
      */
     protected $fillable = [
-      'user_id'
+      'user_id',
       'request_type',
-      'change_to_user_type'
+      'change_to_user_type',
       'shop_id',
     ];
 
