@@ -2,7 +2,7 @@
 
 @section('custom-scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="{{ asset('js/changeUserTypeModal.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/requestModal.js') }}"></script>
 @endsection
 
 @section('content')
@@ -39,7 +39,7 @@
                               <td>{{ $value->request_type}}</td>
                               <td>{{ $value->change_to_user_type}}</td>
                               <td>
-                                <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#changeUserTypeModal" data-form-action="" data-id="" data-name="" data-type='shopowner' type="button" role="button" name="button">Approve</a>
+                                <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#requestModal" data-form-action="" data-id="" data-name="" data-type='shopowner' type="button" role="button" name="button">Approve</a>
                               </td>
                             </tr>
                             @endforeach
@@ -48,11 +48,11 @@
                       </table>
                     </div>
 
-                    <div class="modal fade" id="changeUserTypeModal" tabindex="-1" aria-labelledby="changeUserTypeModalLabel" aria-hidden="true" name="changeUserTypeModal">
+                    <div class="modal fade" id="requestModal" tabindex="-1" aria-labelledby="requestModalLabel" aria-hidden="true" name="requestModal">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="changeUserTypeModalLabel">Confirm Edit</h5>
+                            <h5 class="modal-title" id="requestModalLabel">Confirm Approval</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -68,7 +68,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12 justify-content-center">
-                                  <button class="btn btn-primary col-md-6" id="changeUserTypeButton" type="submit">Continue</button>
+                                  <button class="btn btn-primary col-md-6" id="approveRequestButton" type="submit">Continue</button>
                                 </div>
                               </div>
                             </form>
