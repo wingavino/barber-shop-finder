@@ -51,7 +51,7 @@ class UserController extends Controller
     public function changeUserType($id, $type, Request $request)
     {
       $user = User::where('id', '=', $id)->first();
-      if ($request->confirm == $type) {
+      if ($user) {
         $user->type = $type;
         $user->save();
       }

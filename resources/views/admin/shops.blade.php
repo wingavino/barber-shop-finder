@@ -38,7 +38,7 @@
                               <td>{{ $value->owner_name }}</td>
                               <td>
                                 <a class="btn btn-primary col-md-4" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shops.delete', ['id' => $value->id]) }}" data-shop-id="{{ $value->id }}" data-shop-name="{{ $value->name }}">Delete</button>
+                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shops.delete', ['id' => $value->id]) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}">Delete</button>
                               </td>
                             </tr>
                             @endforeach
@@ -62,7 +62,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <p>Please confirm that you want to delete the following shop.</p>
-                                  <h4 id='shopName'></h4>
+                                  <h4 id='name'></h4>
                                 </div>
                               </div>
                               <div class="row">

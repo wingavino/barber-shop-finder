@@ -94,4 +94,13 @@ class AdminController extends Controller
       $user->save();
     }
   }
+
+  public function deleteAdmin($id, Request $request)
+  {
+    $admin = User::where('id', '=', $id)->where('type', '=', 'admin')->first();
+    if ($admin) {
+      $admin->delete();
+    }
+    return redirect()->route('admin.admins');
+  }
 }
