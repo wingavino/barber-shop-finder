@@ -66,6 +66,11 @@ class ShopOwnerController extends Controller
       ]);
   }
 
+  public function index()
+  {
+    return redirect()->route('home');
+  }
+
   public function showRegistrationForm()
   {
     return view('auth/register-shopowner');

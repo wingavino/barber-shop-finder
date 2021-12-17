@@ -76,6 +76,12 @@
                         <a class="nav-link" href="{{ route('admin.pending-requests') }}">{{ __('Requests') }}</a>
                       </li>
                       @endif
+
+                      @if (Auth::user() && Auth::user()->type == 'shopowner')
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
+                      </li>
+                      @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -121,6 +127,17 @@
                 </div>
             </div>
         </nav>
+
+        <div id="liveAlertPlaceholder">
+              @if(Auth::user() && Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
+              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Your request to change account type to Shop Owner is currently pending approval.</strong>
+                <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+              @endif
+        </div>
 
         <main class="py-4">
             @yield('content')

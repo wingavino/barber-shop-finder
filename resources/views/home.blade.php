@@ -6,6 +6,8 @@
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
+
+<script type="text/javascript" src="{{ asset('js/requestAlert.js') }}"></script>
 @endsection
 
 @section('content')

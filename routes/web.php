@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function (){
 
 // Shop Owner Routes
 Route::middleware('isShopOwner')->group(function(){
-
+  Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home');
+  Route::get('/shopowner/shop', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.shop');
 });
 
 // Admin Routes
