@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="card-body text-center">
-                    <form method="POST" action="{{ route('register.shopowner') }}">
+                    <form method="POST" action="{{ route('register.shopowner', ['pending_request' => 'change-user-type']) }}">
                         @csrf
                         <div class="form-group row justify-content-center">
                             <div class="col-md-6 offset-md-2">

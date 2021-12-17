@@ -28,7 +28,7 @@ Route::get('/', function () {
 Auth::routes();
 // Shop Owner Registration Route
 Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner');
-Route::post('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner');
+Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner');
 
 // End User Routes
 Route::middleware('auth')->group(function (){
