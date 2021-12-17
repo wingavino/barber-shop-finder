@@ -39,7 +39,21 @@
                               <td>{{ $value->request_type}}</td>
                               <td>{{ $value->change_to_user_type}}</td>
                               <td>
-                                <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#requestModal" data-form-action="" data-id="" data-name="" data-type='shopowner' type="button" role="button" name="button">Approve</a>
+                                @if($value->request_type == 'change-user-type')
+                                  <a class="btn btn-info col-md-6"
+                                    data-toggle="modal"
+                                    data-target="#requestModal"
+                                    data-form-action="{{ route('admin.shopowners.edit', ['id' => $value->user_id, 'type' => $value->change_to_user_type]) }}"
+                                    data-id="{{ $value->id }}"
+                                    data-user-id="{{ $value->user_id }}"
+                                    data-name="{{ $value->name }}"
+                                    data-request-type='{{ $value->request_type }}'
+                                    data-change-to-user-type="{{ $value->change_to_user_type }}"
+                                    type="button" role="button" name="button"
+                                  >
+                                    Approve
+                                  </a>
+                                @endif
                               </td>
                             </tr>
                             @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PendingRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -54,6 +55,8 @@ class UserController extends Controller
       if ($user) {
         $user->type = $type;
         $user->save();
+        $pending_request = PendingRequest::where('user_id', '=', $user->id);
+        $pending_request->delete();
       }
       return redirect()->route('admin.shopowners');
     }

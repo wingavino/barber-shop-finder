@@ -107,7 +107,11 @@ class AdminController extends Controller
 
   public function showPendingRequestsPage()
   {
-    $data = DB::table('pending_requests')->get();
+    $data = DB::table('pending_requests')
+                ->leftJoin('users', 'user_id', '=', 'users.id')
+                ->select('pending_requests.*', 'users.name as name', 'users.email as email')
+                ->where('approved', '=', false)
+                ->get();
     return view('admin/pending-requests', ['data' => $data]);
   }
 }
