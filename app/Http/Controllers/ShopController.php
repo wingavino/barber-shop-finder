@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shop;
+use App\Models\PendingRequest;
 use Auth;
 
 class ShopController extends Controller
@@ -27,6 +28,20 @@ class ShopController extends Controller
     }
   }
 
+  public function showShop()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+
+    return view('shopowner/shop', ['shop' => $shop]);
+  }
+
+  public function showShopEdit()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+
+    return view('shopowner/shop-edit', ['shop' => $shop]);
+  }
+
   public function showShopsAdd()
   {
     switch (Auth::user()->type) {
@@ -41,18 +56,48 @@ class ShopController extends Controller
     }
   }
 
+  public function showShopAddPage()
+  {
+    switch (Auth::user()->type) {
+      case 'admin':
+        $shopowners = User::where('type', '=', 'shopowner')->get();
+        return view('admin/shops-add', ['shopowners' => $shopowners]);
+        break;
+
+      case 'shopowner':
+        return view('shopowner/shop-add');
+        break;
+
+      default:
+        return view('home');
+        break;
+    }
+  }
+
   public function addShop(Request $request)
   {
     $shop = Shop::where('name', '=', $request->name)->first();
     if (!$shop) {
       $shop = new Shop();
       $shop->name = $request->name;
-      $shop->owner_id = $request->owner_id;
+
+      if ($shop->owner_id) {
+        $shop->owner_id = $request->owner_id;
+      }else {
+        $shop->owner_id = Auth::user()->id;
+      }
+
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
-      // $shop->location = DB::raw('GeomFromText(POINT($request->lat, $request->lng))');
       $shop->save();
-      return redirect()->route('admin.shops');
+
+      $pending_request = new PendingRequest();
+      $pending_request->user_id = Auth::user()->id;
+      $pending_request->request_type = 'add-new-shop';
+      $pending_request->shop_id = $shop->id;
+      $pending_request->save();
+
+      return redirect()->route('home');
     }
   }
 
@@ -80,7 +125,7 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
-      $shop->owner_id = $request->owner_id;
+      $shop->owner_id = Auth::user()->id;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       $shop->save();
@@ -89,6 +134,10 @@ class ShopController extends Controller
     switch (Auth::user()->type) {
       case 'admin':
       return redirect()->route('admin.shops');
+      break;
+
+      case 'shopowner':
+      return redirect()->route('shopowner.shop');
       break;
 
       default:
@@ -122,6 +171,21 @@ class ShopController extends Controller
         return redirect()->route('shops');
         break;
       }
+    }
+  }
+
+  public function approveShop($id)
+  {
+    $shop = Shop::where('id', '=', $id)->first();
+    if ($shop) {
+      $shop->approved = true;
+      $shop->save();
+      $pending_request = PendingRequest::where('shop_id', $id)
+                                        ->where('request_type', 'add-new-shop')
+                                        ->first();
+      $pending_request->delete();
+
+      return redirect()->route('admin.pending-requests');
     }
   }
 }

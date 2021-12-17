@@ -27,6 +27,7 @@
                             <th scope="col">User ID</th>
                             <th scope="col">Request Type</th>
                             <th scope="col">User Type</th>
+                            <th scope="col">Shop ID</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
@@ -38,6 +39,7 @@
                               <td>{{ $value->user_id }}</td>
                               <td>{{ $value->request_type}}</td>
                               <td>{{ $value->change_to_user_type}}</td>
+                              <td>{{ $value->shop_id }}</td>
                               <td>
                                 @if($value->request_type == 'change-user-type')
                                   <a class="btn btn-info col-md-6"
@@ -47,6 +49,24 @@
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
                                     data-name="{{ $value->name }}"
+                                    data-request-type='{{ $value->request_type }}'
+                                    data-change-to-user-type="{{ $value->change_to_user_type }}"
+                                    type="button" role="button" name="button"
+                                  >
+                                    Approve
+                                  </a>
+                                @endif
+
+                                @if($value->request_type == 'add-new-shop')
+                                  <a class="btn btn-info col-md-6"
+                                    data-toggle="modal"
+                                    data-target="#requestModal"
+                                    data-form-action="{{ route('admin.shops.approve', ['id' => $value->shop_id]) }}"
+                                    data-id="{{ $value->id }}"
+                                    data-user-id="{{ $value->user_id }}"
+                                    data-name="{{ $value->name }}"
+                                    data-shop-id="{{ $value->shop_id }}"
+                                    data-shop-name="{{ $value->shop_name }}"
                                     data-request-type='{{ $value->request_type }}'
                                     data-change-to-user-type="{{ $value->change_to_user_type }}"
                                     type="button" role="button" name="button"

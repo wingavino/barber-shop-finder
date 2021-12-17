@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shop extends Model
+class OpenHours extends Model
 {
     use HasFactory;
 
@@ -15,20 +15,14 @@ class Shop extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'owner_id',
-        'lat',
-        'lng',
-        'approved',
+        'shop_id',
+        'day',
+        'time_start',
+        'time_end',
     ];
 
-    public function user()
+    public function shop()
     {
-      return $this->belongsTo(User::class, 'owner_id');
-    }
-
-    public function open_hours()
-    {
-      return $this->hasMany(OpenHours::class);
+      return $this->belongsTo(Shop::class);
     }
 }

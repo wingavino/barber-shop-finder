@@ -45,7 +45,11 @@ Route::middleware('auth')->group(function (){
 // Shop Owner Routes
 Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home');
-  Route::get('/shopowner/shop', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.shop');
+  Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shopowner.shop');
+  Route::get('/shopowner/shop/edit', [App\Http\Controllers\ShopController::class, 'showShopEdit'])->name('shopowner.shop.edit');
+  Route::post('/shopowner/shop/edit/{id?}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('shopowner.shop.edit');
+  Route::get('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'showShopAddPage'])->name('shopowner.shop.add');
+  Route::post('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('shopowner.shop.add');
 });
 
 // Admin Routes
@@ -71,6 +75,8 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit');
   Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete');
   Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete');
+
+  Route::post('/admin/shops/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve');
 });
 
 // Google Authentication

@@ -109,8 +109,9 @@ class AdminController extends Controller
   {
     $data = DB::table('pending_requests')
                 ->leftJoin('users', 'user_id', '=', 'users.id')
-                ->select('pending_requests.*', 'users.name as name', 'users.email as email')
-                ->where('approved', '=', false)
+                ->leftJoin('shops', 'shop_id', '=', 'shops.id')
+                ->select('pending_requests.*', 'users.name as name', 'users.email as email', 'shops.name as shop_name')
+                ->where('pending_requests.approved', '=', false)
                 ->get();
     return view('admin/pending-requests', ['data' => $data]);
   }

@@ -68,7 +68,23 @@ class ShopOwnerController extends Controller
 
   public function index()
   {
-    return redirect()->route('home');
+    return redirect()->route('shopowner.home');
+  }
+
+  public function showShopPage()
+  {
+    $shop = DB::table('shops')->where('owner_id', '=', Auth::user()->id)->get();
+    return view('shopowner/shop', ['shop' => $shop]);
+  }
+
+  public function showShopAddPage()
+  {
+    return view('shopowner/shop-add');
+  }
+
+  public function addShop(Request $request)
+  {
+    return redirect()->route('shopowner.home');
   }
 
   public function showRegistrationForm()

@@ -5,6 +5,8 @@ $(document).ready(function(){
     var id = button.data('id'); // Extract info from data-* attributes
     var user_id = button.data('user-id');
     var name = button.data('name');
+    var shop_id = button.data('shop-id');
+    var shop_name = button.data('shop-name');
     var request_type = button.data('request-type');
     var change_to_user_type = button.data('change-to-user-type');
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -14,6 +16,9 @@ $(document).ready(function(){
     if (request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + change_to_user_type + '.');
     }
-    modal.find('.modal-body #name').text('ID: ' + user_id + ' Name: '+ name);
+    if (request_type == 'add-new-shop') {
+      modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
+    }
+    modal.find('.modal-body #name').text('User ID: ' + user_id + ', Owner Name: '+ name + ', Shop ID: ' + shop_id + ', Shop Name: ' + shop_name);
   });
 });

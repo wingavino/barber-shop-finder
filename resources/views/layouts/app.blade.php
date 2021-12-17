@@ -78,9 +78,15 @@
                       @endif
 
                       @if (Auth::user() && Auth::user()->type == 'shopowner')
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
-                      </li>
+                        @if(Auth::user()->shop)
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>
+                        </li>
+                        @endif
                       @endif
                     </ul>
 
@@ -129,14 +135,24 @@
         </nav>
 
         <div id="liveAlertPlaceholder">
-              @if(Auth::user() && Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
-              <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>Your request to change account type to Shop Owner is currently pending approval.</strong>
-                <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button> -->
-              </div>
-              @endif
+          @if(Auth::user())
+            @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+              <strong>Your request to change account type to Shop Owner is currently pending approval.</strong>
+              <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+            </div>
+            @endif
+            @if(Auth::user()->pending_request->where('request_type', 'add-new-shop')->first())
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <strong>Your request to add a new Shop is currently pending approval. It will appear on the list and map once it has been checked and approved. You may continue to edit the shop during this process.</strong>
+              <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+            </div>
+            @endif
+          @endif
         </div>
 
         <main class="py-4">

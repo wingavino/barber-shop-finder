@@ -20,6 +20,7 @@ class CreateShopsTable extends Migration
             $table->foreign('owner_id')->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
