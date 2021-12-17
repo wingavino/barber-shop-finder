@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ShopOwnerController;
 use App\Models\User;
 // use App\Http\Controllers\UserController;
 
@@ -24,6 +26,9 @@ Route::get('/', function () {
 
 // Laravel Auth Routes
 Auth::routes();
+// Shop Owner Registration Route
+Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner');
+Route::post('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner');
 
 // End User Routes
 Route::middleware('auth')->group(function (){
@@ -70,3 +75,6 @@ Route::middleware('isAdmin')->group(function(){
 // Google Authentication
 Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+Route::get('register/google', [LoginController::class, 'redirectToGoogle'])->name('register.google');
+Route::get('register/shopowner/google', [ShopOwnerController::class, 'redirectToGoogle'])->name('register.shopowner.google');
+Route::get('register/shopowner/google/callback', [ShopOwnerController::class, 'handleGoogleCallback']);

@@ -8,12 +8,12 @@
                 <div class="card-header">
                   <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                      <a class="nav-link active" href="{{ route('register') }}" aria-current="true" href="#">
+                      <a class="nav-link" href="{{ route('register') }}">
                         {{ __('Register as User') }}
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ route('register.shopowner') }}">
+                      <a class="nav-link active" href="{{ route('register.shopowner') }}" aria-current="true">
                         {{ __('Register as Shop Owner') }}
                       </a>
                     </li>
@@ -21,11 +21,11 @@
                 </div>
 
                 <div class="card-body text-center">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register.shopowner') }}">
                         @csrf
                         <div class="form-group row justify-content-center">
                             <div class="col-md-6 offset-md-2">
-                              <a href="{{ route('login.google') }}" class="btn btn-danger btn-block">Sign Up with Google</a>
+                              <a href="{{ route('register.shopowner.google') }}" class="btn btn-danger btn-block">Sign Up with Google</a>
                             </div>
                         </div>
 

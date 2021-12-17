@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shop;
+use App\Models\PendingRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Laravel\Socialite\Facades\Socialite;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +33,7 @@ class ShopOwnerController extends Controller
    *
    * @var string
    */
-  protected $redirectTo = 'admin/shopowners';
+  protected $redirectTo = 'home';
 
   /**
    * Get a validator for an incoming registration request.
@@ -61,8 +63,12 @@ class ShopOwnerController extends Controller
           'email' => $data['email'],
           'password' => Hash::make($data['password']),
           'mobile' => $data['mobile'],
-          'type' => 'shopowner',
       ]);
+  }
+
+  public function showRegistrationForm()
+  {
+    return view('auth/register-shopowner');
   }
 
   public function showShopOwners()
@@ -94,5 +100,45 @@ class ShopOwnerController extends Controller
   {
     $user = User::where('id', '=', $id)->first();
     return view('admin/shop-owners-edit', ['user' => $user, 'type' => $type]);
+  }
+
+  //Google Authentication
+  public function redirectToGoogle()
+  {
+    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
+  }
+
+  //Google Callback
+  public function handleGoogleCallback()
+  {
+    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    $user = Socialite::driver('google')->user();
+    $provider_id = 'google';
+    $this->_registerOrLoginUser($user, $provider_id);
+    return redirect()->route('home');
+  }
+
+  protected function _registerOrLoginUser($data, $provider_id)
+  {
+    $user = User::where('email', '=', $data->email)->first();
+
+    if (!$user) {
+      $user = new User();
+      $user->name = $data->name;
+      $user->email = $data->email;
+      $user->provider_id = $provider_id;
+      //$user->avatar = $data->avatar;
+      $user->save();
+
+      // Creates Request to change Account Type to Shop Owner
+      $pending_request = new PendingRequest();
+      $pending_request->user_id = $user->id;
+      $pending_request->request_type = 'change-user-type';
+      $pending_request->change_to_user_type = 'shopowner';
+      $pending_request->save();
+    }
+
+    Auth::login($user);
   }
 }
