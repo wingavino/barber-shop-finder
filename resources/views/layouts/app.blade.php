@@ -77,15 +77,17 @@
                       </li>
                       @endif
 
-                      @if (Auth::user() && Auth::user()->type == 'shopowner' || Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
-                        @if(Auth::user()->shop)
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
-                        </li>
-                        @else
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>
-                        </li>
+                      @if (Auth::user())
+                        @if (Auth::user()->type == 'shopowner' || Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
+                          @if(Auth::user()->shop)
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
+                          </li>
+                          @else
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>
+                          </li>
+                          @endif
                         @endif
                       @endif
                     </ul>
