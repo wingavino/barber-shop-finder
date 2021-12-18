@@ -17,7 +17,12 @@ class ShopOwnerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-      if (Auth::user()->type == 'shopowner') {
+      if (Auth::user()->type == 'shopowner'
+        or Auth::user()->pending_request
+                  ->where('request_type', 'change-user-type')
+                  ->where('change_to_user_type', 'shopowner')
+                  ->first()
+      ){
         return $next($request);
       }else {
         return redirect('/home');

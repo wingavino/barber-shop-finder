@@ -64,12 +64,8 @@ class ShopController extends Controller
         return view('admin/shops-add', ['shopowners' => $shopowners]);
         break;
 
-      case 'shopowner':
-        return view('shopowner/shop-add');
-        break;
-
       default:
-        return view('home');
+        return view('shopowner/shop-add');
         break;
     }
   }

@@ -77,7 +77,7 @@
                       </li>
                       @endif
 
-                      @if (Auth::user() && Auth::user()->type == 'shopowner')
+                      @if (Auth::user() && Auth::user()->type == 'shopowner' || Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
                         @if(Auth::user()->shop)
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
@@ -138,7 +138,7 @@
           @if(Auth::user())
             @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
             <div class="alert alert-primary alert-dismissible fade show" role="alert">
-              <strong>Your request to change account type to Shop Owner is currently pending approval.</strong>
+              <strong>Your request to change account type to Shop Owner is currently pending approval. You may continue to create/manage your shop while it is being processed.</strong>
               <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button> -->
