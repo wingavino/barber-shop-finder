@@ -61,6 +61,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete');
 
   Route::get('/admin/pending-requests', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests');
+  Route::post('/admin/pending-requests/{request_type}/{id}/reject', [App\Http\Controllers\PendingRequestController::class, 'rejectPendingRequest'])->name('admin.pending-requests.reject');
 
   Route::get('/admin/shopowners', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwners'])->name('admin.shopowners');
   Route::get('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add');

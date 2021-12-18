@@ -31,4 +31,16 @@ class PendingRequestController extends Controller
     }
     return redirect()->route('profile');
   }
+
+  public function rejectPendingRequest(Request $request, $request_type, $id)
+  {
+    $pending_request = PendingRequest::where('id', $id)->first();
+    if ($request_type == 'add-new-shop') {
+      $shop = Shop::where('id', $pending_request->shop_id);
+      $shop->delete();
+    }
+    $pending_request->delete();
+
+    return redirect()->route('admin.pending-requests');
+  }
 }

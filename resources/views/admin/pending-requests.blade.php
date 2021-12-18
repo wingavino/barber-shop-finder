@@ -45,7 +45,8 @@
                                   <a class="btn btn-info col-md-6"
                                     data-toggle="modal"
                                     data-target="#requestModal"
-                                    data-form-action="{{ route('admin.shopowners.edit', ['id' => $value->user_id, 'type' => $value->change_to_user_type]) }}"
+                                    data-reject-form-action="{{ route('admin.pending-requests.reject', ['id' => $value->id, 'request_type' => $value->request_type]) }}"
+                                    data-approve-form-action="{{ route('admin.shopowners.edit', ['id' => $value->user_id, 'type' => $value->change_to_user_type]) }}"
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
                                     data-name="{{ $value->name }}"
@@ -61,7 +62,8 @@
                                   <a class="btn btn-info col-md-6"
                                     data-toggle="modal"
                                     data-target="#requestModal"
-                                    data-form-action="{{ route('admin.shops.approve', ['id' => $value->shop_id]) }}"
+                                    data-reject-form-action="{{ route('admin.pending-requests.reject', ['id' => $value->id, 'request_type' => $value->request_type]) }}"
+                                    data-approve-form-action="{{ route('admin.shops.approve', ['id' => $value->shop_id]) }}"
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
                                     data-name="{{ $value->name }}"
@@ -102,13 +104,13 @@
                               <div class="col-md-12 justify-content-center">
                                 <div class="row">
                                   <div class="col">
-                                    <form class="" action="#" method="post">
+                                    <form class="" action="#" method="post" id='rejectForm'>
                                       @csrf
                                       <button class="btn btn-danger col" id="approveRequestButton" type="submit">Reject</button>
                                     </form>
                                   </div>
                                   <div class="col">
-                                    <form class="" action="#" method="post">
+                                    <form class="" action="#" method="post" id="approveForm">
                                       @csrf
                                       <button class="btn btn-primary col" id="approveRequestButton" type="submit">Approve</button>
                                     </form>

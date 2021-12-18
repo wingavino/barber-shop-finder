@@ -5,7 +5,8 @@ $(document).ready(function(){
     // Extract info from data-* attributes
     var modal_information = {};
 
-    modal_information['formAction'] = button.data('form-action');
+    modal_information['approve_form_action'] = button.data('approve-form-action');
+    modal_information['reject_form_action'] = button.data('reject-form-action');
     modal_information['id'] = button.data('id');
     modal_information['user_id'] = button.data('user-id');
     modal_information['name'] = button.data('name');
@@ -23,7 +24,8 @@ $(document).ready(function(){
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     var modal = $(this);
-    modal.find('.modal-body form').attr('action', modal_information.formAction);
+    modal.find('.modal-body #rejectForm').attr('action', modal_information.reject_form_action);
+    modal.find('.modal-body #approveForm').attr('action', modal_information.approve_form_action);
     if (modal_information.request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + modal_information.change_to_user_type + '.');
     }
