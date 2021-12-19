@@ -24,6 +24,30 @@
                             </div>
                         </div>
 
+                        <label for="open_hours" class="col-md-4 col-form-label text-md-right">{{ __('Open Hours') }}</label>
+                        <div class="form-group row">
+                          <label for="monday_hours" class="col-md-4 col-form-label text-md-right">{{ __('Monday') }}</label>
+                            <div class="col-md-6 input-group">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input id="open_hours_monday" type="checkbox" class="@error('open_hours_monday') is-invalid @enderror" name="open_hours[]" value="1">
+                                  </div>
+                                </div>
+                                <input id="open_hours_monday_start" type="time" class="form-control @error('open_hours_monday_start') is-invalid @enderror" name="open_hours_monday_start" value="{{ old('open_hours_monday_start') }}" autocomplete="open_hours_monday_start">
+                                <input id="open_hours_monday_end" type="time" class="form-control @error('open_hours_monday_end') is-invalid @enderror" name="open_hours_monday_end" value="{{ old('open_hours_monday_end') }}" autocomplete="open_hours_monday_end">
+                                @error('open_hours_monday_start')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                @error('open_hours_monday_end')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="lat" class="col-md-4 col-form-label text-md-right">{{ __('Latitude') }}</label>
 
