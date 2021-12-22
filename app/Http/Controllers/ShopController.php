@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use App\Models\Shop;
+use App\Models\OpenHours;
 use App\Models\PendingRequest;
+use App\Models\Shop;
+use App\Models\User;
 use Auth;
 
 class ShopController extends Controller
@@ -31,15 +32,17 @@ class ShopController extends Controller
   public function showShop()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
 
-    return view('shopowner/shop', ['shop' => $shop]);
+    return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours]);
   }
 
   public function showShopEdit()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $open_hours = OpenHours::where('shop_id', $shop->id)->get();
 
-    return view('shopowner/shop-edit', ['shop' => $shop]);
+    return view('shopowner/shop-edit', ['shop' => $shop, 'open_hours' => $open_hours]);
   }
 
   public function showShopsAdd()
@@ -87,6 +90,19 @@ class ShopController extends Controller
       $shop->lng = $request->lng;
       $shop->save();
 
+      $open_hours_day = $request->input('open_hours_day');
+      $open_hours_start = $request->input('open_hours_start');
+      $open_hours_end = $request->input('open_hours_end');
+
+      foreach ($open_hours_day as $day) {
+        $open_hour = new OpenHours;
+        $open_hour->shop_id = $shop->id;
+        $open_hour->day = $day;
+        $open_hour->time_start = $open_hours_start[$day];
+        $open_hour->time_end = $open_hours_end[$day];
+        $open_hour->save();
+      }
+
       $pending_request = new PendingRequest();
       $pending_request->user_id = Auth::user()->id;
       $pending_request->request_type = 'add-new-shop';
@@ -125,6 +141,22 @@ class ShopController extends Controller
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       $shop->save();
+
+      $open_hours_day = $request->input('open_hours_day');
+      $open_hours_start = $request->input('open_hours_start');
+      $open_hours_end = $request->input('open_hours_end');
+
+      foreach ($open_hours_day as $day) {
+        $open_hour = OpenHours::where('shop_id', $shop->id)->where('day', $day)->first();
+        if (!$open_hour) {
+          $open_hour = new OpenHours;
+        }
+        $open_hour->shop_id = $shop->id;
+        $open_hour->day = $day;
+        $open_hour->time_start = $open_hours_start[$day];
+        $open_hour->time_end = $open_hours_end[$day];
+        $open_hour->save();
+      }
     }
 
     switch (Auth::user()->type) {
