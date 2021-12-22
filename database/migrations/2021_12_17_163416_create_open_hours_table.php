@@ -18,8 +18,8 @@ class CreateOpenHoursTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('day');
-            $table->time('time_start');
-            $table->time('time_end');
+            $table->time('time_start')->default('08:00');
+            $table->time('time_end')->default('17:00');
             $table->timestamps();
         });
     }

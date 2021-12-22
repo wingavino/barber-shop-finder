@@ -98,8 +98,12 @@ class ShopController extends Controller
         $open_hour = new OpenHours;
         $open_hour->shop_id = $shop->id;
         $open_hour->day = $day;
-        $open_hour->time_start = $open_hours_start[$day];
-        $open_hour->time_end = $open_hours_end[$day];
+        if ($open_hours_start[$day] != null) {
+          $open_hour->time_start = $open_hours_start[$day];
+        }
+        if ($open_hours_end[$day] != null) {
+          $open_hour->time_end = $open_hours_end[$day];
+        }
         $open_hour->save();
       }
 
