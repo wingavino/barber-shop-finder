@@ -66,6 +66,7 @@
                                     data-approve-form-action="{{ route('admin.shops.approve', ['id' => $value->shop_id]) }}"
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
+                                    data-user-type="{{ $value->user_type }}"
                                     data-name="{{ $value->name }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"

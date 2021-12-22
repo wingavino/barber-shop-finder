@@ -10,6 +10,7 @@ $(document).ready(function(){
     modal_information['id'] = button.data('id');
     modal_information['user_id'] = button.data('user-id');
     modal_information['name'] = button.data('name');
+    modal_information['user_type'] = button.data('user-type');
     modal_information['shop_id'] = button.data('shop-id');
     modal_information['shop_name'] = button.data('shop-name');
     modal_information['request_type'] = button.data('request-type');
@@ -28,10 +29,11 @@ $(document).ready(function(){
     modal.find('.modal-body #approveForm').attr('action', modal_information.approve_form_action);
     if (modal_information.request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + modal_information.change_to_user_type + '.');
+      modal.find('.modal-body #name').text('User ID: ' + modal_information.user_id + ', User Name: '+ modal_information.name);
     }
     if (modal_information.request_type == 'add-new-shop') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
+      modal.find('.modal-body #name').text('User ID: ' + modal_information.user_id + ', User Name: '+ modal_information.name + ', User Type: ' + modal_information.user_type + ', Shop ID: ' + modal_information.shop_id + ', Shop Name: ' + modal_information.shop_name);
     }
-    modal.find('.modal-body #name').text('User ID: ' + modal_information.user_id + ', User Name: '+ modal_information.name + ', Shop ID: ' + modal_information.shop_id + ', Shop Name: ' + modal_information.shop_name);
   });
 });

@@ -15,8 +15,8 @@ class CreateOpenHoursTable extends Migration
     {
         Schema::create('open_hours', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('shop_id')->nullable();
-            $table->foreign('shop_id')->references('id')->on('shops')->cascadeOnUpdate()->nullOnDelete();
+            $table->unsignedBigInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shops')->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('day');
             $table->time('time_start');
             $table->time('time_end');

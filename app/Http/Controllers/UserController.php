@@ -55,8 +55,11 @@ class UserController extends Controller
       if ($user) {
         $user->type = $type;
         $user->save();
-        $pending_request = PendingRequest::where('user_id', '=', $user->id);
-        $pending_request->delete();
+        $pending_request = PendingRequest::where('user_id', '=', $user->id)->where('request_type', 'change-user-type');
+        if ($pending_request) {
+          $pending_request->delete();
+          return redirect()->route('admin.pending-requests');
+        }
       }
       return redirect()->route('admin.shopowners');
     }
