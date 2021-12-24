@@ -31,4 +31,9 @@ class Shop extends Model
     {
       return $this->hasMany(OpenHours::class);
     }
+
+    public function shop_services()
+    {
+      return $this->hasMany(ShopServices::class);
+    }
 }

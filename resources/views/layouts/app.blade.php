@@ -83,6 +83,9 @@
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('shopowner.shop') }}">{{ __('Manage Shop') }}</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ route('shopowner.shop.services') }}">{{ __('Manage Shop Services') }}</a>
+                          </li>
                           @else
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>

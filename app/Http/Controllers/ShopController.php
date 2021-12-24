@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\OpenHours;
 use App\Models\PendingRequest;
 use App\Models\Shop;
+use App\Models\ShopServices;
 use App\Models\User;
 use Auth;
 
@@ -35,6 +36,34 @@ class ShopController extends Controller
     $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
 
     return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours]);
+  }
+
+  public function showShopServices()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $shop_services = $shop->shop_services;
+
+    return view('shopowner/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
+  public function showAddShopServices()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+
+    return view('shopowner/shop-services-add', ['shop' => $shop]);
+  }
+
+  public function addShopServices(Request $request)
+  {
+    $shop = Auth::user()->shop;
+    if ($shop) {
+      $shop_service = new ShopServices;
+      $shop_service->shop_id = $shop->id;
+      $shop_service->name = $request->name;
+      $shop_service->price = $request->price;
+      $shop_service->save();
+    }
+    return redirect()->route('shopowner.shop.services');
   }
 
   public function showShopEdit()
