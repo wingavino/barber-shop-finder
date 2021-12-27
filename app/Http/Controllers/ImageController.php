@@ -18,7 +18,7 @@ class ImageController extends Controller
   {
     $request->validate([
       'imageFile' => 'required',
-      'imageFile.*' => 'mimes:jpeg,jpg,png|max:2048'
+      'imageFile.*' => 'mimes:jpeg,jpg,png|max:10240'
     ]);
 
     if($request->hasfile('imageFile')) {

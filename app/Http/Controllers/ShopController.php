@@ -31,7 +31,15 @@ class ShopController extends Controller
     }
   }
 
-  public function showShop()
+  public function showShop($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
+
+    return view('shop', ['shop' => $shop, 'open_hours' => $open_hours]);
+  }
+
+  public function showShopAsShopOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
@@ -39,7 +47,15 @@ class ShopController extends Controller
     return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours]);
   }
 
-  public function showShopImages()
+  public function showShopImages($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $images = Image::where('shop_id', $id)->get();
+
+    return view('shop-images', ['shop' => $shop, 'images' => $images]);
+  }
+
+  public function showShopImagesAsShopOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $images = Image::where('shop_id', $shop->id)->get();

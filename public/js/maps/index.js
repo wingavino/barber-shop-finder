@@ -91,7 +91,7 @@ var infowindow;
           "</div>" +
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
           '<div id="bodyContent">' +
-            "<p><b>"+ shop.title +"</b>";
+            "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b>";
 
       for (var j = 0; j < open_hours.length; j++) {
         if (open_hours[j].shop_id == shop.id) {
@@ -104,6 +104,7 @@ var infowindow;
       }
 
       contentString +=
+            "<a href='http://localhost:8000/shop/" + shop.id + "'>View Shop Page</a>" +
           "</div>" +
         "</div>";
 

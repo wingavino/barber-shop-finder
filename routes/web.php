@@ -39,18 +39,20 @@ Route::middleware('auth')->group(function (){
   Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password');
   Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password');
   Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request');
+  Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop');
+  Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images');
   // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 });
 
 // Shop Owner Routes
 Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home');
-  Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shopowner.shop');
+  Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShopAsShopOwner'])->name('shopowner.shop');
   Route::get('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'showShopAddPage'])->name('shopowner.shop.add');
   Route::post('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('shopowner.shop.add');
   Route::get('/shopowner/shop/edit', [App\Http\Controllers\ShopController::class, 'showShopEdit'])->name('shopowner.shop.edit');
   Route::post('/shopowner/shop/edit/{id?}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('shopowner.shop.edit');
-  Route::get('/shopowner/shop/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shopowner.shop.images');
+  Route::get('/shopowner/shop/images', [App\Http\Controllers\ShopController::class, 'showShopImagesAsShopOwner'])->name('shopowner.shop.images');
   Route::post('/shopowner/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('shopowner.shop.images.delete');
   Route::get('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('shopowner.shop.images.upload');
   Route::post('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('shopowner.shop.images.upload');
