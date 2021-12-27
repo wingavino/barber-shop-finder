@@ -9,6 +9,7 @@ use App\Models\PendingRequest;
 use App\Models\Shop;
 use App\Models\ShopServices;
 use App\Models\User;
+use App\Models\Image;
 use Auth;
 
 class ShopController extends Controller
@@ -36,6 +37,14 @@ class ShopController extends Controller
     $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
 
     return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours]);
+  }
+
+  public function showShopImages()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $images = Image::where('shop_id', $shop->id)->get();
+
+    return view('shopowner/shop-images', ['shop' => $shop, 'images' => $images]);
   }
 
   public function showShopServices()

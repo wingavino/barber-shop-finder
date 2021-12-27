@@ -5,7 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3>{{ __('Shop Details') }}</h3></div>
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">
+                        {{ __('Shop Details') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('shopowner.shop.images') }}">
+                        {{ __('Shop Images') }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
 
                 <div class="card-body">
                   <form method="POST" action="#">
