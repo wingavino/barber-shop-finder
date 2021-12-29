@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Image;
 use App\Models\OpenHours;
+use App\Models\Queue;
 use App\Models\PendingRequest;
 use App\Models\Shop;
 use App\Models\ShopServices;
 use App\Models\User;
-use App\Models\Image;
 use Auth;
 
 class ShopController extends Controller
@@ -63,12 +64,28 @@ class ShopController extends Controller
     return view('shopowner/shop-images', ['shop' => $shop, 'images' => $images]);
   }
 
-  public function showShopServices()
+  public function showShopServices($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_services = $shop->shop_services;
+
+    return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
+  public function showShopServicesAsOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $shop_services = $shop->shop_services;
 
     return view('shopowner/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
+  public function showShopQueueAsOwner()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $shop_queue = $shop->queue;
+
+    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
   public function showAddShopServices()
@@ -167,6 +184,10 @@ class ShopController extends Controller
       $pending_request->request_type = 'add-new-shop';
       $pending_request->shop_id = $shop->id;
       $pending_request->save();
+
+      $queue = new Queue();
+      $queue->shop_id = $shop->id;
+      $queue->save();
 
       return redirect()->route('shopowner.shop');
     }

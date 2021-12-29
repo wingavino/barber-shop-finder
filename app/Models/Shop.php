@@ -32,6 +32,11 @@ class Shop extends Model
       return $this->hasMany(OpenHours::class);
     }
 
+    public function queue()
+    {
+      return $this->hasOne(Queue::class);
+    }
+
     public function shop_services()
     {
       return $this->hasMany(ShopServices::class);

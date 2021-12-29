@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
       return $this->hasMany(PendingRequest::class);
     }
+
+    public function ticket()
+    {
+      return $this->hasOne(Ticket::class);
+    }
 }

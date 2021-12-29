@@ -10,7 +10,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3>{{ __('Shop Services List') }}</h3></div>
+                <div class="card-header">
+                  @include('shopowner.shop-nav-tabs')
+                </div>
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">

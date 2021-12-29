@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ShopOwnerController;
+use App\Http\Controllers\TicketController;
 use App\Models\User;
 // use App\Http\Controllers\UserController;
 
@@ -41,6 +42,9 @@ Route::middleware('auth')->group(function (){
   Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request');
   Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop');
   Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images');
+  Route::get('/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shop.services');
+  Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket');
+  Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel');
   // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 });
 
@@ -56,7 +60,12 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('shopowner.shop.images.delete');
   Route::get('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('shopowner.shop.images.upload');
   Route::post('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('shopowner.shop.images.upload');
-  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shopowner.shop.services');
+  Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue');
+  Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish');
+  Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold');
+  Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next');
+  Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold');
+  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services');
   Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add');
   Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add');
 });

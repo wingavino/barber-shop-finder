@@ -60,39 +60,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                      @if (Auth::user() && Auth::user()->type == 'admin')
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.shopowners') }}">{{ __('Shop Owners') }}</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.shops') }}">{{ __('Shops') }}</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admins') }}">{{ __('Admins') }}</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.pending-requests') }}">{{ __('Requests') }}</a>
-                      </li>
-                      @endif
-
-                      @if (Auth::user())
-                        @if (Auth::user()->type == 'shopowner' || Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
-                          @if(Auth::user()->shop)
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('shopowner.shop', ['id' => Auth::user()->shop->id]) }}">{{ __('Manage Shop') }}</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('shopowner.shop.services') }}">{{ __('Manage Shop Services') }}</a>
-                          </li>
-                          @else
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>
-                          </li>
-                          @endif
-                        @endif
-                      @endif
+                      @include('layouts.admin-nav')
+                      @include('layouts.shopowner-nav')
+                      @include('layouts.user-nav')
                     </ul>
 
                     <!-- Right Side Of Navbar -->
