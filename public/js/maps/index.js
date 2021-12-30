@@ -116,6 +116,7 @@ var infowindow;
           infowindow.setContent(info);
           infowindow.open(marker.get("map"), marker);
           map.panTo(marker.getPosition());
+          map.setZoom(13);
         });
       }
     }

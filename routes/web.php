@@ -72,7 +72,7 @@ Route::middleware('isShopOwner')->group(function(){
 
 // Admin Routes
 Route::middleware('isAdmin')->group(function(){
-  Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
+  Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
   Route::get('/admin/admins', [App\Http\Controllers\AdminController::class, 'admins'])->name('admin.admins');
   Route::get('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'showAddAdmin'])->name('admin.add');
   Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add');
