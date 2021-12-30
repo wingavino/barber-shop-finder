@@ -5,9 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add New Shop Service') }}</div>
+                <div class="card-header">
+                  @include('shopowner.shop-nav-tabs')
+                </div>
 
                 <div class="card-body text-center">
+                  <h3>{{ __('Add New Shop Service') }}</h3>
                     <form method="POST" action="{{ route('shopowner.shop.services.add') }}">
                         @csrf
                         <div class="form-group row">

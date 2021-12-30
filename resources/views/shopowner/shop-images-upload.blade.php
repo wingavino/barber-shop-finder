@@ -11,18 +11,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('shopowner.shop') }}">
-                        {{ __('Shop Details') }}
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#">
-                        {{ __('Shop Images') }}
-                      </a>
-                    </li>
-                  </ul>
+                  @include('shopowner.shop-nav-tabs')
                 </div>
 
                 <div class="card-body">

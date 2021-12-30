@@ -5,12 +5,12 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.images') ? 'active' : '' }}" href="{{ route('shopowner.shop.images') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.images' || Route::currentRouteName() == 'shopowner.shop.images.upload') ? 'active' : '' }}" href="{{ route('shopowner.shop.images') }}">
       {{ __('Shop Images') }}
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.services') ? 'active' : '' }}" href="{{ route('shopowner.shop.services') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.services' || Route::currentRouteName() == 'shopowner.shop.services.add') ? 'active' : '' }}" href="{{ route('shopowner.shop.services') }}">
       {{ __('Shop Services') }}
     </a>
   </li>
