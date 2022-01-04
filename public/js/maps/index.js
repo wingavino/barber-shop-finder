@@ -86,7 +86,7 @@ var infowindow;
       markers.push(marker);
 
       var contentString =
-        '<div id="content">' +
+        '<div id="content" class="text-black">' +
           '<div id="siteNotice">' +
           "</div>" +
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
@@ -104,7 +104,7 @@ var infowindow;
       }
 
       contentString +=
-            "<a href='http://localhost:8000/shop/" + shop.id + "'>View Shop Page</a>" +
+            "<a class='text-black' href='http://localhost:8000/shop/" + shop.id + "'>View Shop Page</a>" +
           "</div>" +
         "</div>";
 
