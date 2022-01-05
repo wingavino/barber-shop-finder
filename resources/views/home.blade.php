@@ -31,7 +31,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-9 map-area" style="width: 500px; height: 500px">
+        <div class="col-md-9" style="width: 500px; height: 500px">
           <div id="map" style="width:100%;height:100%"></div>
         </div>
     </div>
