@@ -22,7 +22,7 @@ use App\Models\User;
 
 // Index/Landing Page
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 
 // Laravel Auth Routes
