@@ -87,6 +87,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\ShopOwnerController::class, 'showEditShopOwners'])->name('admin.shopowners.edit');
   Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit');
 
+  Route::get('/admin/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('admin.shop');
   Route::get('/admin/shops', [App\Http\Controllers\ShopController::class, 'showShops'])->name('admin.shops');
   Route::post('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('admin.shops.add');
   Route::get('/admin/shops/add/{lat?}/{lng?}', [App\Http\Controllers\ShopController::class, 'showShopsAdd'])->name('admin.shops.add');
