@@ -15,9 +15,47 @@
                 </div>
 
                 <div class="card-body">
+                  <!-- Logo Upload -->
+                  <div class="container mt-5">
+                    <h3 class="text-center mb-5">Upload Logo</h3>
+                    <form action="{{ route('shopowner.shop.images.logo.upload') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
+
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <div class="user-image mb-3 text-center">
+                            <div class="logoPreview justify-content-center text-center"></div>
+                        </div>
+
+                        <div class="custom-file">
+                            <input type="file" name="logoFile" class="custom-file-input" id="logo">
+                            <label class="custom-file-label" for="logo">Choose image</label>
+                        </div>
+
+                        <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
+                            Upload Image
+                        </button>
+                    </form>
+                  </div>
+                  <!-- Logo Upload End -->
+
+                  <!-- Image Upload -->
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Images</h3>
-                    <form action="{{route('shopowner.shop.images.upload')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('shopowner.shop.images.upload') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
@@ -48,7 +86,8 @@
                             Upload Images
                         </button>
                     </form>
-                </div>
+                  </div>
+                  <!-- Image Upload End -->
                 </div>
             </div>
         </div>

@@ -35,17 +35,26 @@ class ShopController extends Controller
   public function showShop($id)
   {
     $shop = Shop::where('id', $id)->first();
-    $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
 
-    return view('shop', ['shop' => $shop, 'open_hours' => $open_hours]);
+    if (!$shop->approved) {
+      if (Auth::user()->type == 'user' && $shop->owner_id != Auth::user()->id) {
+        return redirect()->route('home');
+      }
+    }
+
+    $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
+    $logo = Image::where('shop_id', $id)->where('type', 'logo')->first();
+
+    return view('shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
   }
 
   public function showShopAsShopOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours]);
+    return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
   }
 
   public function showShopImages($id)
@@ -59,9 +68,10 @@ class ShopController extends Controller
   public function showShopImagesAsShopOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
-    $images = Image::where('shop_id', $shop->id)->get();
+    $images = Image::where('shop_id', $shop->id)->where('type', 'images')->get();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('shopowner/shop-images', ['shop' => $shop, 'images' => $images]);
+    return view('shopowner/shop-images', ['shop' => $shop, 'images' => $images, 'logo' => $logo]);
   }
 
   public function showShopServices($id)
@@ -104,6 +114,40 @@ class ShopController extends Controller
       $shop_service->name = $request->name;
       $shop_service->price = $request->price;
       $shop_service->save();
+    }
+    return redirect()->route('shopowner.shop.services');
+  }
+
+  public function showEditShopServices($id)
+  {
+    $shop = Auth::user()->shop;
+    $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+
+    return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+  }
+
+  public function editShopServices(Request $request, $id)
+  {
+    $shop = Auth::user()->shop;
+    if ($shop) {
+      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+      if ($shop_service) {
+        $shop_service->name = $request->name;
+        $shop_service->price = $request->price;
+        $shop_service->save();
+      }
+    }
+    return redirect()->route('shopowner.shop.services');
+  }
+
+  public function deleteShopServices(Request $request, $id)
+  {
+    $shop = Auth::user()->shop;
+    if ($shop) {
+      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+      if ($shop_service) {
+        $shop_service->delete();
+      }
     }
     return redirect()->route('shopowner.shop.services');
   }

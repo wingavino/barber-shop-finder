@@ -35,10 +35,40 @@ class ImageController extends Controller
             $fileModal = new Image();
             $fileModal->shop_id = Auth::user()->shop->id;
             $fileModal->path = $img;
+            $fileModal->type = 'image';
 
             $fileModal->save();
           }
         }
+
+       return redirect()->route('shopowner.shop.images');
+    }
+  }
+
+  public function uploadLogo(Request $request)
+  {
+    $request->validate([
+      'logoFile' => 'required',
+      'logoFile.*' => 'mimes:jpeg,jpg,png|max:10240'
+    ]);
+
+    if($request->hasfile('logoFile')) {
+      $image = $request->file('logoFile');
+      $name = 'logo';
+      $extension = $image->getClientOriginalExtension();
+      $name = 'logo/'.$name.'.'.$extension;
+      $image->move(public_path().'/img/'.Auth::user()->shop->id.'/logo/', $name);
+      $logoData = $name;
+
+      $file = Image::where('shop_id', Auth::user()->shop->id)->where('path', $logoData)->first();
+      if (!$file) {
+        $fileModal = new Image();
+        $fileModal->shop_id = Auth::user()->shop->id;
+        $fileModal->path = $logoData;
+        $fileModal->type = 'logo';
+
+        $fileModal->save();
+      }
 
        return redirect()->route('shopowner.shop.images');
     }

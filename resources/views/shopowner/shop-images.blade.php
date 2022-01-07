@@ -18,15 +18,28 @@
                   <div class="col text-right">
                     <a class="btn btn-info" type="button" role="button" href="{{ route('shopowner.shop.images.upload') }}">Upload</a>
                   </div>
-                  <div class="row">
-                    @isset($images)
-                    @foreach($images as $image)
-                    <div class="col-6">
-                      <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.$shop->id.'/'.$image->path) }}">
-                        <img src="{{ asset('img/'.$shop->id.'/'.$image->path) }}" class="img-thumbnail" alt="...">
-                      </a>
+                  <div class="row justify-content-center text-center">
+                    <div class="col-3">
+                      <h4>Logo</h4>
+                    @isset($logo)
+                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $logo->id]) }}" data-id="{{ $logo->id }}" data-src="{{ asset('img/'.$shop->id.'/'.$logo->path) }}">
+                          <img src="{{ asset('img/'.$shop->id.'/'.$logo->path) }}" class="img-thumbnail" alt="...">
+                        </a>
+                    @else
+                      <img src="https://via.placeholder.com/1000?text=No+Image" class="img-fluid img-thumbnail" alt="...">
+                    @endisset
                     </div>
-                    @endforeach
+                  </div>
+                  <div class="row">
+                    <h4>Images</h4>
+                    @isset($images)
+                      @foreach($images as $image)
+                        <div class="col-6">
+                          <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.$shop->id.'/'.$image->path) }}">
+                            <img src="{{ asset('img/'.$shop->id.'/'.$image->path) }}" class="img-thumbnail" alt="...">
+                          </a>
+                        </div>
+                      @endforeach
                     @endisset
                   </div>
                 </div>

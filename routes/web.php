@@ -60,6 +60,7 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('shopowner.shop.images.delete');
   Route::get('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('shopowner.shop.images.upload');
   Route::post('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('shopowner.shop.images.upload');
+  Route::post('/shopowner/shop/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('shopowner.shop.images.logo.upload');
   Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue');
   Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish');
   Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold');
@@ -68,6 +69,9 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services');
   Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add');
   Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add');
+  Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete');
+  Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit');
+  Route::post('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit');
 });
 
 // Admin Routes

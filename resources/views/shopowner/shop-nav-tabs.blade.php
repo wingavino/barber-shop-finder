@@ -10,7 +10,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.services' || Route::currentRouteName() == 'shopowner.shop.services.add') ? 'active' : '' }}" href="{{ route('shopowner.shop.services') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.services' || Route::currentRouteName() == 'shopowner.shop.services.add' || Route::currentRouteName() == 'shopowner.shop.services.edit') ? 'active' : '' }}" href="{{ route('shopowner.shop.services') }}">
       {{ __('Shop Services') }}
     </a>
   </li>
