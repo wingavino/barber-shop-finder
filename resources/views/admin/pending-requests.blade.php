@@ -50,6 +50,7 @@
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
                                     data-name="{{ $value->name }}"
+                                    data-email="{{ $value->email }}"
                                     data-request-type='{{ $value->request_type }}'
                                     data-change-to-user-type="{{ $value->change_to_user_type }}"
                                     type="button" role="button" name="button"
@@ -68,8 +69,10 @@
                                     data-user-id="{{ $value->user_id }}"
                                     data-user-type="{{ $value->user_type }}"
                                     data-name="{{ $value->name }}"
+                                    data-email="{{ $value->email }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"
+                                    data-shop-url="{{ route('admin.shop', ['id' => $value->shop_id]) }}"
                                     data-request-type='{{ $value->request_type }}'
                                     data-change-to-user-type="{{ $value->change_to_user_type }}"
                                     type="button" role="button" name="button"
@@ -98,22 +101,24 @@
                             <div class="row">
                               <div class="col-md-12">
                                 <p id='modalMessage'></p>
-                                <h4 id='name'></h4>
+                                <ul class="list-group list-group-flush text-left" id="name">
+
+                                </ul>
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-md-12 justify-content-center">
                                 <div class="row">
                                   <div class="col">
-                                    <form class="" action="#" method="post" id='rejectForm'>
-                                      @csrf
-                                      <button class="btn btn-danger col" id="approveRequestButton" type="submit">Reject</button>
-                                    </form>
-                                  </div>
-                                  <div class="col">
                                     <form class="" action="#" method="post" id="approveForm">
                                       @csrf
                                       <button class="btn btn-primary col" id="approveRequestButton" type="submit">Approve</button>
+                                    </form>
+                                  </div>
+                                  <div class="col">
+                                    <form class="" action="#" method="post" id='rejectForm'>
+                                      @csrf
+                                      <button class="btn btn-danger col" id="approveRequestButton" type="submit">Reject</button>
                                     </form>
                                   </div>
                                 </div>

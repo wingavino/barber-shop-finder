@@ -10,9 +10,11 @@ $(document).ready(function(){
     modal_information['id'] = button.data('id');
     modal_information['user_id'] = button.data('user-id');
     modal_information['name'] = button.data('name');
+    modal_information['email'] = button.data('email');
     modal_information['user_type'] = button.data('user-type');
     modal_information['shop_id'] = button.data('shop-id');
     modal_information['shop_name'] = button.data('shop-name');
+    modal_information['shop_url'] = button.data('shop-url');
     modal_information['request_type'] = button.data('request-type');
     modal_information['change_to_user_type'] = button.data('change-to-user-type');
 
@@ -29,11 +31,13 @@ $(document).ready(function(){
     modal.find('.modal-body #approveForm').attr('action', modal_information.approve_form_action);
     if (modal_information.request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + modal_information.change_to_user_type + '.');
-      modal.find('.modal-body #name').text('User ID: ' + modal_information.user_id + ', User Name: '+ modal_information.name);
+      modal.find('.modal-body #name').empty();
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li>');
     }
     if (modal_information.request_type == 'add-new-shop') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
-      modal.find('.modal-body #name').text('User ID: ' + modal_information.user_id + ', User Name: '+ modal_information.name + ', User Type: ' + modal_information.user_type + ', Shop ID: ' + modal_information.shop_id + ', Shop Name: ' + modal_information.shop_name);
+      modal.find('.modal-body #name').empty();
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
     }
   });
 });
