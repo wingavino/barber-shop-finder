@@ -3,6 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+      <div class="col-md-12 text-center">
+        <h2>{{ $shop->name }}</h2>
+        <h5>({{ $shop->lat . ', ' . $shop->lng }})</h5>
+      </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -14,19 +18,6 @@
                     <div class="col-md-8">
                       <form method="POST" action="#">
                         @csrf
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ __($shop->name) }}" required autocomplete="name" autofocus readonly>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <label for="open_hours" class="col col-form-label text-md-center"><h3>{{ __('Open Hours') }}</h3></label>
 
@@ -88,32 +79,7 @@
 
                         <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
 
-                        <div class="form-group row">
-                            <label for="lat" class="col-md-4 col-form-label text-md-right">{{ __('Latitude') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="lat" type="text" class="form-control @error('lat') is-invalid @enderror" name="lat" value="{{ old('lat') }}" required autocomplete="name" readonly>
-
-                                @error('lat')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="lng" class="col-md-4 col-form-label text-md-right">{{ __('Longitude') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="lng" type="text" class="form-control @error('lng') is-invalid @enderror" name="lng" value="{{ old('lng') }}" required autocomplete="name" readonly>
-
-                                @error('lng')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                         </div>
@@ -194,8 +160,7 @@
                           function listShops(data) {
                             var shop = data.shops;
                             // console.log(shop);
-                            document.getElementById("lat").value = shop.lat;
-                            document.getElementById("lng").value = shop.lng;
+                            
 
                             shops.push({
                               'title':  shop.name,
@@ -225,8 +190,7 @@
                               });
                               google.maps.event.addListener(marker, 'dragend', function(event){
                                 // When marker is dragged, do this
-                                document.getElementById("lat").value = event.latLng.lat();
-                                document.getElementById("lng").value = event.latLng.lng();
+
                               });
                             }
                           }
