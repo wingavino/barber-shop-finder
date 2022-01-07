@@ -68,7 +68,7 @@ class ShopOwnerController extends Controller
 
   public function index()
   {
-    return redirect()->route('shopowner.home');
+    return view('home');
   }
 
   public function showShopPage()

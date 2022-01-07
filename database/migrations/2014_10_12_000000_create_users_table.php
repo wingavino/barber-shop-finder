@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
         });
 
         DB::table('users')->insert([
-          'name' => 'Admin',
+          'name' => 'Superadmin',
           'email' => 'admin@gmail.com',
           'type' => 'admin',
           'password' => Hash::make('admin')
