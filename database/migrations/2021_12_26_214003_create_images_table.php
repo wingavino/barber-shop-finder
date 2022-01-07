@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('path');
+            $table->string('type');
             $table->timestamps();
         });
     }

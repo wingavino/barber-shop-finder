@@ -17,6 +17,7 @@ class Image extends Model
     protected $fillable = [
         'shop_id',
         'path',
+        'type',
     ];
 
     public function shop()
