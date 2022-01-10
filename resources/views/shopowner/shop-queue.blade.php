@@ -32,19 +32,19 @@
                             <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.hold') }}">
                                 @csrf
-                                <button class="btn btn-dark" type="submit" name="button">Put on Hold</button>
+                                <button class="btn btn-primary" type="submit" name="button">Put on Hold</button>
                               </form>
                             </div>
                             <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.next.hold') }}">
                                 @csrf
-                                <button class="btn btn-secondary" type="submit" name="button">Next from On Hold</button>
+                                <button class="btn btn-primary" type="submit" name="button">Next from On Hold</button>
                               </form>
                             </div>
                             <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.finish') }}">
                                 @csrf
-                                <button class="btn btn-success" type="submit" name="button">Finished / Next</button>
+                                <button class="btn btn-primary" type="submit" name="button">Finished / Next</button>
                               </form>
                             </div>
                           </div>
