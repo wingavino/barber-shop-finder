@@ -21,6 +21,7 @@ class CreateShopsTable extends Migration
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
             $table->boolean('approved')->default(false);
+            $table->boolean('rejected')->default(false);
             $table->timestamps();
         });
     }

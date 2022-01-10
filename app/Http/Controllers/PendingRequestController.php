@@ -36,10 +36,14 @@ class PendingRequestController extends Controller
   {
     $pending_request = PendingRequest::where('id', $id)->first();
     if ($request_type == 'add-new-shop') {
-      $shop = Shop::where('id', $pending_request->shop_id);
-      $shop->delete();
+      $shop = Shop::where('id', $pending_request->shop_id)->first();
+      $shop->approved = false;
+      $shop->rejected = true;
+      $shop->save();
     }
-    $pending_request->delete();
+    $pending_request->approved = false;
+    $pending_request->rejected = true;
+    $pending_request->save();
 
     return redirect()->route('admin.pending-requests');
   }

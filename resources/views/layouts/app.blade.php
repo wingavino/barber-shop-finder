@@ -111,21 +111,36 @@
 
         <div id="liveAlertPlaceholder">
           @if(Auth::user())
-            @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-              <strong>Your request to change account type to Shop Owner is currently pending approval. You may continue to create/manage your shop while it is being processed.</strong>
-              <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button> -->
-            </div>
+            @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('approved', false)->where('rejected', false)->first())
+              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Your request to change account type to Shop Owner is currently pending approval. You may continue to create/manage your shop while it is being processed.</strong>
+                <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+            @elseif(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('rejected', true)->first())
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Your request to change account type to Shop Owner was rejected. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
+                <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             @endif
-            @if(Auth::user()->pending_request->where('request_type', 'add-new-shop')->first())
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-              <strong>Your request to add a new Shop is currently pending approval. It will appear on the list and map once it has been checked and approved. You may continue to edit the shop during this process.</strong>
-              <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button> -->
-            </div>
+
+            @if(Auth::user()->pending_request->where('request_type', 'add-new-shop')->where('approved', false)->where('rejected', false)->first())
+              <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Your request to add a new Shop is currently pending approval. It will appear on the list and map once it has been checked and approved. You may continue to edit the shop during this process.</strong>
+                <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+            @elseif(Auth::user()->pending_request->where('request_type', 'add-new-shop')->where('rejected', true)->first())
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Your request to add a new Shop was rejected. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
+                <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             @endif
           @endif
         </div>

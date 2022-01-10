@@ -20,6 +20,7 @@ class Shop extends Model
         'lat',
         'lng',
         'approved',
+        'rejected',
     ];
 
     public function user()

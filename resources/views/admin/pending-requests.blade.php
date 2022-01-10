@@ -28,6 +28,7 @@
                             <th scope="col">Request Type</th>
                             <th scope="col">User Type</th>
                             <th scope="col">Shop ID</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
@@ -40,9 +41,18 @@
                               <td>{{ $value->request_type}}</td>
                               <td>{{ $value->change_to_user_type}}</td>
                               <td>{{ $value->shop_id }}</td>
+                              <td class="text-center">
+                                @if($value->approved)
+                                  <p class="text-success">Approved</p>
+                                @elseif($value->rejected)
+                                  <p class="bg-danger text-white">Rejected</p>
+                                @else
+                                  <p class="bg-secondary text-white">Awaiting Action</p>
+                                @endif
+                              </td>
                               <td>
                                 @if($value->request_type == 'change-user-type')
-                                  <a class="btn btn-info col-md-6"
+                                  <a class="btn btn-info col"
                                     data-toggle="modal"
                                     data-target="#requestModal"
                                     data-reject-form-action="{{ route('admin.pending-requests.reject', ['id' => $value->id, 'request_type' => $value->request_type]) }}"
@@ -60,7 +70,7 @@
                                 @endif
 
                                 @if($value->request_type == 'add-new-shop')
-                                  <a class="btn btn-info col-md-6"
+                                  <a class="btn btn-info col"
                                     data-toggle="modal"
                                     data-target="#requestModal"
                                     data-reject-form-action="{{ route('admin.pending-requests.reject', ['id' => $value->id, 'request_type' => $value->request_type]) }}"

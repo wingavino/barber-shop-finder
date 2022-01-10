@@ -100,7 +100,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete');
   Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete');
 
-  Route::post('/admin/shops/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve');
+  Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve');
 });
 
 // Google Authentication

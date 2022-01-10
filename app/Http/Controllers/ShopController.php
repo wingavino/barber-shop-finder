@@ -332,11 +332,14 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->approved = true;
+      $shop->rejected = false;
       $shop->save();
       $pending_request = PendingRequest::where('shop_id', $id)
                                         ->where('request_type', 'add-new-shop')
                                         ->first();
-      $pending_request->delete();
+      $pending_request->approved = true;
+      $pending_request->rejected = false;
+      $pending_request->save();
 
       return redirect()->route('admin.pending-requests');
     }
