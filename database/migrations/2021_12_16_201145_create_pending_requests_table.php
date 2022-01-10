@@ -22,6 +22,7 @@ class CreatePendingRequestsTable extends Migration
             $table->unsignedBigInteger('shop_id')->nullable();
             $table->foreign('shop_id')->references('id')->on('shops')->nullOnDelete()->cascadeOnUpdate();
             $table->boolean('approved')->default(false);
+            $table->boolean('rejected')->default(false);
             // $table->unsignedBigInteger('change_user_type_request_id')->nullable();
             // $table->foreign('change_user_type_request_id')->references('id')->on('change_user_type_requests')->cascadeOnDelete()->cascadeOnUpdate();
             // $table->unsignedBigInteger('new_shop_request_id')->nullable();

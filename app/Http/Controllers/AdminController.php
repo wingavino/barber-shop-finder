@@ -111,7 +111,7 @@ class AdminController extends Controller
                 ->leftJoin('users', 'user_id', '=', 'users.id')
                 ->leftJoin('shops', 'shop_id', '=', 'shops.id')
                 ->select('pending_requests.*', 'users.name as name', 'users.email as email', 'users.type as user_type', 'shops.name as shop_name')
-                ->where('pending_requests.approved', '=', false)
+                ->where('pending_requests.approved', false)
                 ->get();
     return view('admin/pending-requests', ['data' => $data]);
   }

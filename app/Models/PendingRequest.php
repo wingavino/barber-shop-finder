@@ -19,6 +19,8 @@ class PendingRequest extends Model
       'request_type',
       'change_to_user_type',
       'shop_id',
+      'approved',
+      'rejected',
     ];
 
     public function user()
