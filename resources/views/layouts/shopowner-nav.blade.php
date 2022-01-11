@@ -13,6 +13,9 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ route('shopowner.shop.queue') }}">{{ __('Queue') }}</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('shopowner.shop.reviews') }}">{{ __('Reviews') }}</a>
+    </li>
     @else
     <li class="nav-item">
       <a class="nav-link" href="{{ route('shopowner.shop.add') }}">{{ __('Create Shop') }}</a>

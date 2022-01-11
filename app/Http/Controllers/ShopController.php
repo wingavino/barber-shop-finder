@@ -11,6 +11,7 @@ use App\Models\PendingRequest;
 use App\Models\Shop;
 use App\Models\ShopServices;
 use App\Models\User;
+use App\Models\Review;
 use Auth;
 
 class ShopController extends Controller
@@ -80,6 +81,33 @@ class ShopController extends Controller
     $shop_services = $shop->shop_services;
 
     return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
+  public function showShopReviews($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_reviews = Review::where('shop_id', $shop->id)->get();
+    $review_count = Review::where('shop_id', $shop->id)->count();
+    $review_average = Review::where('shop_id', $shop->id)->avg('rating');
+
+    return view('shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+  }
+
+  public function showShopReviewsAsOwner()
+  {
+    $shop = Auth::user()->shop;
+    $shop_reviews = Review::where('shop_id', $shop->id)->get();
+    $review_count = Review::where('shop_id', $shop->id)->count();
+    $review_average = Review::where('shop_id', $shop->id)->avg('rating');
+
+    return view('shopowner.shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+  }
+
+  public function showShopAddReview($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+
+    return view('shop-reviews-add', ['shop' => $shop,'id' => $shop->id]);
   }
 
   public function showShopServicesAsOwner()

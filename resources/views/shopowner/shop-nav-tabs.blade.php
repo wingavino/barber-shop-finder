@@ -19,4 +19,9 @@
       {{ __('Shop Queue') }}
     </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.reviews') ? 'active' : '' }}" href="{{ route('shopowner.shop.reviews') }}">
+      {{ __('Shop Reviews') }}
+    </a>
+  </li>
 </ul>
