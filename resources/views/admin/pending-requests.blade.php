@@ -90,6 +90,35 @@
                                     View
                                   </a>
                                 @endif
+
+                                @if($value->request_type == 'report-review')
+                                  @php
+                                  $review = App\Models\Review::where('id', $value->review_id)->first()
+                                  @endphp
+                                  <a class="btn btn-info col"
+                                    data-toggle="modal"
+                                    data-target="#requestModal"
+                                    data-reject-form-action=""
+                                    data-approve-form-action="{{ route('admin.shops.reviews.delete', ['id' => $review->id]) }}"
+                                    data-id="{{ $value->id }}"
+                                    data-user-id="{{ $value->user_id }}"
+                                    data-name="{{ $value->name }}"
+                                    data-reported-user-id="{{ $review->user->id }}"
+                                    data-reported-user-name="{{ $review->user->name }}"
+                                    data-reported-user-email="{{ $review->user->email }}"
+                                    data-reported-user-type="{{ $review->user->type }}"
+                                    data-report-reason="{{ $value->report_reason }}"
+                                    data-review-id="{{ $value->review_id }}"
+                                    data-review_text="{{ $review->review_text }}"
+                                    data-shop-id="{{ $value->shop_id }}"
+                                    data-shop-name="{{ $value->shop_name }}"
+                                    data-shop-url="{{ route('admin.shop', ['id' => $value->shop_id]) }}"
+                                    data-request-type='{{ $value->request_type }}'
+                                    type="button" role="button" name="button"
+                                  >
+                                    View
+                                  </a>
+                                @endif
                               </td>
                             </tr>
                             @endforeach

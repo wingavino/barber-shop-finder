@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function (){
   Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('shop.reviews');
   Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add');
   Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add');
+  Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report');
   Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket');
   Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel');
   // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
@@ -103,6 +104,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit');
   Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete');
   Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete');
+  Route::post('/admin/shop/reviews/delete/{id}', [App\Http\Controllers\ReviewController::class, 'deleteReview'])->name('admin.shops.reviews.delete');
 
   Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve');
 });
