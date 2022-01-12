@@ -1,6 +1,7 @@
 let map;
 var shops = [];
 var open_hours = [];
+var reviews = [];
 var markers = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const philippines = { lat: 15.5000569, lng: 120.9109837 };
@@ -13,6 +14,12 @@ async function getShops() {
 
 async function getOpenHours() {
   let response = await fetch ('http://localhost:8000/api/open_hours');
+  let data = await response.json();
+  return data;
+};
+
+async function getReviews() {
+  let response = await fetch ('http://localhost:8000/api/reviews');
   let data = await response.json();
   return data;
 };
@@ -53,6 +60,20 @@ function listOpenHours(data) {
   });
 }
 
+function listReviews(data) {
+  Object.entries(data.reviews).forEach(([key, value]) => {
+    reviews.push({
+      'id':  value.id,
+      'shop_id': value.shop_id,
+      'user_id': value.user_id,
+      'rating': value.rating,
+      'review_text': value.review_text,
+      'created_at': value.created_at,
+      'updated_at': value.updated_at,
+    });
+  });
+}
+
 var infowindow;
   async function initMap() {
     await getShops()
@@ -63,6 +84,11 @@ var infowindow;
     await getOpenHours()
     .then(
       data => listOpenHours(data),
+    );
+
+    await getReviews()
+    .then(
+      data => listReviews(data),
     );
 
     map = new google.maps.Map(document.getElementById("map"), {
@@ -92,6 +118,22 @@ var infowindow;
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
           '<div id="bodyContent">' +
             "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b>";
+
+        var review_count = 0;
+        var rating_total = 0;
+        for (var j = 0; j < reviews.length; j++) {
+          if (reviews[j].shop_id == shop.id) {
+            review_count++;
+            rating_total += reviews[j].rating;
+          }
+        }
+        var rating_average = rating_total / review_count;
+
+        if (!$.isNumeric(rating_average)) {
+          rating_average = 0;
+        }
+
+        contentString += '<p>' + rating_average  + '&#9733; Average from ' + review_count + ' reviews.</p>';
 
       for (var j = 0; j < open_hours.length; j++) {
         if (open_hours[j].shop_id == shop.id) {

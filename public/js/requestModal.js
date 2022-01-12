@@ -9,9 +9,16 @@ $(document).ready(function(){
     modal_information['reject_form_action'] = button.data('reject-form-action');
     modal_information['id'] = button.data('id');
     modal_information['user_id'] = button.data('user-id');
+    modal_information['reported_user_id'] = button.data('reported-user-id');
+    modal_information['reported_user_name'] = button.data('reported-user-name');
+    modal_information['reported_user_email'] = button.data('reported-user-email');
+    modal_information['reported_user_type'] = button.data('reported-user-type');
     modal_information['name'] = button.data('name');
     modal_information['email'] = button.data('email');
     modal_information['user_type'] = button.data('user-type');
+    modal_information['review_id'] = button.data('review-id');
+    modal_information['review_text'] = button.data('review-text');
+    modal_information['report_reason'] = button.data('report-reason');
     modal_information['shop_id'] = button.data('shop-id');
     modal_information['shop_name'] = button.data('shop-name');
     modal_information['shop_url'] = button.data('shop-url');
@@ -38,6 +45,20 @@ $(document).ready(function(){
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
       modal.find('.modal-body #name').empty();
       modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
+    }
+
+    if (modal_information.request_type == 'report-review') {
+      modal.find('.modal-body #modalMessage').text('Please confirm that you want to delete the following review:');
+      modal.find('.modal-body #name').empty();
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.reported_user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.reported_user_name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.reported_user_email + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.reported_user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li> <li class="list-group-item"><b>Review Text:</b> '
+        + '<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseReview" aria-expanded="false" aria-controls="collapseReview">'
+        +   'Click to View/Hide'
+        +  '</button>'
+        +  '<div class="collapse" id="collapseReview">'
+        +   '<div class="card card-body">'
+        +     modal_information.review_text + '</li>'
+        +   '</div>'
+        +  '</div>');
     }
   });
 });
