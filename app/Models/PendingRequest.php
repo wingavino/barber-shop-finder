@@ -18,6 +18,8 @@ class PendingRequest extends Model
       'user_id',
       'request_type',
       'change_to_user_type',
+      'report_reason',
+      'review_id',
       'shop_id',
       'approved',
       'rejected',
