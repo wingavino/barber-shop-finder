@@ -18,7 +18,7 @@ class Ticket extends Model
         'queue_id',
         'user_id',
         'ticket_number',
-        'boolean'
+        'on_hold'
     ];
 
     public function queue()
