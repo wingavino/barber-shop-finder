@@ -26,92 +26,91 @@ Route::get('/', function () {
 });
 
 // Laravel Auth Routes
-Auth::routes();
+Auth::routes(); //Handles functions for Laravel's Authentication
 // Shop Owner Registration Route
-Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner');
-Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner');
+Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner'); //Shows Registration  Page for Shopowners
+Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner'); //Handles functions for Shopowner Registration Page
 
 // End User Routes
 Route::middleware('auth')->group(function (){
-  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-  Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
-  Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit');
-  Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit');
-  Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password');
-  Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password');
-  Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request');
-  Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop');
-  Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images');
-  Route::get('/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shop.services');
-  Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('shop.reviews');
-  Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add');
-  Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add');
-  Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report');
-  Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket');
-  Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel');
-  // Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
+  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); //Shows User's Home Page
+  Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile'); //Shows User's Profile Page
+  Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit'); //Shows Edit Page for User's Profile
+  Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit'); //Handles functions for Edit User's Profile Page
+  Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password'); //Shows Edit Page for User's Password
+  Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password'); //Handles functions for Edit User's Password Page
+  Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request'); //Handles functions for Adding a Pending Request
+  Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop'); //Shows Shop Page
+  Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images'); //Shows Shop's Images Page
+  Route::get('/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shop.services'); //Shows Shop's Services Page
+  Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('shop.reviews'); //Shows Shop's Reviews Page
+  Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add'); //Shows Add Shop Review Page
+  Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add'); //Handles functions for Add Shop Review Page
+  Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report'); //Handles functions for Reporting a Shop Review
+  Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket'); //Handles functions for getting a Queue Ticket
+  Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel'); //Handles functions for cancelling a Queue Ticket
 });
 
 // Shop Owner Routes
 Route::middleware('isShopOwner')->group(function(){
-  Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home');
-  Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShopAsShopOwner'])->name('shopowner.shop');
-  Route::get('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'showShopAddPage'])->name('shopowner.shop.add');
-  Route::post('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('shopowner.shop.add');
-  Route::get('/shopowner/shop/edit', [App\Http\Controllers\ShopController::class, 'showShopEdit'])->name('shopowner.shop.edit');
-  Route::post('/shopowner/shop/edit/{id?}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('shopowner.shop.edit');
-  Route::get('/shopowner/shop/images', [App\Http\Controllers\ShopController::class, 'showShopImagesAsShopOwner'])->name('shopowner.shop.images');
-  Route::post('/shopowner/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('shopowner.shop.images.delete');
-  Route::get('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('shopowner.shop.images.upload');
-  Route::post('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('shopowner.shop.images.upload');
-  Route::post('/shopowner/shop/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('shopowner.shop.images.logo.upload');
-  Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue');
-  Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish');
-  Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold');
-  Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next');
-  Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold');
-  Route::get('/shopowner/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('shopowner.shop.reviews');
-  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services');
-  Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add');
-  Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add');
-  Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete');
-  Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit');
-  Route::post('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit');
+  Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home'); //Shows Shopowner's Home Page
+  Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShopAsShopOwner'])->name('shopowner.shop'); //Shows Shopowner's Shop Page
+  Route::get('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'showShopAddPage'])->name('shopowner.shop.add');  //Shows Create Shop Page
+  Route::post('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('shopowner.shop.add'); //Handles functions for Create Shop Page
+  Route::get('/shopowner/shop/edit', [App\Http\Controllers\ShopController::class, 'showShopEdit'])->name('shopowner.shop.edit'); //Shows Edit Shop Page for Shopowner
+  Route::post('/shopowner/shop/edit/{id?}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('shopowner.shop.edit'); //Handles functions for Edit Shop Page
+  Route::get('/shopowner/shop/images', [App\Http\Controllers\ShopController::class, 'showShopImagesAsShopOwner'])->name('shopowner.shop.images'); //Shows Shop's Images Page for Shopowner
+  Route::post('/shopowner/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('shopowner.shop.images.delete'); //Handles functions for Deleting Shop Image
+  Route::get('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('shopowner.shop.images.upload'); //Shows Shop's Upload Image Page for Shopowner
+  Route::post('/shopowner/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('shopowner.shop.images.upload'); //Handles functions for Uploading Shop Image
+  Route::post('/shopowner/shop/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('shopowner.shop.images.logo.upload'); //Handles functions for uploading Shop Logo Image
+  Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue'); //Shows Shop's Queue Page for Shopowner
+  Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish'); //Handles functions for finishing/ending Current Queue Ticket
+  Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold'); //Handles functions for putting Current Queue Ticket on Hold
+  Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
+  Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
+  Route::get('/shopowner/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('shopowner.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
+  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services'); //Shows Shop's Services Page for Shopowner
+  Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add'); //Shows Add Service Page for Shop
+  Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add'); //Handles functions for Adding a Shop Service
+  Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete'); //Handles functions for Deleting a Shop Service
+  Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit'); //Shows Edit Page for Shop Service
+  Route::post('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit'); //Handles functions for Editing a Shop Service
 });
 
 // Admin Routes
 Route::middleware('isAdmin')->group(function(){
-  Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
-  Route::get('/admin/admins', [App\Http\Controllers\AdminController::class, 'admins'])->name('admin.admins');
-  Route::get('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'showAddAdmin'])->name('admin.add');
-  Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add');
-  Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete');
+  Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home'); //Shows Admin's Home Page
+  Route::get('/admin/admins', [App\Http\Controllers\AdminController::class, 'admins'])->name('admin.admins'); //Shows List of Admins Page
+  Route::get('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'showAddAdmin'])->name('admin.add'); //Shows Add New Admin Page
+  Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add'); //Handles functions for Adding/Registering a New Admin
+  Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete'); //Handles functions for deleting an Admin
 
-  Route::get('/admin/pending-requests', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests');
-  Route::post('/admin/pending-requests/{request_type}/{id}/reject', [App\Http\Controllers\PendingRequestController::class, 'rejectPendingRequest'])->name('admin.pending-requests.reject');
+  Route::get('/admin/pending-requests', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests'); //Shows Pending Requests Page
+  Route::post('/admin/pending-requests/{request_type}/{id}/reject', [App\Http\Controllers\PendingRequestController::class, 'rejectPendingRequest'])->name('admin.pending-requests.reject'); //Handles functions for Rejecting a Pending Request
 
-  Route::get('/admin/shopowners', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwners'])->name('admin.shopowners');
-  Route::get('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add');
-  Route::post('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'registerNoLogin'])->name('admin.shopowners.add');
-  Route::get('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\ShopOwnerController::class, 'showEditShopOwners'])->name('admin.shopowners.edit');
-  Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit');
+  Route::get('/admin/shopowners', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwners'])->name('admin.shopowners'); //Shows list of Shopowners Page
+  Route::get('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwnersAdd'])->name('admin.shopowners.add'); //Shows Add New Shopowner Page
+  Route::post('/admin/shopowners/add', [App\Http\Controllers\ShopOwnerController::class, 'registerNoLogin'])->name('admin.shopowners.add'); //Handles functions for adding a New Shopowner as an Admin
+  Route::get('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\ShopOwnerController::class, 'showEditShopOwners'])->name('admin.shopowners.edit'); //Shows Edit Shopowner Page as an Admin
+  Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit'); //Handles functions for changing a User's account type (user/shopowner)
 
-  Route::get('/admin/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('admin.shop');
-  Route::get('/admin/shops', [App\Http\Controllers\ShopController::class, 'showShops'])->name('admin.shops');
-  Route::post('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('admin.shops.add');
-  Route::get('/admin/shops/add/{lat?}/{lng?}', [App\Http\Controllers\ShopController::class, 'showShopsAdd'])->name('admin.shops.add');
-  Route::get('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'showEditShop'])->name('admin.shops.edit');
-  Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit');
-  Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete');
-  Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete');
-  Route::post('/admin/shop/reviews/delete/{id}', [App\Http\Controllers\ReviewController::class, 'deleteReview'])->name('admin.shops.reviews.delete');
+  Route::get('/admin/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('admin.shop'); //Shows a Shop Page as an Admin
+  Route::get('/admin/shops', [App\Http\Controllers\ShopController::class, 'showShops'])->name('admin.shops'); //Shows list of Shops Page
+  Route::post('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('admin.shops.add'); //Handles functions for Adding a New Shop as an Admin
+  Route::get('/admin/shops/add/{lat?}/{lng?}', [App\Http\Controllers\ShopController::class, 'showShopsAdd'])->name('admin.shops.add'); //Shows Add New Shop Page as an Admin
+  Route::get('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'showEditShop'])->name('admin.shops.edit'); //Shows Edit Shop Page as an Admin
+  Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit'); //Handles functions for Edit Shop Page as an Admin
+  Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete'); //Shows Delete Shop Page
+  Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete'); //Handles functions for Deleting a Shop
+  Route::post('/admin/shop/reviews/delete/{id}', [App\Http\Controllers\ReviewController::class, 'deleteReview'])->name('admin.shops.reviews.delete'); //Handles functions for deleting a Shop Review
 
-  Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve');
+  Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve'); //Handles functions for Approving a New Shop
 });
 
 // Google Authentication
-Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
-Route::get('register/google', [LoginController::class, 'redirectToGoogle'])->name('register.google');
-Route::get('register/shopowner/google', [ShopOwnerController::class, 'redirectToGoogle'])->name('register.shopowner.google');
-Route::get('register/shopowner/google/callback', [ShopOwnerController::class, 'handleGoogleCallback']);
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google'); //Handles functions for Redirecting from Saber to Google for User Login
+Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']); //Handles functions for Accepting Data from Google Account to Create/Login User
+Route::get('register/google', [LoginController::class, 'redirectToGoogle'])->name('register.google'); //Handles functions for Redirecting from Saber to Google for User Registration
+Route::get('register/shopowner/google', [ShopOwnerController::class, 'redirectToGoogle'])->name('register.shopowner.google'); //Handles functions for Redirecting from Saber to Google for Shopowner Registration
+Route::get('register/shopowner/google/callback', [ShopOwnerController::class, 'handleGoogleCallback']); //Handles functions for Accepting Data from Google Account to Create/Login Shopowner

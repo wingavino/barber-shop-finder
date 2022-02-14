@@ -44,13 +44,13 @@ class LoginController extends Controller
     //Google Authentication
     public function redirectToGoogle()
     {
-      return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
+      return Socialite::driver('google')->with(["prompt" => "select_account"])->stateless()->redirect();
     }
 
     //Google Callback
     public function handleGoogleCallback()
     {
-      $user = Socialite::driver('google')->user();
+      $user = Socialite::driver('google')->stateless()->user();
       $provider_id = 'google';
       $this->_registerOrLoginUser($user, $provider_id);
       return redirect()->route('home');
