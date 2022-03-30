@@ -7,19 +7,19 @@ var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 const philippines = { lat: 15.5000569, lng: 120.9109837 };
 
 async function getShops() {
-  let response = await fetch ('http://localhost:8000/api/shops');
+  let response = await fetch ('https://barber-shop-finder-zlzx2.ondigitalocean.app/api/shops');
   let data = await response.json();
   return data;
 };
 
 async function getOpenHours() {
-  let response = await fetch ('http://localhost:8000/api/open_hours');
+  let response = await fetch ('https://barber-shop-finder-zlzx2.ondigitalocean.app/api/open_hours');
   let data = await response.json();
   return data;
 };
 
 async function getReviews() {
-  let response = await fetch ('http://localhost:8000/api/reviews');
+  let response = await fetch ('https://barber-shop-finder-zlzx2.ondigitalocean.app/api/reviews');
   let data = await response.json();
   return data;
 };
@@ -146,7 +146,7 @@ var infowindow;
       }
 
       contentString +=
-            "<a href='http://localhost:8000/shop/" + shop.id + "'>View Shop Page</a>" +
+            "<a href='https://barber-shop-finder-zlzx2.ondigitalocean.app/shop/" + shop.id + "'>View Shop Page</a>" +
           "</div>" +
         "</div>";
 
