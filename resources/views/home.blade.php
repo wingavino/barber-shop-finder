@@ -4,12 +4,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <!-- Script to initialize map and Retrieve list of shops -->
-<script type="text/javascript" src="{{ asset('js/maps/index.js') }}"></script>
+<script type="text/javascript" async>
+  var app_url = "{{env('APP_URL')}}";
+</script>
 
-<script type="text/javascript" src="{{ asset('js/maps/search.js') }}"></script>
+<script defer type="text/javascript" src="{{ asset('js/maps/index.js') }}"></script>
+
+<script defer type="text/javascript" src="{{ asset('js/maps/search.js') }}"></script>
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
 
 <script type="text/javascript" src="{{ asset('js/requestAlert.js') }}"></script>
 @endsection
