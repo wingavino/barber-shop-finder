@@ -27,6 +27,7 @@ Route::get('/', function () {
 
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
+
 // Shop Owner Registration Route
 Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner'); //Shows Registration  Page for Shopowners
 Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner'); //Handles functions for Shopowner Registration Page
