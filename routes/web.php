@@ -25,6 +25,7 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
 
