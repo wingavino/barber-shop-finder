@@ -18,6 +18,7 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('address');
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
             $table->boolean('approved')->default(false);

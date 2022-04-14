@@ -229,6 +229,7 @@ class ShopController extends Controller
         $shop->owner_id = Auth::user()->id;
       }
 
+      $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       $shop->save();

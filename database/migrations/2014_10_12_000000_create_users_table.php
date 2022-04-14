@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class CreateUsersTable extends Migration
 {
@@ -33,6 +34,7 @@ class CreateUsersTable extends Migration
           'name' => 'Superadmin',
           'email' => 'saber.shop.finder@gmail.com',
           'type' => 'admin',
+          'email_verified_at' => Carbon::now(),
           'password' => Hash::make('admin')
         ]);
     }
