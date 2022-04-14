@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert([
           'name' => 'Superadmin',
-          'email' => 'admin@gmail.com',
+          'email' => 'saber.shop.finder@gmail.com',
           'type' => 'admin',
           'password' => Hash::make('admin')
         ]);
