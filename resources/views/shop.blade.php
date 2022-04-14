@@ -87,8 +87,13 @@
                         @endforeach
 
                         <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
-
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $shop->address }}" readonly>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                         </div>

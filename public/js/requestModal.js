@@ -15,6 +15,8 @@ $(document).ready(function(){
     modal_information['reported_user_type'] = button.data('reported-user-type');
     modal_information['name'] = button.data('name');
     modal_information['email'] = button.data('email');
+    modal_information['email_verified_at'] = button.data('email-verified-at');
+    modal_information['mobile'] = button.data('mobile');
     modal_information['user_type'] = button.data('user-type');
     modal_information['review_id'] = button.data('review-id');
     modal_information['review_text'] = button.data('review-text');
@@ -39,12 +41,12 @@ $(document).ready(function(){
     if (modal_information.request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + modal_information.change_to_user_type + '.');
       modal.find('.modal-body #name').empty();
-      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li>');
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li>');
     }
     if (modal_information.request_type == 'add-new-shop') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
       modal.find('.modal-body #name').empty();
-      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
     }
 
     if (modal_information.request_type == 'report-review') {

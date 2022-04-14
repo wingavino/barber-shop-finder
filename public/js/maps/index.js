@@ -30,9 +30,16 @@ function listShops(data) {
   Object.entries(data.shops).forEach(([key, value]) => {
     var listItem = document.createElement('a');
     listItem.href = '#';
-    listItem.classList.add('list-group-item', 'list-group-item-action');
+    listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
+    var bold = document.createElement("strong");
     var listItemContent = document.createTextNode(value.name.toString());
-    listItem.appendChild(listItemContent);
+    bold.appendChild(listItemContent);
+    var br = document.createElement("br");
+    var listItemAddress = document.createTextNode(value.address.toString());
+
+    listItem.appendChild(bold);
+    listItem.appendChild(br);
+    listItem.appendChild(listItemAddress);
 
     listItem.addEventListener("click", () => {
       // Triggers a click event on the marker which pans the map and opens the InfoWindow
@@ -43,6 +50,7 @@ function listShops(data) {
     shops.push({
       'id': value.id,
       'title':  value.name,
+      'address': value.address,
       'position': {lat: value.lat, lng: value.lng},
     });
   });
@@ -117,7 +125,9 @@ var infowindow;
           "</div>" +
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
           '<div id="bodyContent">' +
-            "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b>";
+            // "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b></p>" +
+            "<p>" + shop.address + "</p>"
+            ;
 
         var review_count = 0;
         var rating_total = 0;

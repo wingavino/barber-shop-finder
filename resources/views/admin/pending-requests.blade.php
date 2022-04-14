@@ -61,6 +61,8 @@
                                     data-user-id="{{ $value->user_id }}"
                                     data-name="{{ $value->name }}"
                                     data-email="{{ $value->email }}"
+                                    data-email-verified-at="{{ $value->email_verified_at }}"
+                                    data-mobile="{{ $value->mobile }}"
                                     data-request-type='{{ $value->request_type }}'
                                     data-change-to-user-type="{{ $value->change_to_user_type }}"
                                     type="button" role="button" name="button"
@@ -80,6 +82,8 @@
                                     data-user-type="{{ $value->user_type }}"
                                     data-name="{{ $value->name }}"
                                     data-email="{{ $value->email }}"
+                                    data-email-verified-at="{{ $value->email_verified_at }}"
+                                    data-mobile="{{ $value->mobile }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"
                                     data-shop-url="{{ route('admin.shop', ['id' => $value->shop_id]) }}"
