@@ -142,6 +142,18 @@
                 </button>
               </div>
             @endif
+
+            @if(Auth::user()->email_verified_at == '')
+              <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <form class="" action="{{ route('verification.send') }}" method="post">
+                  @csrf
+                  <strong>Your account's email has not been verified. If you have not received an email containing the verification link, please click <button class="btn btn-link mx-n2" type="submit">HERE</button> to resend the link.</strong>
+                </form>
+                <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+            @endif
           @endif
         </div>
 

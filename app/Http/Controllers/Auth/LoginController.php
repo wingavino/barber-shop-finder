@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Carbon\Carbon;
 use Auth;
 
 class LoginController extends Controller
@@ -65,6 +66,7 @@ class LoginController extends Controller
         $user->name = $data->name;
         $user->email = $data->email;
         $user->provider_id = $provider_id;
+        $user->email_verified_at = Carbon::now();
         //$user->avatar = $data->avatar;
         $user->save();
       }
