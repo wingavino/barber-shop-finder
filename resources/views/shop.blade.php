@@ -166,7 +166,7 @@
                           const philippines = { lat: 15.5000569, lng: 120.9109837 };
 
                           async function getShops(id) {
-                            let response = await fetch ({{env('APP_URL')}} + '/api/shops/' + id);
+                            let response = await fetch ('{{ env("APP_URL")}}/api/shops/' + id);
                             let data = await response.json();
                             return data;
                           };
