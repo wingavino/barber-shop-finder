@@ -2,6 +2,12 @@
 
 @section('custom-scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Script to initialize image -->
+<script type="text/javascript" async>
+  var asset_url = '{{ URL::asset("/img/") }}'
+</script>
+<script type="text/javascript" src="{{ asset('js/imagePreviewModal.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/requestModal.js') }}"></script>
 @endsection
 
@@ -62,6 +68,7 @@
                                     data-name="{{ $value->name }}"
                                     data-email="{{ $value->email }}"
                                     data-email-verified-at="{{ $value->email_verified_at }}"
+                                    data-img-id="{{ App\Models\Image::where('user_id', $value->user_id)->where('type', 'id')->first()->path }}"
                                     data-mobile="{{ $value->mobile }}"
                                     data-request-type='{{ $value->request_type }}'
                                     data-change-to-user-type="{{ $value->change_to_user_type }}"
@@ -174,6 +181,31 @@
                         </div>
                       </div>
                     </div>
+
+                    <!-- Image Preview Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" name="deleteModal">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Image</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body text-center">
+                            <div class="row">
+                              <div class="col">
+                                <img src="#" class="img-fluid" id="modalImagePreview" alt="...">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Image Preview Modal -->
                   </div>
                 </div>
             </div>
