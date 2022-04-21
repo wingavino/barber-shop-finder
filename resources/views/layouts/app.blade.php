@@ -113,7 +113,7 @@
           @if(Auth::user())
             @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('approved', false)->where('rejected', false)->first())
               <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>Your request to change account type to Shop Owner is currently pending approval. You may continue to create/manage your shop while it is being processed.</strong>
+                <strong>Your request to change account type to Shop Owner is currently pending approval. Please click <a href="#">HERE</a> to upload documents to verify your profile. You may continue to create/manage your shop while it is being processed.</strong>
                 <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button> -->

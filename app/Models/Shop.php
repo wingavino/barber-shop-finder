@@ -20,6 +20,7 @@ class Shop extends Model
         'address',
         'lat',
         'lng',
+        'shop_verified_at',
         'approved',
         'rejected',
     ];

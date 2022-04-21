@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('type')->default('user');
             $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('id_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -35,6 +36,7 @@ class CreateUsersTable extends Migration
           'email' => 'saber.shop.finder@gmail.com',
           'type' => 'admin',
           'email_verified_at' => Carbon::now(),
+          'id_verified_at' => Carbon::now(),
           'password' => Hash::make('admin')
         ]);
     }

@@ -21,6 +21,7 @@ class CreateShopsTable extends Migration
             $table->string('address');
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
+            $table->timestamp('shop_verified_at')->nullable();
             $table->boolean('approved')->default(false);
             $table->boolean('rejected')->default(false);
             $table->timestamps();
