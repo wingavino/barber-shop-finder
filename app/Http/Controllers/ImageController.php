@@ -30,17 +30,18 @@ class ImageController extends Controller
         foreach($request->file('imageFile') as $image)
         {
             $name = $image->getClientOriginalName();
-            $image->move(public_path().'/img/'.Auth::user()->shop->id.'/', $name);
+            $image->move(public_path().'/img/'.Auth::user()->id.'/shop/', $name);
             $imgData[] = $name;
         }
 
         foreach ($imgData as $img) {
+          $img = "shop/" . $img;
           $file = Image::where('shop_id', Auth::user()->shop->id)->where('path', $img)->first();
           if (!$file) {
             $fileModal = new Image();
             $fileModal->shop_id = Auth::user()->shop->id;
             $fileModal->path = $img;
-            $fileModal->type = 'image';
+            $fileModal->type = 'images';
 
             $fileModal->save();
           }
@@ -61,12 +62,14 @@ class ImageController extends Controller
       $image = $request->file('logoFile');
       $name = 'logo';
       $extension = $image->getClientOriginalExtension();
-      $name = 'logo/'.$name.'.'.$extension;
-      $image->move(public_path().'/img/'.Auth::user()->shop->id.'/logo/', $name);
+      $name = 'shop/logo/'.$name.'.'.$extension;
       $logoData = $name;
 
-      $file = Image::where('shop_id', Auth::user()->shop->id)->where('path', $logoData)->first();
-      if (!$file) {
+      $file = Image::where('shop_id', Auth::user()->shop->id)->where('type', 'logo')->first();
+      if ($file) {
+        $file->path = $imgData;
+        $file->save();
+      }else {
         $fileModal = new Image();
         $fileModal->shop_id = Auth::user()->shop->id;
         $fileModal->path = $logoData;
@@ -74,6 +77,7 @@ class ImageController extends Controller
 
         $fileModal->save();
       }
+      $image->move(public_path().'/img/'.Auth::user()->id.'/shop/logo/', $name);
 
        return redirect()->route('shopowner.shop.images');
     }
@@ -82,7 +86,7 @@ class ImageController extends Controller
   public function deleteImage(Request $request, $id)
   {
     $image = Image::where('shop_id', Auth::user()->shop->id)->where('id', $id)->first();
-    $file = public_path('img/'.Auth::user()->shop->id.'/'.$image->path);
+    $file = public_path('img/'.Auth::user()->id.'/'.$image->path);
     if(File::exists($file)){
         File::delete($file);
         if ($image) {
@@ -97,7 +101,7 @@ class ImageController extends Controller
   {
     $request->validate([
       'imgFile' => 'required',
-      'imgFile.*' => 'mimes:jpeg,jpg,png|max:10240'
+      'imgFile.*' => 'mimes:jpeg,jpg,png|max:20480'
     ]);
 
     if($request->hasfile('imgFile')) {
@@ -105,11 +109,12 @@ class ImageController extends Controller
       $name = 'id';
       $extension = $image->getClientOriginalExtension();
       $name = 'id/'.$name.'.'.$extension;
-      $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
       $imgData = $name;
-
-      $file = Image::where('user_id', Auth::user()->id)->where('path', $imgData)->first();
-      if (!$file) {
+      $file = Image::where('user_id', Auth::user()->id)->where('type', 'id')->first();
+      if ($file) {
+        $file->path = $imgData;
+        $file->save();
+      }else {
         $fileModal = new Image();
         $fileModal->user_id = Auth::user()->id;
         $fileModal->path = $imgData;
@@ -117,6 +122,8 @@ class ImageController extends Controller
 
         $fileModal->save();
       }
+
+      $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
 
       return redirect()->route('shopowner.img.id');
     }
