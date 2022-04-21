@@ -38,7 +38,7 @@
 
                         <div class="user-image mb-3 text-center">
                             <div class="idPreview justify-content-center text-center">
-                              @if(Auth::user()->image->where('type', 'id'))
+                              @if(Auth::user()->image->where('type', 'id')->first())
                                 <h3 class="text-success">ID already uploaded, you may upload again if you need to change the image.</h3>
                                 <img src="{{ asset('img/'.Auth::user()->id.'/'.Auth::user()->image->where('type', 'id')->first()->path) }}" class="col-md-6 img-thumbnail">
                               @endif
