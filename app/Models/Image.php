@@ -16,6 +16,7 @@ class Image extends Model
      */
     protected $fillable = [
         'shop_id',
+        'user_id',
         'path',
         'type',
     ];
@@ -23,5 +24,10 @@ class Image extends Model
     public function shop()
     {
       return $this->belongsTo(Shop::class);
+    }
+
+    public function user()
+    {
+      return $this->belongsTo(User::class);
     }
 }

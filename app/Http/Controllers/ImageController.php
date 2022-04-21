@@ -88,3 +88,32 @@ class ImageController extends Controller
 
   }
 }
+
+public function uploadUserID(Request $request)
+{
+  $request->validate([
+    'imgFile' => 'required',
+    'imgFile.*' => 'mimes:jpeg,jpg,png|max:10240'
+  ]);
+
+  if($request->hasfile('imgFile')) {
+    $image = $request->file('imgFile');
+    $name = 'id';
+    $extension = $image->getClientOriginalExtension();
+    $name = 'id/'.$name.'.'.$extension;
+    $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
+    $imgData = $name;
+
+    $file = Image::where('user_id', Auth::user()->id)->where('path', $imgData)->first();
+    if (!$file) {
+      $fileModal = new Image();
+      $fileModal->user_id = Auth::user()->id;
+      $fileModal->path = $imgData;
+      $fileModal->type = 'id';
+
+      $fileModal->save();
+    }
+
+     return redirect()->route('home');
+  }
+}
