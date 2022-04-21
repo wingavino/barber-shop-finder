@@ -14,6 +14,11 @@ class ImageController extends Controller
     return view('shopowner/shop-images-upload');
   }
 
+  public function showUploadID()
+  {
+    return view('shopowner/image-id-upload');
+  }
+
   public function uploadImage(Request $request)
   {
     $request->validate([
@@ -87,33 +92,33 @@ class ImageController extends Controller
     }
 
   }
-}
 
-public function uploadUserID(Request $request)
-{
-  $request->validate([
-    'imgFile' => 'required',
-    'imgFile.*' => 'mimes:jpeg,jpg,png|max:10240'
-  ]);
+  public function uploadID(Request $request)
+  {
+    $request->validate([
+      'imgFile' => 'required',
+      'imgFile.*' => 'mimes:jpeg,jpg,png|max:10240'
+    ]);
 
-  if($request->hasfile('imgFile')) {
-    $image = $request->file('imgFile');
-    $name = 'id';
-    $extension = $image->getClientOriginalExtension();
-    $name = 'id/'.$name.'.'.$extension;
-    $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
-    $imgData = $name;
+    if($request->hasfile('imgFile')) {
+      $image = $request->file('imgFile');
+      $name = 'id';
+      $extension = $image->getClientOriginalExtension();
+      $name = 'id/'.$name.'.'.$extension;
+      $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
+      $imgData = $name;
 
-    $file = Image::where('user_id', Auth::user()->id)->where('path', $imgData)->first();
-    if (!$file) {
-      $fileModal = new Image();
-      $fileModal->user_id = Auth::user()->id;
-      $fileModal->path = $imgData;
-      $fileModal->type = 'id';
+      $file = Image::where('user_id', Auth::user()->id)->where('path', $imgData)->first();
+      if (!$file) {
+        $fileModal = new Image();
+        $fileModal->user_id = Auth::user()->id;
+        $fileModal->path = $imgData;
+        $fileModal->type = 'id';
 
-      $fileModal->save();
+        $fileModal->save();
+      }
+
+      return redirect()->route('shopowner.img.id');
     }
-
-     return redirect()->route('home');
   }
 }

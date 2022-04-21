@@ -43,4 +43,27 @@ $(document).ready(function() {
   $('#logo').on('change', function() {
       logoPreview(this, 'div.logoPreview');
   });
+
+  // ID preview with JavaScript
+  var idPreview = function(input, idPreviewPlaceholder) {
+
+      if (input.files) {
+          var filesAmount = input.files.length;
+
+          for (i = 0; i < filesAmount; i++) {
+              var reader = new FileReader();
+
+              reader.onload = function(event) {
+                $(idPreviewPlaceholder).empty();
+                $($.parseHTML('<img>')).attr('src', event.target.result).attr('class', 'col-md-6 img-thumbnail rounded').appendTo(idPreviewPlaceholder);
+              }
+
+              reader.readAsDataURL(input.files[i]);
+          }
+      }
+  };
+
+  $('#img_id').on('change', function() {
+      idPreview(this, 'div.idPreview');
+  });
 });
