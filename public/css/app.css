@@ -5417,6 +5417,7 @@ a.close.disabled {
   height: 100%;
   overflow: hidden;
   outline: 0;
+  overflow-y:auto;
 }
 
 .modal-dialog {

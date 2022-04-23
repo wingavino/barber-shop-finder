@@ -77,6 +77,8 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/home', [App\Http\Controllers\ShopOwnerController::class, 'index'])->name('shopowner.home'); //Shows Shopowner's Home Page
   Route::get('/shopowner/img/id', [App\Http\Controllers\ImageController::class, 'showUploadID'])->name('shopowner.img.id'); //Shows Shopowner's Page for Uploading their ID
   Route::post('/shopowner/img/id', [App\Http\Controllers\ImageController::class, 'uploadID'])->name('shopowner.img.id'); //Handles functions for Uploading Shopowner's ID Image
+  Route::get('/shopowner/img/shop/doc', [App\Http\Controllers\ImageController::class, 'showUploadShopDocument'])->name('shopowner.img.shop.doc'); //Shows Shopowner's Page for Uploading their shop's Documents
+  Route::post('/shopowner/img/shop/doc', [App\Http\Controllers\ImageController::class, 'uploadShopDocument'])->name('shopowner.img.shop.doc'); //Handles functions for Uploading Shop's Documents
   Route::get('/shopowner/shop', [App\Http\Controllers\ShopController::class, 'showShopAsShopOwner'])->name('shopowner.shop'); //Shows Shopowner's Shop Page
   Route::get('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'showShopAddPage'])->name('shopowner.shop.add');  //Shows Create Shop Page
   Route::post('/shopowner/shop/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('shopowner.shop.add'); //Handles functions for Create Shop Page

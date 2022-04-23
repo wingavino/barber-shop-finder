@@ -19,6 +19,11 @@ class ImageController extends Controller
     return view('shopowner/image-id-upload');
   }
 
+  public function showUploadShopDocument()
+  {
+    return view('shopowner/image-shop-document-upload');
+  }
+
   public function uploadImage(Request $request)
   {
     $request->validate([
@@ -126,6 +131,38 @@ class ImageController extends Controller
       $image->move(public_path().'/img/'.Auth::user()->id.'/id/', $name);
 
       return redirect()->route('shopowner.img.id');
+    }
+  }
+
+  public function uploadShopDocument(Request $request)
+  {
+    $request->validate([
+      'imgFile' => 'required',
+      'imgFile.*' => 'mimes:jpeg,jpg,png|max:20480'
+    ]);
+
+    if($request->hasfile('imgFile')) {
+      $image = $request->file('imgFile');
+      $name = 'doc';
+      $extension = $image->getClientOriginalExtension();
+      $name = 'shop/doc/'.$name.'.'.$extension;
+      $imgData = $name;
+      $file = Image::where('shop_id', Auth::user()->shop->id)->where('type', 'doc')->first();
+      if ($file) {
+        $file->path = $imgData;
+        $file->save();
+      }else {
+        $fileModal = new Image();
+        $fileModal->shop_id = Auth::user()->shop->id;
+        $fileModal->path = $imgData;
+        $fileModal->type = 'doc';
+
+        $fileModal->save();
+      }
+
+      $image->move(public_path().'/img/'.Auth::user()->id.'/shop/doc/', $name);
+
+      return redirect()->route('shopowner.img.shop.doc');
     }
   }
 }

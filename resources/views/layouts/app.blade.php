@@ -129,7 +129,7 @@
 
             @if(Auth::user()->pending_request->where('request_type', 'add-new-shop')->where('approved', false)->where('rejected', false)->first())
               <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>Your request to add a new Shop is currently pending approval. Please click <a href="#">HERE</a> to upload documents to verify your shop's legitimacy. It will appear on the list and map once it has been checked and approved. You may continue to edit the shop during this process.</strong>
+                <strong>Your request to add a new Shop is currently pending approval. Please click <a href="{{ route('shopowner.img.shop.doc') }}">HERE</a> to upload documents to verify your shop's legitimacy. It will appear on the list and map once it has been checked and approved. You may continue to edit the shop during this process.</strong>
                 <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button> -->

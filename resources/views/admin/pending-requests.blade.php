@@ -90,6 +90,8 @@
                                     data-name="{{ $value->name }}"
                                     data-email="{{ $value->email }}"
                                     data-email-verified-at="{{ $value->email_verified_at }}"
+                                    data-img-id="{{ App\Models\Image::where('user_id', $value->user_id)->where('type', 'id')->first()->path }}"
+                                    data-img-shop-doc="{{ App\Models\Image::where('shop_id', $value->shop_id)->where('type', 'doc')->first()->path }}"
                                     data-mobile="{{ $value->mobile }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"
@@ -188,7 +190,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabel">Image</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="modal" data-target="#deleteModal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
@@ -200,7 +202,7 @@
                             </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-target="#deleteModal">Close</button>
                           </div>
                         </div>
                       </div>
