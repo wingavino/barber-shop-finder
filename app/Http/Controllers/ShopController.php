@@ -61,7 +61,7 @@ class ShopController extends Controller
   public function showShopImages($id)
   {
     $shop = Shop::where('id', $id)->first();
-    $images = Image::where('shop_id', $id)->get();
+    $images = Image::where('shop_id', $id)->where('type', 'images')->get();
 
     return view('shop-images', ['shop' => $shop, 'images' => $images]);
   }
