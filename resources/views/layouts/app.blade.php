@@ -120,7 +120,7 @@
               </div>
             @elseif(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('rejected', true)->first())
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Your request to change account type to Shop Owner was rejected. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
+                <strong>Your request to change account type to Shop Owner was rejected. Please click <a href="{{ route('shopowner.img.id') }}">HERE</a> to upload documents to verify your profile. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
                 <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -136,7 +136,7 @@
               </div>
             @elseif(Auth::user()->pending_request->where('request_type', 'add-new-shop')->where('rejected', true)->first())
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Your request to add a new Shop was rejected. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
+                <strong>Your request to add a new Shop was rejected. Please click <a href="{{ route('shopowner.img.shop.doc') }}">HERE</a> to upload documents to verify your shop's legitimacy. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
                 <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
