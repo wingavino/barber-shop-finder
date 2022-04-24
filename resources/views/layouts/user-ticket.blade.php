@@ -1,5 +1,3 @@
-
-
 @isset(Auth::user()->ticket)
 <div class="row justify-content-center">
 
@@ -16,8 +14,8 @@
               var current_ticket = '';
               var btn_status = '';
 
-              if(response.current_ticket){
-                current_ticket = response.current_ticket;
+              if(response.queue.current_ticket){
+                current_ticket = response.queue.current_ticket;
                 $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
               }else {
                 current_ticket = 'None';

@@ -1,6 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
+
+<script>
+$(document).ready(function(){
+  function updateCurrentTicket(){
+    $.ajax({
+      url:'/queue/{{ Auth::user()->shop->queue->id }}/current_ticket',
+      type:'GET',
+      dataType:'json',
+      success:function(response){
+        var current_ticket = '';
+        var btn_status = '';
+
+        if(response.queue.current_ticket){
+          current_ticket = response.queue.current_ticket + '<br>' + response.user.name;
+          $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
+        }else {
+          current_ticket = 'None';
+          $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
+        }
+
+        $('#current_ticket').empty();
+        $('#current_ticket').append(current_ticket);
+
+      },error:function(err){
+        $('#current_ticket').empty();
+      }
+    }).then(function(){
+      setTimeout(updateCurrentTicket, 5000);
+    });
+  }
+  updateCurrentTicket();
+});
+</script>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -19,14 +53,15 @@
 
                         <div class="card-body text-center">
                           <h3>
-                            @isset($shop->queue->current_ticket)
+                            <button class="btn btn-danger disabled" id="current_ticket" type="button" name="button">None</button>
+                            <!-- @isset($shop->queue->current_ticket)
                               <h3>{{ $shop->queue->current_ticket }}</h3>
                               @if(App\Models\Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first()->user)
                               <h3>Name: {{ App\Models\Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first()->user->name }}</h3>
                               @endif
                             @else
-                              <button class="btn btn-danger disabled" type="button" name="button">None</button>
-                            @endisset
+                              <button class="btn btn-danger disabled" id="current_ticket" type="button" name="button">None</button>
+                            @endisset -->
                           </h3>
                         </div>
 
