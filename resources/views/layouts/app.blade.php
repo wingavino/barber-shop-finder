@@ -62,7 +62,7 @@
                     <ul class="navbar-nav mr-auto">
                       @include('layouts.admin-nav')
                       @include('layouts.shopowner-nav')
-                      @include('layouts.user-nav')
+                      <!-- @include('layouts.user-nav') -->
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -110,6 +110,8 @@
         </nav>
 
         <div id="liveAlertPlaceholder">
+          @include('layouts.user-ticket')
+
           @if(Auth::user())
             @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('approved', false)->where('rejected', false)->first())
               <div class="alert alert-primary alert-dismissible fade show" role="alert">

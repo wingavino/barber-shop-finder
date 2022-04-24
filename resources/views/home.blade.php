@@ -24,15 +24,19 @@
         <div class="col-md-3" style="max-height:500px; overflow-y:auto;">
           <div class="card" style="width: 100%;">
             <div class="card-header text-center">
-              <h5 class="card-title">Barber Shops List</h5>
+              <a class="text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <h5 class="card-title">Barber Shops List</h5>
+              </a>
               <form>
                 <div class="form-group">
                   <input type="text" class="form-control" id="search" placeholder="Search">
                 </div>
               </form>
             </div>
-            <ul class="list-group list-group-flush" id="shops-list">
-            </ul>
+            <div class="collapse show" id="collapseExample">
+              <ul class="list-group list-group-flush" id="shops-list">
+              </ul>
+            </div>
           </div>
         </div>
         <div class="col-md-9" style="width: 500px; height: 500px">
