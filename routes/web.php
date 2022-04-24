@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function (){
   Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report'); //Handles functions for Reporting a Shop Review
   Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket'); //Handles functions for getting a Queue Ticket
   Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel'); //Handles functions for cancelling a Queue Ticket
+  Route::get('/queue/{queue_id}/current_ticket', [App\Http\Controllers\QueueController::class, 'getCurrentTicket'])->name('queue.current_ticket'); //Handles functions for retrieving Queue's Current Ticket
 });
 
 // Shop Owner Routes
