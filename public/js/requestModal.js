@@ -17,7 +17,11 @@ $(document).ready(function(){
     modal_information['email'] = button.data('email');
     modal_information['email_verified_at'] = button.data('email-verified-at');
     modal_information['img_id'] = button.data('img-id');
-    modal_information['img_shop_doc'] = button.data('img-shop-doc');
+    if (modal_information['img_id'] == '#') {
+      modal_information['img_id_src'] = 'https://via.placeholder.com/1000?text=No+Image'      ;
+    }else {
+      modal_information['img_id_src'] = asset_url + '/' + modal_information.user_id + '/' + modal_information.img_id;
+    }
     modal_information['mobile'] = button.data('mobile');
     modal_information['user_type'] = button.data('user-type');
     modal_information['review_id'] = button.data('review-id');
@@ -26,6 +30,12 @@ $(document).ready(function(){
     modal_information['shop_id'] = button.data('shop-id');
     modal_information['shop_name'] = button.data('shop-name');
     modal_information['shop_url'] = button.data('shop-url');
+    modal_information['img_shop_doc'] = button.data('img-shop-doc');
+    if (modal_information['img_shop_doc'] == '#') {
+      modal_information['img_shop_doc_src'] = 'https://via.placeholder.com/1000?text=No+Image'      ;
+    }else {
+      modal_information['img_shop_doc_src'] = asset_url + '/' + modal_information.user_id + '/' + modal_information.img_shop_doc;
+    }
     modal_information['request_type'] = button.data('request-type');
     modal_information['change_to_user_type'] = button.data('change-to-user-type');
 
@@ -43,12 +53,12 @@ $(document).ready(function(){
     if (modal_information.request_type == 'change-user-type') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to change the following account\'s type to ' + modal_information.change_to_user_type + '.');
       modal.find('.modal-body #name').empty();
-      modal.find('.modal-body #name').append('<li class="list-group-item"><b>ID Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_id + '"><img src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_id + '" class="col-md-6 img-thumbnail"></a></li> <li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li>');
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>ID Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + modal_information.img_id_src + '"><img src="' + modal_information.img_id_src + '" class="col-md-6 img-thumbnail"></a></li> <li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li>');
     }
     if (modal_information.request_type == 'add-new-shop') {
       modal.find('.modal-body #modalMessage').text('Please confirm that you want to approve the following shop:');
       modal.find('.modal-body #name').empty();
-      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_id + '"><img src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_id + '" class="col-md-6 img-thumbnail"></a></li> <li class="list-group-item"><b>Shop Document Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_shop_doc + '"><img src="' + asset_url + '/' + modal_information.user_id + '/' + modal_information.img_shop_doc + '" class="col-md-6 img-thumbnail"></a></li>  <li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
+      modal.find('.modal-body #name').append('<li class="list-group-item"><b>User ID Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + modal_information.img_id_src + '"><img src="' + modal_information.img_id_src + '" class="col-md-6 img-thumbnail"></a></li> <li class="list-group-item"><b>Shop Document Photo: </b><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{ ' + modal_information.id + ' }}" data-src="' + modal_information.img_shop_doc_src + '"><img src="' + modal_information.img_shop_doc_src + '" class="col-md-6 img-thumbnail"></a></li>  <li class="list-group-item"><b>User ID:</b> ' + modal_information.user_id + '</li> <li class="list-group-item"><b>User Name:</b> '+ modal_information.name + '</li> <li class="list-group-item"><b>Email:</b> ' + modal_information.email + '</li> <li class="list-group-item"><b>Email Verified:</b> ' + modal_information.email_verified_at + '</li> <li class="list-group-item"><b>Mobile:</b> ' + modal_information.mobile + '</li> <li class="list-group-item"><b>User Type:</b> ' + modal_information.user_type + '</li> <li class="list-group-item"><b>Shop ID:</b> ' + modal_information.shop_id + '</li> <li class="list-group-item"><b>Shop Name:</b> <a href="'+ modal_information['shop_url'] +'" target="_blank">' + modal_information.shop_name + '</a></li>');
     }
 
     if (modal_information.request_type == 'report-review') {
