@@ -14,7 +14,7 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <a class="btn btn-success col-md-2" href="{{ route('admin.shopowners.add') }}" type="button" role="button" name="button">Add New Shop Owner</a>
+                      <!-- <a class="btn btn-success col-md-2" href="{{ route('admin.shopowners.add') }}" type="button" role="button" name="button">Add New Shop Owner</a> -->
                     </div>
                   </div>
 
@@ -27,6 +27,9 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mobile</th>
+                            <th scope="col">Shop ID</th>
+                            <th scope="col">Shop Name</th>
+                            <th scope="col">Shop Address</th>
                             <th scope="col">Type</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -34,21 +37,24 @@
                         <tbody>
                           @isset($data)
                             @foreach ($data as $key => $value)
-                            <tr>
-                              <th scope="row">{{ $value->id }}</th>
-                              <td>{{ $value->name }}</td>
-                              <td>{{ $value->email}}</td>
-                              <td>{{ $value->mobile}}</td>
-                              <td>{{ $value->type }}</td>
-                              <td>
-                                @if ($value->type == 'user')
-                                <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#changeUserTypeModal" data-form-action="{{ route('admin.shopowners.edit', [$value->id, 'shopowner']) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}" data-type='shopowner' type="button" role="button" name="button">Change User Type to Shop Owner</a>
-                                @endif
-                                @if ($value->type == 'shopowner')
-                                <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#changeUserTypeModal" data-form-action="{{ route('admin.shopowners.edit', [$value->id, 'user']) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}" data-type='user' type="button" role="button" name="button">Change User Type to Regular User</a>
-                                @endif
-                              </td>
-                            </tr>
+                                <tr>
+                                  <th scope="row">{{ $value->id }}</th>
+                                  <td>{{ $value->name }}</td>
+                                  <td>{{ $value->email}}</td>
+                                  <td>{{ $value->mobile}}</td>
+                                  <td>{{ $value->shop_id }}</td>
+                                  <td>{{ $value->shop_name }}</td>
+                                  <td>{{ $value->shop_address }}</td>
+                                  <td>{{ $value->type }}</td>
+                                  <td>
+                                    <!-- @if ($value->type == 'user')
+                                    <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#changeUserTypeModal" data-form-action="{{ route('admin.shopowners.edit', [$value->id, 'shopowner']) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}" data-type='shopowner' type="button" role="button" name="button">Change User Type to Shop Owner</a>
+                                    @endif
+                                    @if ($value->type == 'shopowner')
+                                    <a class="btn btn-info col-md-6" data-toggle="modal" data-target="#changeUserTypeModal" data-form-action="{{ route('admin.shopowners.edit', [$value->id, 'user']) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}" data-type='user' type="button" role="button" name="button">Change User Type to Regular User</a>
+                                    @endif -->
+                                  </td>
+                                </tr>
                             @endforeach
                           @endisset
                         </tbody>

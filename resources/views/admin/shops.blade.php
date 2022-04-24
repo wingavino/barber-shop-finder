@@ -23,8 +23,9 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th scope="col">ID #</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Shop ID #</th>
+                            <th scope="col">Shop Name</th>
+                            <th scope="col">Shop Address</th>
                             <th scope="col">Owner's Name</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -35,6 +36,7 @@
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
+                              <td>{{ $value->address }}</td>
                               <td>{{ $value->owner_name }}</td>
                               <td>
                                 <a class="btn btn-primary col-md-4" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>

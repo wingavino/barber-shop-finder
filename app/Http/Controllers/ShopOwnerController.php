@@ -94,7 +94,11 @@ class ShopOwnerController extends Controller
 
   public function showShopOwners()
   {
-    $data = DB::table('users')->where('type' , '!=', 'admin')->get();
+    $data = DB::table('users')
+      ->where('type' , '!=', 'admin')
+      ->leftJoin('shops', 'shops.owner_id', '=', 'users.id')
+      ->select('users.*', 'shops.id as shop_id', 'shops.name as shop_name', 'shops.address as shop_address')
+      ->get();
     return view('admin/shop-owners', ['data' => $data]);
   }
 
