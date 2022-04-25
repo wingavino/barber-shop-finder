@@ -23,9 +23,16 @@ use Illuminate\Http\Request;
 
 
 // Index/Landing Page
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', function (){
+  if (Auth::user()) {
     return redirect()->route('home');
-});
+  }else {
+    return view('welcome');
+  }
+})->name('index'); //Shows User's Home Page
 
 
 // Laravel Auth Routes

@@ -46,7 +46,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ route('index') }}">
                   <!-- @if (Auth::user() && Auth::user()->type == 'admin')
                     Admin Home Page
                   @else
