@@ -69,7 +69,7 @@
                                   data-rating="{{ $review->rating }}"
                                   data-reported-user-id="{{ $review->user_id }}"
                                   data-reported-user-name="{{ $review->user->name }}"
-                                  data-review-text="{{ $review->text }}"
+                                  data-review-text="{{ $review->review_text }}"
                                   data-request-type='report-review'
                                   data-user-id="{{ Auth::user()->id }}"
                                   type="button" role="button" name="button"
