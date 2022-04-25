@@ -20,6 +20,11 @@
     </a>
   </li>
   <li class="nav-item">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.employees' || Route::currentRouteName() == 'shopowner.shop.employees.add' || Route::currentRouteName() == 'shopowner.shop.employees.edit') ? 'active' : '' }}" href="{{ route('shopowner.shop.employees') }}">
+      {{ __('Shop Employees') }}
+    </a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.reviews') ? 'active' : '' }}" href="{{ route('shopowner.shop.reviews') }}">
       {{ __('Shop Reviews') }}
     </a>

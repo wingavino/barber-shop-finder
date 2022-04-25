@@ -604,6 +604,7 @@ class ComposerStaticInit27d046da49a99ca0eebe9be4100ff5f2
         'App\\Http\\Resources\\OpenHours' => __DIR__ . '/../..' . '/app/Http/Resources/OpenHours.php',
         'App\\Http\\Resources\\Review' => __DIR__ . '/../..' . '/app/Http/Resources/Review.php',
         'App\\Http\\Resources\\Shop' => __DIR__ . '/../..' . '/app/Http/Resources/Shop.php',
+        'App\\Models\\Employee' => __DIR__ . '/../..' . '/app/Models/Employee.php',
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\OpenHours' => __DIR__ . '/../..' . '/app/Models/OpenHours.php',
         'App\\Models\\PendingRequest' => __DIR__ . '/../..' . '/app/Models/PendingRequest.php',

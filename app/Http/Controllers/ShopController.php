@@ -12,6 +12,7 @@ use App\Models\Shop;
 use App\Models\ShopServices;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\Employee;
 use Auth;
 
 class ShopController extends Controller
@@ -81,6 +82,21 @@ class ShopController extends Controller
     $shop_services = $shop->shop_services;
 
     return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
+  public function showShopEmployeesAsShopOwner()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $employees = $shop->employee;
+
+    return view('shopowner.shop-employees', ['shop' => $shop, 'employees' => $employees]);
+  }
+
+  public function showAddShopEmployee()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+
+    return view('shopowner.shop-employee-add', ['shop' => $shop]);
   }
 
   public function showShopReviews($id)

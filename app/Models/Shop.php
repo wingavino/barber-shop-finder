@@ -45,6 +45,11 @@ class Shop extends Model
       return $this->hasMany(ShopServices::class);
     }
 
+    public function employee()
+    {
+      return $this->hasMany(Employee::class);
+    }
+
     public function image()
     {
       return $this->hasMany(Image::class);

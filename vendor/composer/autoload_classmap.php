@@ -44,6 +44,7 @@ return array(
     'App\\Http\\Resources\\OpenHours' => $baseDir . '/app/Http/Resources/OpenHours.php',
     'App\\Http\\Resources\\Review' => $baseDir . '/app/Http/Resources/Review.php',
     'App\\Http\\Resources\\Shop' => $baseDir . '/app/Http/Resources/Shop.php',
+    'App\\Models\\Employee' => $baseDir . '/app/Models/Employee.php',
     'App\\Models\\Image' => $baseDir . '/app/Models/Image.php',
     'App\\Models\\OpenHours' => $baseDir . '/app/Models/OpenHours.php',
     'App\\Models\\PendingRequest' => $baseDir . '/app/Models/PendingRequest.php',

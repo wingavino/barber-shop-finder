@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ShopOwnerController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\EmployeeController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -109,6 +110,9 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete'); //Handles functions for Deleting a Shop Service
   Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit'); //Shows Edit Page for Shop Service
   Route::post('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit'); //Handles functions for Editing a Shop Service
+  Route::get('/shopowner/shop/employees', [App\Http\Controllers\ShopController::class, 'showShopEmployeesAsShopOwner'])->name('shopowner.shop.employees'); //Shows Shop's Employees
+  Route::get('/shopowner/shop/employees/add', [App\Http\Controllers\ShopController::class, 'showAddShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
+  Route::post('/shopowner/shop/employees/add', [App\Http\Controllers\EmployeeController::class, 'addShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
 });
 
 // Admin Routes
