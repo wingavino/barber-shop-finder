@@ -22,7 +22,7 @@ $(document).ready(function(){
         }
 
         if(response.queue.next_ticket){
-          current_ticket = response.queue.next_ticket;
+          next_ticket = response.queue.next_ticket;
           $('#next_ticket').removeClass('btn-danger').addClass('btn-primary');
         }else {
           next_ticket = 'None';
