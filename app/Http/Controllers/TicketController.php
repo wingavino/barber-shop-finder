@@ -107,9 +107,11 @@ class TicketController extends Controller
 
         if (!$shop->queue->current_ticket = $shop->queue->next_ticket) {
           $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', true)->first();
-          $shop->queue->current_ticket = $next_ticket->ticket_number;
-          $next_ticket->on_hold = false;
-          $next_ticket->save();
+          if ($next_ticket) {
+            $shop->queue->current_ticket = $next_ticket->ticket_number;
+            $next_ticket->on_hold = false;
+            $next_ticket->save();
+          }
         }
 
         $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->where('ticket_number', '!=', $shop->queue->current_ticket)->first();
