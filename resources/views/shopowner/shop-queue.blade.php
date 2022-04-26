@@ -21,11 +21,21 @@ $(document).ready(function(){
           $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
         }
 
+        if(response.queue.next_ticket){
+          current_ticket = response.queue.next_ticket;
+          $('#next_ticket').removeClass('btn-danger').addClass('btn-primary');
+        }else {
+          next_ticket = 'None';
+          $('#next_ticket').removeClass('btn-primary').addClass('btn-danger');
+        }
+
         $('#current_ticket').empty();
         $('#current_ticket').append(current_ticket);
-
+        $('#next_ticket').empty();
+        $('#next_ticket').append(next_ticket);
       },error:function(err){
         $('#current_ticket').empty();
+        $('#next_ticket').empty();
       }
     }).then(function(){
       setTimeout(updateCurrentTicket, 5000);
