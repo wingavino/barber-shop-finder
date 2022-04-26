@@ -47,7 +47,7 @@
 
 
 
-        <main class="py-4">
+        <main class="">
             <div class="container">
                 <div class="row justify-content-center">
                   <img class="img-fluid" src="{{ asset('img/logo.png') }}" alt="" width="20%">
@@ -63,10 +63,9 @@
                                     <div class="form-group row justify-content-center">
                                         <div class="col-md-6">
                                           <a href="{{ route('login.google') }}" class="btn btn-danger btn-block">Login with Google</a>
+                                          <hr>
                                         </div>
                                     </div>
-
-                                    <p>Or</p>
 
                                     <div class="form-group row justify-content-center">
                                         <div class="col-md-6">

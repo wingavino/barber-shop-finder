@@ -20,6 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
+            $table->string('email')->unique()->nullable();
             $table->string('type')->default('employee');
             $table->timestamps();
         });

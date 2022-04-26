@@ -9,6 +9,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Middleware\EmployeeMiddleware;
+use App\Http\Middleware\ShopOwnerMiddleware;
 // use App\Http\Controllers\UserController;
 
 /*
@@ -113,6 +115,29 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/employees', [App\Http\Controllers\ShopController::class, 'showShopEmployeesAsShopOwner'])->name('shopowner.shop.employees'); //Shows Shop's Employees
   Route::get('/shopowner/shop/employees/add', [App\Http\Controllers\ShopController::class, 'showAddShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
   Route::post('/shopowner/shop/employees/add', [App\Http\Controllers\EmployeeController::class, 'addShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
+  Route::post('/shopowner/shop/employees/{id}/delete', [App\Http\Controllers\EmployeeController::class, 'deleteShopEmployee'])->name('shopowner.shop.employees.delete'); //Handles functions for Deleting a Shop Employee
+});
+
+// Employee Routes
+Route::middleware('isEmployee')->group(function(){
+  Route::get('/employee/shop', [App\Http\Controllers\ShopController::class, 'showShopAsEmployee'])->name('employee.shop'); //Shows Employee's Shop Page
+  Route::get('/employee/shop/images', [App\Http\Controllers\ShopController::class, 'showShopImagesAsEmployee'])->name('employee.shop.images'); //Shows Shop's Images Page for Employee
+  Route::post('/employee/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('employee.shop.images.delete'); //Handles functions for Deleting Shop Image
+  Route::get('/employee/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('employee.shop.images.upload'); //Shows Shop's Upload Image Page for Employee
+  Route::post('/employee/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('employee.shop.images.upload'); //Handles functions for Uploading Shop Image
+  Route::get('/employee/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsEmployee'])->name('employee.shop.queue'); //Shows Shop's Queue Page for Employee
+  Route::post('/employee/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('employee.shop.queue.finish'); //Handles functions for finishing/ending Current Queue Ticket
+  Route::post('/employee/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('employee.shop.queue.hold'); //Handles functions for putting Current Queue Ticket on Hold
+  Route::post('/employee/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('employee.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
+  Route::post('/employee/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('employee.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
+  Route::get('/employee/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsEmployee'])->name('employee.shop.reviews'); //Shows Shop's Reviews Page for Employee
+  Route::get('/employee/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsEmployee'])->name('employee.shop.services'); //Shows Shop's Services Page for Employee
+  Route::get('/employee/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('employee.shop.services.add'); //Shows Add Service Page for Shop
+  Route::post('/employee/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('employee.shop.services.add'); //Handles functions for Adding a Shop Service
+  Route::post('/employee/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('employee.shop.services.delete'); //Handles functions for Deleting a Shop Service
+  Route::get('/employee/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('employee.shop.services.edit'); //Shows Edit Page for Shop Service
+  Route::post('/employee/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('employee.shop.services.edit'); //Handles functions for Editing a Shop Service
+  Route::get('/employee/shop/employees', [App\Http\Controllers\ShopController::class, 'showShopEmployeesAsEmployee'])->name('employee.shop.employees'); //Shows Shop's Employees
 });
 
 // Admin Routes

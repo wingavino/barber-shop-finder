@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                  @include('shopowner.shop-nav-tabs')
+                  @include('employee.shop-nav-tabs')
                 </div>
 
                 <div class="card-body text-center">

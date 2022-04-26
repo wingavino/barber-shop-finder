@@ -11,13 +11,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  @include('shopowner.shop-nav-tabs')
+                  @include('employee.shop-nav-tabs')
                 </div>
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
-                    <div class="col-md-12">
-                      <a class="btn btn-success col-md-2" href="{{ route('shopowner.shop.employees.add') }}" type="button" role="button" name="button">Add New Employee</a>
-                    </div>
+
                   </div>
 
                   <div class="row">
@@ -30,7 +28,6 @@
                             <th scope="col">Employee Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Type</th>
-                            <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -43,10 +40,7 @@
                               <td>{{ $employee->name }}</td>
                               <td>{{ $employee->email }}</td>
                               <td>{{ $employee->type }}</td>
-                              <td>
-                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.employees.add', ['id' => $employee->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.employees.delete', ['id' => $employee->id]) }}" data-id="{{ $employee->id }}" data-name="{{ $employee->name }}" data-email="{{ $employee->email }}">Delete</button>
-                              </td>
+
                             </tr>
                             @endforeach
                           @endisset

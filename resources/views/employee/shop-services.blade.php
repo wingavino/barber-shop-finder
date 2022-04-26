@@ -11,13 +11,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  @include('shopowner.shop-nav-tabs')
+                  @include('employee.shop-nav-tabs')
                 </div>
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
-                    <div class="col-md-12">
-                      <a class="btn btn-success col-md-2" href="{{ route('shopowner.shop.employees.add') }}" type="button" role="button" name="button">Add New Employee</a>
-                    </div>
+                    <!-- <div class="col-md-12">
+                      <a class="btn btn-success col-md-2" href="{{ route('shopowner.shop.services.add') }}" type="button" role="button" name="button">Add New Shop Service</a>
+                    </div> -->
                   </div>
 
                   <div class="row">
@@ -25,27 +25,22 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Account ID</th>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">Service Name</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
 
-                          @isset($employees)
-                            @foreach ($employees as $shop_employee => $employee)
+                          @isset($shop_services)
+                            @foreach ($shop_services as $shop_service => $service)
                             <tr>
-                              <td>{{ $employee->id }}</td>
-                              <td>{{ $employee->user_id }}</td>
-                              <td>{{ $employee->name }}</td>
-                              <td>{{ $employee->email }}</td>
-                              <td>{{ $employee->type }}</td>
+                              <td>{{ $service->name }}</td>
+                              <td>₱{{ $service->price }}</td>
+
                               <td>
-                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.employees.add', ['id' => $employee->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.employees.delete', ['id' => $employee->id]) }}" data-id="{{ $employee->id }}" data-name="{{ $employee->name }}" data-email="{{ $employee->email }}">Delete</button>
+                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.services.edit', ['id' => $service->id]) }}" type="button" role="button" name="button">Edit</a>
+                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.services.delete', ['id' => $service->id]) }}" data-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
                               </td>
                             </tr>
                             @endforeach
@@ -68,7 +63,7 @@
                               @csrf
                               <div class="row">
                                 <div class="col-md-12">
-                                  <p>Please confirm that you want to delete the following employee.</p>
+                                  <p>Please confirm that you want to delete the following shop.</p>
                                   <h4 id='name'></h4>
                                 </div>
                               </div>

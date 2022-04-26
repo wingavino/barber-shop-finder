@@ -18,12 +18,13 @@ class Employee extends Model
         'shop_id',
         'user_id',
         'name',
+        'email',
         'type',
     ];
 
     public function shop()
     {
-      return $this->hasOne(Shop::class);
+      return $this->belongsTo(Shop::class);
     }
 
     public function user()

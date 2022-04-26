@@ -16,17 +16,22 @@
 
               if(response.queue.current_ticket){
                 current_ticket = response.queue.current_ticket;
-                $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
+                
+                $('#current_ticket_nav').removeClass('btn-danger').addClass('btn-primary');
               }else {
                 current_ticket = 'None';
-                $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
+
+                $('#current_ticket_nav').removeClass('btn-primary').addClass('btn-danger');
               }
 
-              $('#current_ticket').empty();
-              $('#current_ticket').append(current_ticket);
+
+              $('#current_ticket_nav').empty();
+
+              $('#current_ticket_nav').append(current_ticket);
 
             },error:function(err){
-              $('#current_ticket').empty();
+
+              $('#current_ticket_nav').empty();
             }
           }).then(function(){
             setTimeout(updateCurrentTicket, 5000);
@@ -35,7 +40,7 @@
         updateCurrentTicket();
       });
       </script>
-      <a class="btn btn-primary" id="current_ticket" href="{{ route('shop', ['id' => Auth::user()->ticket->queue->shop_id]) }}" type="button" role="button"></a>
+      <a class="btn btn-primary" id="current_ticket_nav" href="{{ route('shop', ['id' => Auth::user()->ticket->queue->shop_id]) }}" type="button" role="button"></a>
       <!-- @isset(Auth::user()->ticket->queue->current_ticket)
       <a class="btn btn-primary" href="{{ route('shop', ['id' => Auth::user()->ticket->queue->shop_id]) }}" type="button" role="button">{{ Auth::user()->ticket->queue->current_ticket }}</a>
       @else

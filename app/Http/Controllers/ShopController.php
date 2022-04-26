@@ -59,6 +59,15 @@ class ShopController extends Controller
     return view('shopowner/shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
   }
 
+  public function showShopAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    return view('employee/shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+  }
+
   public function showShopImages($id)
   {
     $shop = Shop::where('id', $id)->first();
@@ -76,6 +85,15 @@ class ShopController extends Controller
     return view('shopowner/shop-images', ['shop' => $shop, 'images' => $images, 'logo' => $logo]);
   }
 
+  public function showShopImagesAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $images = Image::where('shop_id', $shop->id)->where('type', 'images')->get();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    return view('employee/shop-images', ['shop' => $shop, 'images' => $images, 'logo' => $logo]);
+  }
+
   public function showShopServices($id)
   {
     $shop = Shop::where('id', $id)->first();
@@ -90,6 +108,14 @@ class ShopController extends Controller
     $employees = $shop->employee;
 
     return view('shopowner.shop-employees', ['shop' => $shop, 'employees' => $employees]);
+  }
+
+  public function showShopEmployeesAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $employees = $shop->employee;
+
+    return view('employee.shop-employees', ['shop' => $shop, 'employees' => $employees]);
   }
 
   public function showAddShopEmployee()
@@ -119,6 +145,16 @@ class ShopController extends Controller
     return view('shopowner.shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
   }
 
+  public function showShopReviewsAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $shop_reviews = Review::where('shop_id', $shop->id)->get();
+    $review_count = Review::where('shop_id', $shop->id)->count();
+    $review_average = Review::where('shop_id', $shop->id)->avg('rating');
+
+    return view('employee.shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+  }
+
   public function showShopAddReview($id)
   {
     $shop = Shop::where('id', $id)->first();
@@ -134,12 +170,28 @@ class ShopController extends Controller
     return view('shopowner/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
   }
 
+  public function showShopServicesAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $shop_services = $shop->shop_services;
+
+    return view('employee/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+  }
+
   public function showShopQueueAsOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $shop_queue = $shop->queue;
 
     return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+  }
+
+  public function showShopQueueAsEmployee()
+  {
+    $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+    $shop_queue = $shop->queue;
+
+    return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
   public function showAddShopServices()

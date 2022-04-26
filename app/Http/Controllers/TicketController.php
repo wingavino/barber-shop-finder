@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Queue;
 use App\Models\Shop;
 use App\Models\Ticket;
+use App\Models\Employee;
 use Auth;
 
 class TicketController extends Controller
@@ -46,7 +47,12 @@ class TicketController extends Controller
 
     public function setNextTicket(Request $request, $id)
     {
-      $shop = Auth::user()->shop;
+      if (Auth::user()->type == 'shopowner') {
+        $shop = Auth::user()->shop;
+      }else {
+        $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+      }
+
       if ($shop) {
         $next_ticket = Ticket::where('id', $id)->first();
         if ($next_ticket) {
@@ -61,7 +67,12 @@ class TicketController extends Controller
 
     public function setNextTicketFromOnHold(Request $request)
     {
-      $shop = Auth::user()->shop;
+      if (Auth::user()->type == 'shopowner') {
+        $shop = Auth::user()->shop;
+      }else {
+        $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+      }
+
       if ($shop) {
         $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
         if ($current_ticket) {
@@ -82,19 +93,32 @@ class TicketController extends Controller
 
     public function finishCurrentTicket(Request $request)
     {
-      $shop = Auth::user()->shop;
+      if (Auth::user()->type == 'shopowner') {
+        $shop = Auth::user()->shop;
+      }else {
+        $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+      }
+
       if ($shop) {
         $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
         if ($current_ticket) {
           $current_ticket->delete();
         }
-        $shop->queue->current_ticket = $shop->queue->next_ticket;
+
+        if (!$shop->queue->current_ticket = $shop->queue->next_ticket) {
+          $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', true)->first();
+          $shop->queue->current_ticket = $next_ticket->ticket_number;
+          $next_ticket->on_hold = false;
+          $next_ticket->save();
+        }
+
         $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->where('ticket_number', '!=', $shop->queue->current_ticket)->first();
         $shop->queue->next_ticket = null;
 
         if ($next_ticket) {
           $shop->queue->next_ticket = $next_ticket->ticket_number;
         }
+
         $shop->queue->save();
       }
       return redirect()->back();
@@ -102,7 +126,12 @@ class TicketController extends Controller
 
     public function holdCurrentTicket(Request $request)
     {
-      $shop = Auth::user()->shop;
+      if (Auth::user()->type == 'shopowner') {
+        $shop = Auth::user()->shop;
+      }else {
+        $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+      }
+
       if ($shop) {
         $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
         if ($current_ticket) {
