@@ -14,6 +14,9 @@
       <a class="nav-link" href="{{ route('employee.shop.queue') }}">{{ __('Queue') }}</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('employee.shop.employees') }}">{{ __('Employees') }}</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="{{ route('employee.shop.reviews') }}">{{ __('Reviews') }}</a>
     </li>
     @endif
