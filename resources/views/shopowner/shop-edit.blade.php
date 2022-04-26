@@ -146,7 +146,7 @@
                             <script type="text/javascript">
                             let map;
                             var shops = [];
-                            const philippines = { lat: 15.5000569, lng: 120.9109837 };
+                            const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
 
                             async function getShops(id) {
                               let response = await fetch ('{{env("APP_URL")}}/api/shops/' + id);
@@ -194,7 +194,14 @@
                                   document.getElementById("lat").value = event.latLng.lat();
                                   document.getElementById("lng").value = event.latLng.lng();
                                 });
-                                // console.log(marker);
+
+                                google.maps.event.addListener(map, 'click', function(event){
+                                  // When map is clicked, do this
+                                  marker.setPosition(event.latLng);
+                                  document.getElementById("lat").value = event.latLng.lat();
+                                  document.getElementById("lng").value = event.latLng.lng();
+                                });
+
                               }
                               // marker.setMap(map);
 
