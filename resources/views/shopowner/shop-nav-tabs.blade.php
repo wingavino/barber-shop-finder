@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs card-header-tabs">
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop') ? 'active' : '' }}" href="{{ route('shopowner.shop') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop' || Route::currentRouteName() == 'shopowner.shop.edit') ? 'active' : '' }}" href="{{ route('shopowner.shop') }}">
       {{ __('Shop Details') }}
     </a>
   </li>

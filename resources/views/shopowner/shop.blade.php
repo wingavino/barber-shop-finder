@@ -10,12 +10,9 @@
       </div>
       <div class="col-8 col-sm-12 text-center">
         <h2>{{ $shop->name }}</h2>
-        <h5>{{ $shop->address }}</h5>
-        <!-- <h5>({{ $shop->lat . ', ' . $shop->lng }})</h5> -->
+        <h5>{{ $shop->address }}</h5>        
+      </div>
 
-      </div>
-      <div class="col-2 col-sm-12">
-      </div>
       <div class="col-md-12">
           <div class="card">
               <div class="card-header">

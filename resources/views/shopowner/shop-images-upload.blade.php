@@ -9,6 +9,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <div class="col-md-2 col-sm-4">
+              @isset($logo)
+              <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+              @endisset
+            </div>
+            <div class="col-8 col-sm-12 text-center">
+              <h2>{{ $shop->name }}</h2>
+              <h5>{{ $shop->address }}</h5>
+            </div>
             <div class="card">
                 <div class="card-header">
                   @include('shopowner.shop-nav-tabs')
@@ -16,6 +25,7 @@
 
                 <div class="card-body">
                   <!-- Logo Upload -->
+                  <a class="btn btn-primary" href="{{ route('shopowner.shop') }}">Back</a>
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Logo</h3>
                     <form action="{{ route('shopowner.shop.images.logo.upload') }}" method="post" enctype="multipart/form-data">

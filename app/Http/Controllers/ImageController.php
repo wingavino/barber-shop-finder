@@ -11,7 +11,7 @@ class ImageController extends Controller
 {
   public function showUploadImage()
   {
-    return view('shopowner/shop-images-upload');
+    return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
   }
 
   public function showUploadID()
