@@ -157,6 +157,12 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\ShopOwnerController::class, 'showEditShopOwners'])->name('admin.shopowners.edit'); //Shows Edit Shopowner Page as an Admin
   Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit'); //Handles functions for changing a User's account type (user/shopowner)
 
+  Route::get('/admin/users', [App\Http\Controllers\UserController::class, 'showUsers'])->name('admin.users'); //Shows list of Shopowners Page
+  Route::get('/admin/users/add', [App\Http\Controllers\UserController::class, 'showUsersAdd'])->name('admin.users.add'); //Shows Add New Shopowner Page
+  // Route::post('/admin/users/add', [App\Http\Controllers\UserController::class, 'registerNoLogin'])->name('admin.users.add'); //Handles functions for adding a New Shopowner as an Admin
+  // Route::get('/admin/users/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'showEditUsers'])->name('admin.users.edit'); //Shows Edit Shopowner Page as an Admin
+  // Route::post('/admin/users/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.users.edit'); //Handles functions for changing a User's account type (user/shopowner)
+
   Route::get('/admin/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('admin.shop'); //Shows a Shop Page as an Admin
   Route::get('/admin/shops', [App\Http\Controllers\ShopController::class, 'showShops'])->name('admin.shops'); //Shows list of Shops Page
   Route::post('/admin/shops/add', [App\Http\Controllers\ShopController::class, 'addShop'])->name('admin.shops.add'); //Handles functions for Adding a New Shop as an Admin
