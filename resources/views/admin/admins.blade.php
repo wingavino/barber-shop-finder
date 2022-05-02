@@ -32,8 +32,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @isset($data)
-                            @foreach ($data as $key => $value)
+                            @forelse ($data as $key => $value)
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->name }}</td>
@@ -46,9 +45,10 @@
                                 @endif
                               </td>
                             </tr>
-                            @endforeach
-                          @endisset
+                            @empty
+                            @endforelse
                         </tbody>
+                        {{ $data->links() }}
                       </table>
                     </div>
 

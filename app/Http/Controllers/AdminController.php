@@ -73,7 +73,7 @@ class AdminController extends Controller
 
   public function admins()
   {
-    $data = DB::table('users')->where('type', '=', 'admin')->get();
+    $data = DB::table('users')->where('type', '=', 'admin')->paginate(25);
     return view('admin/admins', ['data' => $data]);
   }
 
