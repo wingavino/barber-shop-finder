@@ -17,6 +17,12 @@ class UserController extends Controller
         return view('user');
     }
 
+    public function showUsers()
+    {
+      $data = User::where('type', '!=', 'admin')->paginate(25);
+      return view('admin/users', ['data' => $data]);
+    }
+
     public function showUserEdit(User $user)
     {
       return view('user-edit');

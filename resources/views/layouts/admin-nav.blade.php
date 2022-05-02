@@ -1,6 +1,6 @@
 @if (Auth::user() && Auth::user()->type == 'admin')
 <li class="nav-item">
-  <a class="nav-link" href="{{ route('admin.shopowners') }}">{{ __('Shop Owners') }}</a>
+  <a class="nav-link" href="{{ route('admin.users') }}">{{ __('Users') }}</a>
 </li>
 
 <li class="nav-item">
