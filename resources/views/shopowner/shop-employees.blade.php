@@ -2,6 +2,7 @@
 
 @section('custom-scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script defer type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/deleteModal.js') }}"></script>
 @endsection
 
@@ -31,6 +32,11 @@
 
                   <div class="row">
                     <div class="col-md-12">
+                      <form>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="search" placeholder="Search">
+                        </div>
+                      </form>
                       <table class="table table-hover">
                         <thead>
                           <tr>
@@ -42,8 +48,7 @@
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
-
+                        <tbody id="list">
                           @isset($employees)
                             @foreach ($employees as $shop_employee => $employee)
                             <tr>
@@ -53,7 +58,7 @@
                               <td>{{ $employee->email }}</td>
                               <td>{{ $employee->type }}</td>
                               <td>
-                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.employees.add', ['id' => $employee->id]) }}" type="button" role="button" name="button">Edit</a>
+                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.employees.edit', ['id' => $employee->id]) }}" type="button" role="button" name="button">Edit</a>
                                 <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.employees.delete', ['id' => $employee->id]) }}" data-id="{{ $employee->id }}" data-name="{{ $employee->name }}" data-email="{{ $employee->email }}">Delete</button>
                               </td>
                             </tr>

@@ -39,4 +39,30 @@ class EmployeeController extends Controller
     }
     return redirect()->route('shopowner.shop.employees');
   }
+
+  public function showEditShopEmployee($id)
+  {
+    $shop = Auth::user()->shop;
+    $employee = Employee::where('shop_id', $shop->id)->where('id', $id)->first();
+
+    return view('shopowner/shop-employees-edit', ['shop' => $shop, 'employee' => $employee]);
+  }
+
+  public function editShopEmployee(Request $request, $id)
+  {
+    $shop = Auth::user()->shop;
+    if ($shop) {
+      $employee = Employee::where('shop_id', $shop->id)->where('id', $id)->first();
+      if ($employee) {
+        $employee->name = $request->name;
+        $employee->type = $request->type;
+        if ($request->email) {
+          $employee->email = $request->email;
+          $employee->user_id = User::where('email', $employee->email)->first()->id;
+        }
+        $employee->save();
+      }
+    }
+    return redirect()->route('shopowner.shop.employees');
+  }
 }

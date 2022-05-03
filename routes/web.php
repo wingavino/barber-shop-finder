@@ -115,6 +115,8 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/employees', [App\Http\Controllers\ShopController::class, 'showShopEmployeesAsShopOwner'])->name('shopowner.shop.employees'); //Shows Shop's Employees
   Route::get('/shopowner/shop/employees/add', [App\Http\Controllers\ShopController::class, 'showAddShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
   Route::post('/shopowner/shop/employees/add', [App\Http\Controllers\EmployeeController::class, 'addShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
+  Route::get('/shopowner/shop/employees/{id}/edit', [App\Http\Controllers\EmployeeController::class, 'showEditShopEmployee'])->name('shopowner.shop.employees.edit'); //Shows Edit Page for Shop Employee
+  Route::post('/shopowner/shop/employees/{id}/edit', [App\Http\Controllers\EmployeeController::class, 'editShopEmployee'])->name('shopowner.shop.employees.edit'); //Handles functions for Editing a Shop Employee
   Route::post('/shopowner/shop/employees/{id}/delete', [App\Http\Controllers\EmployeeController::class, 'deleteShopEmployee'])->name('shopowner.shop.employees.delete'); //Handles functions for Deleting a Shop Employee
 });
 
