@@ -2,6 +2,7 @@
 
 @section('custom-scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script defer type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/deleteModal.js') }}"></script>
 @endsection
 
@@ -14,6 +15,11 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
+                      <form>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="search" placeholder="Search">
+                        </div>
+                      </form>
                       <a class="btn btn-success col-md-2" href="{{ route('admin.add') }}" type="button" role="button" name="button">Add New Admin</a>
                     </div>
                   </div>
@@ -31,7 +37,7 @@
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="list">
                             @forelse ($data as $key => $value)
                             <tr>
                               <th scope="row">{{ $value->id }}</th>

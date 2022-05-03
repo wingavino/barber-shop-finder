@@ -7,6 +7,7 @@
 <script type="text/javascript" async>
   var asset_url = '{{ URL::asset("/img/") }}'
 </script>
+<script defer type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/imagePreviewModal.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/requestModal.js') }}"></script>
 @endsection
@@ -26,27 +27,36 @@
 
                   <div class="row">
                     <div class="col-md-12">
+                      <form>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="search" placeholder="Search">
+                        </div>
+                      </form>
                       <table class="table table-hover">
                         <thead>
                           <tr>
                             <th scope="col">ID #</th>
                             <th scope="col">User ID</th>
+                            <th scope="col">User Name</th>
                             <th scope="col">Request Type</th>
                             <th scope="col">User Type</th>
                             <th scope="col">Shop ID</th>
+                            <th scope="col">Shop Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="list">
                           @isset($data)
                             @foreach ($data as $key => $value)
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
                               <td>{{ $value->user_id }}</td>
-                              <td>{{ $value->request_type}}</td>
-                              <td>{{ $value->change_to_user_type}}</td>
+                              <td>{{ $value->name ? $value->name : '' }}</td>
+                              <td>{{ $value->request_type }}</td>
+                              <td>{{ $value->change_to_user_type }}</td>
                               <td>{{ $value->shop_id }}</td>
+                              <td>{{ $value->shop_name ? $value->shop_name : '' }}</td>
                               <td class="text-center">
                                 @if($value->approved)
                                   <p class="text-success">Approved</p>
