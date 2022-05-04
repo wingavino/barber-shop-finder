@@ -18,7 +18,10 @@ class EmployeeController extends Controller
       $employee->shop_id = $shop->id;
       if ($request->email) {
         $employee->email = $request->email;
-        $employee->user_id = User::where('email', $employee->email)->first()->id;
+        $link_user = User::where('email', $employee->email)->first()->id;
+        if ($link_user->type == 'user') {
+          $employee->user_id = $link_user->id;
+        }
       }
 
       $employee->name = $request->name;
@@ -58,7 +61,10 @@ class EmployeeController extends Controller
         $employee->type = $request->type;
         if ($request->email) {
           $employee->email = $request->email;
-          $employee->user_id = User::where('email', $employee->email)->first()->id;
+          $link_user = User::where('email', $employee->email)->first()->id;
+          if ($link_user->type == 'user') {
+            $employee->user_id = $link_user->id;
+          }
         }
         $employee->save();
       }
