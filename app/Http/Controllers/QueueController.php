@@ -16,7 +16,9 @@ class QueueController extends Controller
   {
     $queue = Queue::where('id', $queue_id)->first();
     $current_ticket = Ticket::where('queue_id', $queue_id)->first();
-    $user = User::where('id', $current_ticket->user_id)->first();
+    if ($current_ticket) {
+      $user = User::where('id', $current_ticket->user_id)->first();
+    }
 
     if($request->ajax()){
       if ((Auth::user()->type == 'shopowner' && Auth::user()->shop->id == $queue->shop->id) OR Employee::where('user_id', Auth::user()->id)->where('shop_id', $queue->shop->id)->first()) {
