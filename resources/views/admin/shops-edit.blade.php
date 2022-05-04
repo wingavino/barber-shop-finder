@@ -53,6 +53,97 @@
                           </div>
                       </div>
 
+                      <label for="open_hours" class="col col-form-label text-md-center"><h3>{{ __('Open Hours') }}</h3></label>
+
+                      @for($i = 1; $i <= 7; $i++)
+                      <div class="form-group row">
+                        <label for="open_hours_day_{{$i}}" class="col-md-4 col-form-label text-md-right">
+                          @switch($i)
+                            @case(1)
+                              {{ __('Monday') }}
+                              @break
+
+                            @case(2)
+                              {{ __('Tuesday') }}
+                              @break
+
+                            @case(3)
+                              {{ __('Wednesday') }}
+                              @break
+
+                            @case(4)
+                              {{ __('Thursday') }}
+                              @break
+
+                            @case(5)
+                              {{ __('Friday') }}
+                              @break
+
+                            @case(6)
+                              {{ __('Saturday') }}
+                              @break
+
+                            @default
+                              {{ __('Sunday') }}
+                              @break
+
+                          @endswitch
+                        </label>
+                        <div class="col-md-6 input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              @foreach($open_hours as $open_hour)
+                                @if($open_hour->day == $i)
+                                  <input id="open_hours_day_{{$i}}" type="checkbox" class="@error('open_hours_day_{{$i}}') is-invalid @enderror" name="open_hours_day[]" value="{{$i}}" checked>
+                                  @break
+                                @endif
+
+                                @if($loop->last)
+                                  <input id="open_hours_day_{{$i}}" type="checkbox" class="@error('open_hours_day_{{$i}}') is-invalid @enderror" name="open_hours_day[]" value="{{$i}}">
+                                @endif
+                              @endforeach
+                            </div>
+                          </div>
+                          @foreach($open_hours as $open_hour)
+                            @if($open_hour->day == $i)
+                              <input id="open_hours_start[{{$i}}]" type="time" class="form-control @error('open_hours_start[{{$i}}]') is-invalid @enderror" name="open_hours_start[{{$i}}]" value="{{ old('open_hours_start[$i]', $open_hour->time_start) }}">
+                              <input id="open_hours_end[{{$i}}]" type="time" class="form-control @error('open_hours_end[{{$i}}]') is-invalid @enderror" name="open_hours_end[{{$i}}]" value="{{ old('open_hours_end[$i]', $open_hour->time_end) }}">
+                              @break
+                            @endif
+
+                            @if($loop->last)
+                            <input id="open_hours_start[{{$i}}]" type="time" class="form-control @error('open_hours_start[{{$i}}]') is-invalid @enderror" name="open_hours_start[{{$i}}]" value="{{ old('open_hours_start[$i]') }}">
+                            <input id="open_hours_end[{{$i}}]" type="time" class="form-control @error('open_hours_end[{{$i}}]') is-invalid @enderror" name="open_hours_end[{{$i}}]" value="{{ old('open_hours_end[$i]') }}">
+                            @endif
+                          @endforeach
+                          @error('open_hours_start[$i]')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                          @error('open_hours_end[$i]')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                        </div>
+                      </div>
+                      @endfor
+
+                      <div class="form-group row">
+                          <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+
+                          <div class="col-md-6">
+                              <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ __($shop->address) }}" required autocomplete="name">
+
+                              @error('address')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
+
                       <div class="form-group row">
                           <label for="lat" class="col-md-4 col-form-label text-md-right">{{ __('Latitude') }}</label>
 
