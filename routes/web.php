@@ -106,8 +106,8 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
   Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
   Route::get('/shopowner/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('shopowner.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
-  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services'); //Shows Shop's Services Page for Shopowner
   Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add'); //Shows Add Service Page for Shop
+  Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services'); //Shows Shop's Services Page for Shopowner
   Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add'); //Handles functions for Adding a Shop Service
   Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete'); //Handles functions for Deleting a Shop Service
   Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit'); //Shows Edit Page for Shop Service
@@ -118,6 +118,8 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/employees/{id}/edit', [App\Http\Controllers\EmployeeController::class, 'showEditShopEmployee'])->name('shopowner.shop.employees.edit'); //Shows Edit Page for Shop Employee
   Route::post('/shopowner/shop/employees/{id}/edit', [App\Http\Controllers\EmployeeController::class, 'editShopEmployee'])->name('shopowner.shop.employees.edit'); //Handles functions for Editing a Shop Employee
   Route::post('/shopowner/shop/employees/{id}/delete', [App\Http\Controllers\EmployeeController::class, 'deleteShopEmployee'])->name('shopowner.shop.employees.delete'); //Handles functions for Deleting a Shop Employee
+  Route::get('/shopowner/shop/settings', [App\Http\Controllers\ShopController::class, 'showShopSettingsAsOwner'])->name('shopowner.shop.settings'); //Shows Shop's Settings Page for Shopowner
+  Route::post('/shopowner/shop/delete', [App\Http\Controllers\ShopController::class, 'deleteShopAsOwner'])->name('shopowner.shop.delete'); //Handles function for Shop Deletion
 });
 
 // Employee Routes

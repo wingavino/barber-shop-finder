@@ -413,6 +413,13 @@ class ShopController extends Controller
     }
   }
 
+  public function showShopSettingsAsOwner()
+  {
+    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+
+    return view('shopowner/shop-settings', ['shop' => $shop]);
+  }
+
   public function showDeleteShop($id, Request $request)
   {
     $shop = Shop::where('id', '=', $id)->first();
@@ -439,6 +446,15 @@ class ShopController extends Controller
         break;
       }
     }
+  }
+
+  public function deleteShopAsOwner(Request $request)
+  {
+    $shop = Shop::where('id', Auth::user()->shop->id)->first();
+    if ($shop) {
+      $shop->delete();
+    }
+    return redirect()->route('home');
   }
 
   public function approveShop($id)
