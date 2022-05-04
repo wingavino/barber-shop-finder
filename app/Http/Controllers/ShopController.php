@@ -451,9 +451,17 @@ class ShopController extends Controller
   public function deleteShopAsOwner(Request $request)
   {
     $shop = Shop::where('id', Auth::user()->shop->id)->first();
+
     if ($shop) {
+      $pending_requests = PendingRequest::where('shop_id', $shop->id)->get();
+      if ($pending_requests) {
+        foreach ($pending_requests as $pending_request) {
+          $pending_request->delete();
+        }
+      }
       $shop->delete();
     }
+
     return redirect()->route('home');
   }
 
