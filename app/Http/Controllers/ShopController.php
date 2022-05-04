@@ -343,12 +343,16 @@ class ShopController extends Controller
 
   public function showEditShop($id, Request $request)
   {
-    $shop = Shop::where('id', '=', $id)->first();
+    $shop = Shop::where('id', $id)->first();
     if ($shop) {
+      $open_hours = OpenHours::where('shop_id', $shop->id)->get();
       switch (Auth::user()->type) {
         case 'admin':
           $shopowners = User::where('type', '=', 'shopowner')->get();
-          return view('admin/shops-edit', ['shop' => $shop, 'shopowners' => $shopowners]);
+          return view('admin/shops-edit', ['shop' => $shop, 'shopowners' => $shopowners, 'open_hours' => $open_hours]);
+          break;
+        case 'shopowner':
+          return view('shopowner/shop-edit', ['shop' => $shop, 'open_hours' => $open_hours]);
           break;
 
         default:
@@ -358,6 +362,7 @@ class ShopController extends Controller
     }else {
       return redirect()->route('home');
     }
+
   }
 
   public function editShop($id, Request $request)
@@ -365,7 +370,11 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
-      $shop->owner_id = Auth::user()->id;
+      if (Auth::user()->type == 'admin') {
+        $shop->owner_id = $request->owner_id;
+      }else {
+        $shop->owner_id = Auth::user()->id;
+      }
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
