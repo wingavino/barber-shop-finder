@@ -191,8 +191,8 @@
                             );
 
                             map = new google.maps.Map(document.getElementById("map"), {
-                              center: { lat: 15.5000569, lng: 120.9109837 },
-                              zoom: 8,
+                              center: { lat: {{$shop->lat}}, lng: {{$shop->lng}} },
+                              zoom: 14,
                             });
 
                             for (var i = 0; i < shops.length; i++) {
