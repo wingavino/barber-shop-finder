@@ -4,7 +4,7 @@ var open_hours = [];
 var reviews = [];
 var markers = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const philippines = { lat: 15.5000569, lng: 120.9109837 };
+const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
 
 async function getShops() {
   let response = await fetch (app_url + '/api/shops');
@@ -100,8 +100,8 @@ var infowindow;
     );
 
     map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 15.5000569, lng: 120.9109837 },
-      zoom: 8,
+      center: { lat: philippines.lat, lng: philippines.lng },
+      zoom: 13,
     });
 
     infowindow = new google.maps.InfoWindow();
