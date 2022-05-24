@@ -58,7 +58,7 @@ $(document).ready(function(){
 
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                       <form method="POST" action="#">
                         @csrf
 
@@ -66,7 +66,7 @@ $(document).ready(function(){
 
                         @foreach($open_hours as $i)
                         <div class="form-group row">
-                          <label for="open_hours_day_{{$i}}" class="col-md-4 col-form-label text-md-right">
+                          <label for="open_hours_day_{{$i}}" class="col-md-3 col-form-label text-md-right">
                             @switch($i->day)
                               @case(1)
                                 {{ __('Monday') }}
@@ -122,7 +122,7 @@ $(document).ready(function(){
 
                         <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $shop->address }}" readonly>
@@ -132,57 +132,6 @@ $(document).ready(function(){
                         <div class="form-group row">
                         </div>
                       </form>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="card">
-                        <div class="card-header">
-                          Queue
-                        </div>
-
-                        <div class="card-body">
-
-                          <h3>Now Serving:
-                              <button id="current_ticket" class="btn btn-danger disabled" type="button" name="button">None</button>
-                          </h3>
-
-                          <h3>
-                            Current Queue Length:
-                            @isset($shop->queue->ticket)
-                              {{ $shop->queue->ticket->count() }}
-                            @endisset
-                          </h3>
-
-                          @isset(Auth::user()->ticket)
-                            @if(Auth::user()->ticket->queue->shop_id == $shop->id)
-                            <h3>Your Ticket:
-                              <button class="btn btn-success disabled" type="button" name="button">
-                                {{ Auth::user()->ticket->ticket_number }}
-                              </button>
-                            </h3>
-                            <form method="POST" action="{{ route('shop.ticket.cancel', [$shop->id]) }}">
-                              @csrf
-                              <div class="form-group row mb-0 justify-content-center">
-                                <button type="submit" class="btn btn-danger col-md-12">
-                                  {{ __('Cancel Ticket') }}
-                                </button>
-                              </div>
-                            </form>
-                            @endif
-                          @else
-                            @if(Auth::user()->type == 'user')
-                            <form method="POST" action="{{ route('shop.ticket', [$shop->id]) }}">
-                              @csrf
-                              <div class="form-group row mb-0 justify-content-center">
-                                <button type="submit" class="btn btn-success col-md-12">
-                                    {{ __('Get New Ticket') }}
-                                </button>
-                              </div>
-                            </form>
-                            @endif
-                          @endisset
-                        </div>
-                      </div>
                     </div>
                   </div>
 

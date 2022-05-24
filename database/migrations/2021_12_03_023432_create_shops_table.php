@@ -18,12 +18,13 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('owner_name')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('address');
             $table->decimal('lat', $precision = 11, $scale = 8)->nullable();
             $table->decimal('lng', $precision = 11, $scale = 8)->nullable();
             $table->timestamp('shop_verified_at')->nullable();
-            $table->boolean('approved')->default(false);
-            $table->boolean('rejected')->default(false);
+            $table->boolean('hidden')->default(false);
             $table->timestamps();
         });
     }

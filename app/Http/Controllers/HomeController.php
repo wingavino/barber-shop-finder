@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -24,14 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-      switch (Auth::user()->type) {
-        case 'admin':
-          return view('admin.home');
-          break;
-
-        default:
-          return view('home');
-          break;
-      }
+      return view('home');
     }
 }

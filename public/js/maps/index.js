@@ -29,7 +29,7 @@ var marker
 function listShops(data) {
   Object.entries(data.shops).forEach(([key, value]) => {
     var listItem = document.createElement('a');
-    listItem.href = '#';
+    listItem.href = '#map';
     listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
     var bold = document.createElement("strong");
     var listItemContent = document.createTextNode(value.name.toString());
@@ -168,7 +168,7 @@ var infowindow;
           infowindow.setContent(info);
           infowindow.open(marker.get("map"), marker);
           map.panTo(marker.getPosition());
-          map.setZoom(13);
+          // map.setZoom(15);
         });
       }
     }

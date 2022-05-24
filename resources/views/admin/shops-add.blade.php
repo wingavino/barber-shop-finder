@@ -28,16 +28,95 @@
                             <label for="owner_id" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
 
                             <div class="col-md-6">
-                                <!-- <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ old('owner_name') }}" required autocomplete="owner_name"> -->
-                                <select class="custom-select" id="owner_id" name="owner_id" aria-label="Select Owner Name">
-                                  <option value="">None</option>
-                                  <option value="1">Admin</option>
-                                  @foreach($shopowners as $shopowner)
-                                  <option value="{{$shopowner->id}}">{{$shopowner->id . ' - ' . $shopowner->name}}</option>
-                                  @endforeach
-                                </select>
+                                <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ old('owner_name') }}" required autocomplete="owner_name">
 
                                 @error('owner_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }} (Optional)</label>
+
+                            <div class="col-md-6">
+                                <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" autocomplete="mobile">
+
+                                @error('mobile')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <label for="open_hours" class="col-md-4 col-form-label text-md-right">{{ __('Open Hours') }}</label>
+
+                        @for($i = 1; $i <= 7; $i++)
+                        <div class="form-group row">
+                          <label for="open_hours_day_{{$i}}" class="col-md-4 col-form-label text-md-right">
+                            @switch($i)
+                              @case(1)
+                                {{ __('Monday') }}
+                                @break
+
+                              @case(2)
+                                {{ __('Tuesday') }}
+                                @break
+
+                              @case(3)
+                                {{ __('Wednesday') }}
+                                @break
+
+                              @case(4)
+                                {{ __('Thursday') }}
+                                @break
+
+                              @case(5)
+                                {{ __('Friday') }}
+                                @break
+
+                              @case(6)
+                                {{ __('Saturday') }}
+                                @break
+
+                              @default
+                                {{ __('Sunday') }}
+                                @break
+
+                            @endswitch
+                          </label>
+                          <div class="col-md-6 input-group">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">
+                                <input id="open_hours_day_{{$i}}" type="checkbox" class="@error('open_hours_day_{{$i}}') is-invalid @enderror" name="open_hours_day[]" value="{{$i}}">
+                              </div>
+                            </div>
+                            <input id="open_hours_start[{{$i}}]" type="time" class="form-control @error('open_hours_start[{{$i}}]') is-invalid @enderror" name="open_hours_start[{{$i}}]" value="{{ old('open_hours_start[$i]') }}">
+                            <input id="open_hours_end[{{$i}}]" type="time" class="form-control @error('open_hours_end[{{$i}}]') is-invalid @enderror" name="open_hours_end[{{$i}}]" value="{{ old('open_hours_end[$i]') }}" >
+                            @error('open_hours_start[$i]')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            @error('open_hours_end[$i]')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                          </div>
+                        </div>
+                        @endfor
+
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
+
+                                @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -75,21 +154,21 @@
                         <div class="form-group row">
                           <div class="col-md-12">
                             <!-- <label for="location" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label> -->
-                            <p>Drag the marker to the appropriate location</p>
+                            <p>Drag or click on the map to set the marker to the shop's location</p>
                             <div class="col-md-12" style="width: 100%; height: 500px">
                               <div id="map" style="width:100%;height:100%"></div>
                               <script type="text/javascript">
                               let map;
 
-                              const philippines = { lat: 15.5000569, lng: 120.9109837 };
+                              const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
                               document.getElementById("lat").value = philippines.lat;
                               document.getElementById("lng").value = philippines.lng;
 
                               function initMap() {
 
                                 map = new google.maps.Map(document.getElementById("map"), {
-                                  center: { lat: 15.5000569, lng: 120.9109837 },
-                                  zoom: 8,
+                                  center: { lat: philippines.lat, lng: philippines.lng },
+                                  zoom: 13,
                                 });
 
                                 var marker = new google.maps.Marker({
@@ -100,6 +179,13 @@
 
                                 google.maps.event.addListener(marker, 'dragend', function(event){
                                   // When marker is dragged, do this
+                                  document.getElementById("lat").value = event.latLng.lat();
+                                  document.getElementById("lng").value = event.latLng.lng();
+                                });
+
+                                google.maps.event.addListener(map, 'click', function(event){
+                                  // When map is clicked, do this
+                                  marker.setPosition(event.latLng);
                                   document.getElementById("lat").value = event.latLng.lat();
                                   document.getElementById("lng").value = event.latLng.lng();
                                 });

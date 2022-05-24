@@ -17,12 +17,13 @@ class Shop extends Model
     protected $fillable = [
         'name',
         'owner_id',
+        'owner_name',
+        'mobile',
         'address',
         'lat',
         'lng',
         'shop_verified_at',
-        'approved',
-        'rejected',
+        'hidden',
     ];
 
     public function user()

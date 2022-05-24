@@ -26,17 +26,17 @@ use App\Http\Middleware\ShopOwnerMiddleware;
 
 
 // Index/Landing Page
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', function (){
-  if (Auth::user()) {
     return redirect()->route('home');
-  }else {
-    return view('welcome');
-  }
 })->name('index'); //Shows User's Home Page
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); //Shows User's Home Page
+Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop'); //Shows Shop Page
+Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images'); //Shows Shop's Images Page
+Route::get('/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shop.services'); //Shows Shop's Services Page
+Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('shop.reviews'); //Shows Shop's Reviews Page
+Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add'); //Shows Add Shop Review Page
+Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add'); //Handles functions for Add Shop Review Page
+Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report'); //Handles functions for Reporting a Shop Review
 
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
@@ -63,21 +63,14 @@ Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::cla
 Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner'); //Handles functions for Shopowner Registration Page
 
 // End User Routes
+
 Route::middleware('auth')->group(function (){
-  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); //Shows User's Home Page
   Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('profile'); //Shows User's Profile Page
   Route::get('/user/edit', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('profile.edit'); //Shows Edit Page for User's Profile
   Route::post('/user/edit', [App\Http\Controllers\UserController::class, 'editUser'])->name('profile.edit'); //Handles functions for Edit User's Profile Page
   Route::get('/user/edit-password', [App\Http\Controllers\UserController::class, 'showUserEditPassword'])->name('profile.edit.password'); //Shows Edit Page for User's Password
   Route::post('/user/edit-password', [App\Http\Controllers\UserController::class, 'editUserPassword'])->name('profile.edit.password'); //Handles functions for Edit User's Password Page
   Route::get('/user/request/{id}/{request_type}/{user_type?}', [App\Http\Controllers\PendingRequestController::class, 'addPendingRequest'])->name('request'); //Handles functions for Adding a Pending Request
-  Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop'); //Shows Shop Page
-  Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images'); //Shows Shop's Images Page
-  Route::get('/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('shop.services'); //Shows Shop's Services Page
-  Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('shop.reviews'); //Shows Shop's Reviews Page
-  Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add'); //Shows Add Shop Review Page
-  Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add'); //Handles functions for Add Shop Review Page
-  Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report'); //Handles functions for Reporting a Shop Review
   Route::post('/shop/{id}/ticket', [App\Http\Controllers\TicketController::class, 'getTicket'])->name('shop.ticket'); //Handles functions for getting a Queue Ticket
   Route::post('/shop/{id}/ticket/cancel', [App\Http\Controllers\TicketController::class, 'cancelTicket'])->name('shop.ticket.cancel'); //Handles functions for cancelling a Queue Ticket
   Route::get('/queue/{queue_id}/current_ticket', [App\Http\Controllers\QueueController::class, 'getCurrentTicket'])->name('queue.current_ticket'); //Handles functions for retrieving Queue's Current Ticket

@@ -38,10 +38,8 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
 
-    if (!$shop->approved) {
-      if (Auth::user()->type == 'user' && $shop->owner_id != Auth::user()->id) {
-        return redirect()->route('home');
-      }
+    if ($shop->hidden) {
+      return redirect()->route('home');
     }
 
     $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
@@ -297,6 +295,8 @@ class ShopController extends Controller
         $shop->owner_id = Auth::user()->id;
       }
 
+      $shop->owner_name = $request->owner_name;
+
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
@@ -325,13 +325,6 @@ class ShopController extends Controller
         $shop->delete();
         return redirect()->back();
       }
-
-
-      $pending_request = new PendingRequest();
-      $pending_request->user_id = Auth::user()->id;
-      $pending_request->request_type = 'add-new-shop';
-      $pending_request->shop_id = $shop->id;
-      $pending_request->save();
 
       $queue = new Queue();
       $queue->shop_id = $shop->id;
