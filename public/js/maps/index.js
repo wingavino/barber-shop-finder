@@ -173,8 +173,49 @@ var infowindow;
       }
     }
 
+    const locationButton = document.createElement("button");
+
+    locationButton.textContent = "Go to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            infowindow.setPosition(pos);
+            infowindow.setContent("Location found.");
+            // infowindow.open(map);
+            map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infowindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infowindow, map.getCenter());
+      }
+    });
+
+
     map.addListener('click', function() {
       if (infowindow) infowindow.close();
     });
 
   }
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  infoWindow.open(map);
+}
