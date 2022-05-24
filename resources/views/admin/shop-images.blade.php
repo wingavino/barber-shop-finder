@@ -25,7 +25,7 @@
 
                 <div class="card-body">
                   <div class="col text-right">
-                    <a class="btn btn-info" type="button" role="button" href="{{ route('shopowner.shop.images.upload') }}">Upload</a>
+                    <a class="btn btn-info" type="button" role="button" href="{{ route('admin.shop.images.upload', ['id' => $shop->id]) }}">Upload</a>
                   </div>
                   <div class="row justify-content-center text-center">
                     <div class="col-3">
