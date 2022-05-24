@@ -41,7 +41,11 @@
                             @foreach ($data as $key => $value)
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
-                              <td>{{ $value->name }}</td>
+                              <td>
+                                <a href="{{ route('admin.shop', ['id' => $value->id]) }}">
+                                  {{ $value->name }}
+                                </a>
+                              </td>
                               <td>{{ $value->address }}</td>
                               <td>{{ $value->owner_name }}</td>
                               <td>
