@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-lg-8 order-last" style="width: 75%; height: 80vh">
+    <div class="col-12 col-lg-8 order-last" style="width: 100%; height: 80vh">
       <div id="map" style="width:100%;height:100%"></div>
     </div>
   </div>
