@@ -45,7 +45,12 @@ class ShopController extends Controller
     $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
     $logo = Image::where('shop_id', $id)->where('type', 'logo')->first();
 
-    return view('shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    }else {
+      return view('shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    }
+
   }
 
   public function showShopAsShopOwner()
