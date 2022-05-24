@@ -427,7 +427,7 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
 
-    if (Auth::user()->type 'admin') {
+    if (Auth::user()->type == 'admin') {
       return view('admin/shop-settings', ['shop' => $shop]);
     }
   }
