@@ -15,7 +15,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'admin.shop.reviews') ? 'active' : '' }}" href="{{ route('admin.shop.reviews') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'admin.shop.reviews') ? 'active' : '' }}" href="{{ route('admin.shop.reviews', ['id' => $shop->id]) }}">
       {{ __('Reviews') }}
     </a>
   </li>
