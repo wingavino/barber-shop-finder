@@ -76,7 +76,11 @@ class ShopController extends Controller
     $shop = Shop::where('id', $id)->first();
     $images = Image::where('shop_id', $id)->where('type', 'images')->get();
 
-    return view('shop-images', ['shop' => $shop, 'images' => $images]);
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop-images', ['shop' => $shop, 'images' => $images]);
+    }else {
+      return view('shop-images', ['shop' => $shop, 'images' => $images]);
+    }
   }
 
   public function showShopImagesAsShopOwner()

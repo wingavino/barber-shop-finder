@@ -166,10 +166,22 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shops/add/{lat?}/{lng?}', [App\Http\Controllers\ShopController::class, 'showShopsAdd'])->name('admin.shops.add'); //Shows Add New Shop Page as an Admin
   Route::get('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'showEditShop'])->name('admin.shops.edit'); //Shows Edit Shop Page as an Admin
   Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit'); //Handles functions for Edit Shop Page as an Admin
+  Route::get('/admin/shop/images/{id}', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('admin.shop.images'); //Shows Shop's Images Page for Shopowner
+  Route::post('/admin/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('admin.shop.images.delete'); //Handles functions for Deleting Shop Image
+  Route::get('/admin/shop/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('admin.shop.images.upload'); //Shows Shop's Upload Image Page for Shopowner
+  Route::post('/admin/shop/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('admin.shop.images.upload'); //Handles functions for Uploading Shop Image
+  Route::post('/admin/shop/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('admin.shop.images.logo.upload'); //Handles functions for uploading Shop Logo Image
+  Route::get('/admin/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('admin.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
+  Route::get('/admin/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('admin.shop.services.add'); //Shows Add Service Page for Shop
+  Route::get('/admin/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('admin.shop.services'); //Shows Shop's Services Page for Shopowner
+  Route::post('/admin/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('admin.shop.services.add'); //Handles functions for Adding a Shop Service
+  Route::post('/admin/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('admin.shop.services.delete'); //Handles functions for Deleting a Shop Service
+  Route::get('/admin/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('admin.shop.services.edit'); //Shows Edit Page for Shop Service
+  Route::post('/admin/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('admin.shop.services.edit'); //Handles functions for Editing a Shop Service
   Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete'); //Shows Delete Shop Page
   Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete'); //Handles functions for Deleting a Shop
   Route::post('/admin/shop/reviews/delete/{id}', [App\Http\Controllers\ReviewController::class, 'deleteReview'])->name('admin.shops.reviews.delete'); //Handles functions for deleting a Shop Review
-
+  Route::get('/admin/shop/settings', [App\Http\Controllers\ShopController::class, 'showShopSettingsAsOwner'])->name('admin.shop.settings'); //Shows Shop's Settings Page for Shopowner
   Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve'); //Handles functions for Approving a New Shop
 });
 
