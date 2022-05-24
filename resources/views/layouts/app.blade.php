@@ -164,7 +164,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="navbar bg-white justify-content-center shadow">
+    <footer class="navbar mt-auto bg-white justify-content-center shadow">
       <div class="row">
         <div class="col-12 text-center">
           <p>
