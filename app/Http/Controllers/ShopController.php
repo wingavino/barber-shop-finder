@@ -423,6 +423,15 @@ class ShopController extends Controller
     }
   }
 
+  public function showShopSettings($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+
+    if (Auth::user()->type 'admin') {
+      return view('admin/shop-settings', ['shop' => $shop]);
+    }
+  }
+
   public function showShopSettingsAsOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
