@@ -80,7 +80,7 @@
                       <div class="form-group row mb-0">
                         <label for="edit" class="col-md-4 col-form-label"></label>
                         <div class="col-md-6">
-                          <a type="button" role="button" href="{{ route('shopowner.shop.edit') }}" class="btn btn-primary col-md-12">
+                          <a type="button" role="button" href="{{ route('admin.shops.edit', ['id' => $shop->id]) }}" class="btn btn-primary col-md-12">
                             {{ __('Edit') }}
                           </a>
                         </div>
