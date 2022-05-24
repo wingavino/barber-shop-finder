@@ -21,7 +21,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-4" style="max-height:100vh; overflow-y:auto;">
+    <div class="col-12 col-lg-4" style="max-height:80vh; overflow-y:auto;">
       <div class="card" style="width: 100%;">
         <div class="card-header text-center">
           <div class="row">
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-lg-8 order-last" style="width: 75%; height: 100vh">
+    <div class="col-12 col-lg-8 order-last" style="width: 75%; height: 80vh">
       <div id="map" style="width:100%;height:100%"></div>
     </div>
   </div>
