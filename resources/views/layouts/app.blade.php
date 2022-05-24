@@ -164,6 +164,16 @@
             @yield('content')
         </main>
     </div>
+    <footer class="navbar bg-white justify-content-center shadow">
+      <div class="row">
+        <div class="col-12 text-center">
+          <p>
+            Contact Us at: <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a>
+          </p>
+        </div>
+
+      </div>
+    </footer>
 </body>
 @yield('custom-scripts')
 </html>
