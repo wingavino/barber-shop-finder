@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use App\Models\Shop;
 use Auth;
 use File;
 
 class ImageController extends Controller
 {
-  public function showUploadImage()
+  public function showUploadImage($id)
   {
-    return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
+    $shop = Shop::where('id', $id)->first();
+    
+    if (Auth::user()->type == 'admin') {
+      return view('admin/shop-images-upload', ['shop' => Auth::user()->shop]);
+    }else {
+      return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
+    }
   }
 
   public function showUploadID()
