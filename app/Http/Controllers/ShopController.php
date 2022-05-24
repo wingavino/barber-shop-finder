@@ -106,7 +106,11 @@ class ShopController extends Controller
     $shop = Shop::where('id', $id)->first();
     $shop_services = $shop->shop_services;
 
-    return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+    }else {
+      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+    }
   }
 
   public function showShopEmployeesAsShopOwner()
