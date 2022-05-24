@@ -20,7 +20,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ (Route::currentRouteName() == 'admin.shop.settings') ? 'active' : '' }}" href="{{ route('admin.shop.settings') }}">
+    <a class="nav-link {{ (Route::currentRouteName() == 'admin.shop.settings') ? 'active' : '' }}" href="{{ route('admin.shop.settings', ['id' => $shop->id]) }}">
       {{ __('Settings') }}
     </a>
   </li>
