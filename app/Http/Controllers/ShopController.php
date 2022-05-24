@@ -143,7 +143,11 @@ class ShopController extends Controller
     $review_count = Review::where('shop_id', $shop->id)->count();
     $review_average = Review::where('shop_id', $shop->id)->avg('rating');
 
-    return view('shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    if (Auth::user() && Auth::user()->type =='admin') {
+      return view('admin/shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    }else {
+      return view('shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    }
   }
 
   public function showShopReviewsAsOwner()
