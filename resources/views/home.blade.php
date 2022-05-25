@@ -147,7 +147,7 @@
                     listItem.appendChild(listItemDistance);
                   },
                   () => {
-                    
+
                   });
                 }
 
@@ -185,7 +185,7 @@
                           dataType:'json',
                           success:function(response){
                             $.each(response, function(key, open_hours) {
-                              contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start + ' ~ ' + open_hours.time_end + '</p>';
+                              contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start.slice(0, -3) + ' ~ ' + open_hours.time_end.slice(0, -3) + '</p>';
                             })
                           },complete:function(){
                             contentString+=
