@@ -31,7 +31,7 @@
                     <div class="col-3">
                       <h4>Logo</h4>
                     @isset($logo)
-                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $logo->id]) }}" data-id="{{ $logo->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}">
+                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shop.images.delete', ['id' => $shop->id, 'image_id' => $logo->id]) }}" data-id="{{ $shop->id }}" data-image-id="{{ $logo->id }}" data-src="{{ asset('img/'.$logo->path) }}">
                           <img src="{{ asset('img/'.$logo->path) }}" class="img-thumbnail" alt="...">
                         </a>
                     @else
