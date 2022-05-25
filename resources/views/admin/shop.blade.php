@@ -10,6 +10,7 @@
       </div>
       <div class="col-8 col-sm-12 text-center">
         <h2>{{ $shop->name }}</h2>
+        <h5 class="text-secondary">{{ $shop->type }}</h5>
         <h5>{{ $shop->address }}</h5>
       </div>
 
