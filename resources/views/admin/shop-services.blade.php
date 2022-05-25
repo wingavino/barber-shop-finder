@@ -49,7 +49,7 @@
 
                               <td>
                                 <a class="btn btn-primary col-md-4" href="{{ route('admin.shop.services.edit', ['id' => $shop->id, 'service_id' => $service->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shop.services.delete', ['id' => $shop->id, 'service_id' => $service->id]) }}" data-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
+                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shop.services.delete', ['id' => $shop->id, 'service_id' => $service->id]) }}" data-id="{{ $service->id }}" data-service-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
                               </td>
                             </tr>
                             @endforeach
