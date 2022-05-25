@@ -25,10 +25,27 @@
                       </div>
 
                       <div class="form-group row">
+                        <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Shop Type') }}</label>
+
+                        <div class="col-md-6">
+                            <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
+                              <option value="salon" {{ $shop->type == 'salon' ? 'selected' : '' }}>Salon</option>
+                              <option value="barber" {{ $shop->type == 'barber' ? 'selected' : ''}}>Barber</option>
+                            </select>
+
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                      <div class="form-group row">
                           <label for="owner_name" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
 
                           <div class="col-md-6">
-                              <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ __($shop->owner_name) }}" required autocomplete="owner_name">                              
+                              <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ __($shop->owner_name) }}" required autocomplete="owner_name">
 
                               @error('owner_name')
                                   <span class="invalid-feedback" role="alert">
