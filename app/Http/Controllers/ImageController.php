@@ -13,9 +13,9 @@ class ImageController extends Controller
   public function showUploadImage($id)
   {
     $shop = Shop::where('id', $id)->first();
-    
+
     if (Auth::user()->type == 'admin') {
-      return view('admin/shop-images-upload', ['shop' => Auth::user()->shop]);
+      return view('admin/shop-images-upload', ['shop' => $shop]);
     }else {
       return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
     }
@@ -63,7 +63,7 @@ class ImageController extends Controller
     }
   }
 
-  public function uploadLogo(Request $request)
+  public function uploadLogo($id, Request $request)
   {
     $request->validate([
       'logoFile' => 'required',
@@ -74,10 +74,10 @@ class ImageController extends Controller
       $image = $request->file('logoFile');
       $name = 'logo';
       $extension = $image->getClientOriginalExtension();
-      $name = 'shop/logo/'.$name.'.'.$extension;
+      $name = 'shop/' .$id. 'logo/'.$name.'.'.$extension;
       $logoData = $name;
 
-      $file = Image::where('shop_id', Auth::user()->shop->id)->where('type', 'logo')->first();
+      $file = Image::where('shop_id', $id)->where('type', 'logo')->first();
       if ($file) {
         $file->path = $imgData;
         $file->save();
@@ -89,9 +89,9 @@ class ImageController extends Controller
 
         $fileModal->save();
       }
-      $image->move(public_path().'/img/'.Auth::user()->id.'/shop/logo/', $name);
+      $image->move(public_path().'/img/shop/' .$id. '/logo/', $name);
 
-       return redirect()->route('shopowner.shop.images');
+       return redirect()->route('admin.shop.images', ['id' => $id]);
     }
   }
 
