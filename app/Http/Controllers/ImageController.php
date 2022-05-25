@@ -74,16 +74,16 @@ class ImageController extends Controller
       $image = $request->file('logoFile');
       $name = 'logo';
       $extension = $image->getClientOriginalExtension();
-      $name = 'shop/' .$id. 'logo/'.$name.'.'.$extension;
+      $name = 'shop/' .$id. '/logo/'.$name.'.'.$extension;
       $logoData = $name;
 
       $file = Image::where('shop_id', $id)->where('type', 'logo')->first();
       if ($file) {
-        $file->path = $imgData;
+        $file->path = $logoData;
         $file->save();
       }else {
         $fileModal = new Image();
-        $fileModal->shop_id = Auth::user()->shop->id;
+        $fileModal->shop_id = $id;
         $fileModal->path = $logoData;
         $fileModal->type = 'logo';
 
