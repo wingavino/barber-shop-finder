@@ -25,6 +25,23 @@
                         </div>
 
                         <div class="form-group row">
+                          <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Shop Type') }}</label>
+
+                          <div class="col-md-6">
+                              <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
+                                <option value="salon">Salon</option>
+                                <option value="barber">Barber</option>
+                              </select>
+
+                              @error('type')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
+
+                        <div class="form-group row">
                             <label for="owner_id" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
 
                             <div class="col-md-6">
