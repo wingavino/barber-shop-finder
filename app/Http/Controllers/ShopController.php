@@ -210,11 +210,11 @@ class ShopController extends Controller
     return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
-  public function showAddShopServices()
+  public function showAddShopServices($id)
   {
-    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $shop = Shop::where('shop_id', $id)->first();
 
-    return view('shopowner/shop-services-add', ['shop' => $shop]);
+    return view('admin/shop-services-add', ['shop' => $shop]);
   }
 
   public function addShopServices(Request $request)
