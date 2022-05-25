@@ -47,7 +47,7 @@ class ImageController extends Controller
         }
 
         foreach ($imgData as $img) {
-          $img = "shop/". $id . $img;
+          $img = "shop/". $id . '/' . $img;
           $file = Image::where('shop_id', $id)->where('path', $img)->first();
           if (!$file) {
             $fileModal = new Image();
