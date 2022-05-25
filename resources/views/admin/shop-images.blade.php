@@ -49,7 +49,7 @@
                       @foreach($images as $image)
                         <div class="col-6">
                           <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}">
-                            <img src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}" class="img-thumbnail" alt="...">
+                            <img src="{{ asset('img/'.$image->path) }}" class="img-thumbnail" alt="...">
                           </a>
                         </div>
                       @endforeach
