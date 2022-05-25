@@ -230,12 +230,12 @@ class ShopController extends Controller
     return redirect()->route('admin.shop.services', ['id' => $shop->id]);
   }
 
-  public function showEditShopServices($id)
+  public function showEditShopServices($id, $service_id)
   {
-    $shop = Auth::user()->shop;
-    $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+    $shop = Shop::where('id', $id)->first();
+    $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
 
-    return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
   }
 
   public function editShopServices(Request $request, $id)
