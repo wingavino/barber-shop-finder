@@ -212,7 +212,7 @@ class ShopController extends Controller
 
   public function showAddShopServices($id)
   {
-    $shop = Shop::where('shop_id', $id)->first();
+    $shop = Shop::where('id', $id)->first();
 
     return view('admin/shop-services-add', ['shop' => $shop]);
   }
