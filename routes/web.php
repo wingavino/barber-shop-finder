@@ -167,7 +167,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'showEditShop'])->name('admin.shops.edit'); //Shows Edit Shop Page as an Admin
   Route::post('/admin/shops/edit/{id}', [App\Http\Controllers\ShopController::class, 'editShop'])->name('admin.shops.edit'); //Handles functions for Edit Shop Page as an Admin
   Route::get('/admin/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('admin.shop.images'); //Shows Shop's Images Page for Shopowner
-  Route::post('/admin/shop/images/{id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('admin.shop.images.delete'); //Handles functions for Deleting Shop Image
+  Route::post('/admin/shop/{id}/images/{image_id}/delete', [App\Http\Controllers\ImageController::class, 'deleteImage'])->name('admin.shop.images.delete'); //Handles functions for Deleting Shop Image
   Route::get('/admin/shop/{id}/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('admin.shop.images.upload'); //Shows Shop's Upload Image Page for Shopowner
   Route::post('/admin/shop/{id}/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('admin.shop.images.upload'); //Handles functions for Uploading Shop Image
   Route::post('/admin/shop/{id}/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('admin.shop.images.logo.upload'); //Handles functions for uploading Shop Logo Image
