@@ -59,7 +59,7 @@ class ImageController extends Controller
           }
         }
 
-       return redirect()->route('admin.shop.images');
+       return redirect()->route('admin.shop.images', ['id' => $id]);
     }
   }
 
