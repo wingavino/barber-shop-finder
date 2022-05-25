@@ -48,7 +48,7 @@
                     @isset($images)
                       @foreach($images as $image)
                         <div class="col-6">
-                          <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}">
+                          <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shop.images.delete', ['id' => $shop->id, 'image_id' => $image->id]) }}" data-id="{{ $shop->id }}" data-image-id="{{ $image->id }}" data-src="{{ asset('img/'.$image->path) }}">
                             <img src="{{ asset('img/'.$image->path) }}" class="img-thumbnail" alt="...">
                           </a>
                         </div>
@@ -75,12 +75,12 @@
                     </div>
                     <form class="" action="#" method="post">
                       @csrf
-                      <!-- <div class="row">
+                      <div class="row">
                         <div class="col-md-12">
                           <p>Please confirm that you want to delete the following image.</p>
                           <h4 id='name'></h4>
                         </div>
-                      </div> -->
+                      </div>
                       <div class="row">
                         <div class="col-md-12 justify-content-center">
                           <button class="btn btn-danger col-md-6" id="deleteButton" type="submit">Delete</button>
