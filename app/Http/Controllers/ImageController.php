@@ -31,7 +31,7 @@ class ImageController extends Controller
     return view('shopowner/image-shop-document-upload');
   }
 
-  public function uploadImage(Request $request)
+  public function uploadImage($id, Request $request)
   {
     $request->validate([
       'imageFile' => 'required',
@@ -42,16 +42,16 @@ class ImageController extends Controller
         foreach($request->file('imageFile') as $image)
         {
             $name = $image->getClientOriginalName();
-            $image->move(public_path().'/img/'.Auth::user()->id.'/shop/', $name);
+            $image->move(public_path().'/img/shop/'.$id, $name);
             $imgData[] = $name;
         }
 
         foreach ($imgData as $img) {
-          $img = "shop/" . $img;
-          $file = Image::where('shop_id', Auth::user()->shop->id)->where('path', $img)->first();
+          $img = "shop/". $id . $img;
+          $file = Image::where('shop_id', $id)->where('path', $img)->first();
           if (!$file) {
             $fileModal = new Image();
-            $fileModal->shop_id = Auth::user()->shop->id;
+            $fileModal->shop_id = $id;
             $fileModal->path = $img;
             $fileModal->type = 'images';
 
@@ -59,7 +59,7 @@ class ImageController extends Controller
           }
         }
 
-       return redirect()->route('shopowner.shop.images');
+       return redirect()->route('admin.shop.images');
     }
   }
 
