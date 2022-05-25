@@ -306,6 +306,7 @@ class ShopController extends Controller
     if (!$shop) {
       $shop = new Shop();
       $shop->name = $request->name;
+      $shop->type = $request->type;
 
       if ($request->owner_id) {
         $shop->owner_id = $request->owner_id;
