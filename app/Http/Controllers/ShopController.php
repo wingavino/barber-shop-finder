@@ -382,6 +382,8 @@ class ShopController extends Controller
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
+      $shop->type = $request->type;
+      
       if (Auth::user()->type == 'admin') {
         $shop->owner_id = $request->owner_id;
       }else {
