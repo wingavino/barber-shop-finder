@@ -176,8 +176,8 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shop/{id}/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('admin.shop.services.add'); //Shows Add Service Page for Shop
   Route::post('/admin/shop/{id}/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('admin.shop.services.add'); //Handles functions for Adding a Shop Service
   Route::post('/admin/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('admin.shop.services.delete'); //Handles functions for Deleting a Shop Service
-  Route::get('/admin/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('admin.shop.services.edit'); //Shows Edit Page for Shop Service
-  Route::post('/admin/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('admin.shop.services.edit'); //Handles functions for Editing a Shop Service
+  Route::get('/admin/shop/{id}/services/{service_id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('admin.shop.services.edit'); //Shows Edit Page for Shop Service
+  Route::post('/admin/shop/{id}/services/{service_id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('admin.shop.services.edit'); //Handles functions for Editing a Shop Service
   Route::get('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'showDeleteShop'])->name('admin.shops.delete'); //Shows Delete Shop Page
   Route::post('/admin/shops/delete/{id}', [App\Http\Controllers\ShopController::class, 'deleteShop'])->name('admin.shops.delete'); //Handles functions for Deleting a Shop
   Route::post('/admin/shop/reviews/delete/{id}', [App\Http\Controllers\ReviewController::class, 'deleteReview'])->name('admin.shops.reviews.delete'); //Handles functions for deleting a Shop Review
