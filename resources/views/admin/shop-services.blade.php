@@ -25,7 +25,7 @@
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
                     <div class="col-md-12">
-                      <a class="btn btn-success col-md-2" href="{{ route('shopowner.shop.services.add') }}" type="button" role="button" name="button">Add New Shop Service</a>
+                      <a class="btn btn-success col-md-2" href="{{ route('admin.shop.services.add', ['id' => $shop->id]) }}" type="button" role="button" name="button">Add New Shop Service</a>
                     </div>
                   </div>
 
