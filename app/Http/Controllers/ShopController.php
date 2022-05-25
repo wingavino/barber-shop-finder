@@ -414,7 +414,7 @@ class ShopController extends Controller
 
     switch (Auth::user()->type) {
       case 'admin':
-      return redirect()->route('admin.shops');
+      return redirect()->route('admin.shop', ['id' => $shop->id]);
       break;
 
       default:
