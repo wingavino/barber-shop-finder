@@ -21,7 +21,7 @@ class ShopController extends Controller
   {
     $data = DB::table('shops')
                 ->leftJoin('users', 'shops.owner_id', '=', 'users.id')
-                ->select('shops.*', 'users.id as owner_id', 'users.name as owner_name', 'users.mobile')
+                ->select('shops.*', 'users.id as owner_id', 'users.mobile')
                 ->get();
     switch (Auth::user()->type) {
       case 'admin':
