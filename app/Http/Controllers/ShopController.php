@@ -306,7 +306,7 @@ class ShopController extends Controller
       $shop = new Shop();
       $shop->name = $request->name;
 
-      if ($shop->owner_id) {
+      if ($request->owner_id) {
         $shop->owner_id = $request->owner_id;
       }else {
         $shop->owner_id = Auth::user()->id;
@@ -343,11 +343,12 @@ class ShopController extends Controller
         return redirect()->back();
       }
 
-      $queue = new Queue();
-      $queue->shop_id = $shop->id;
-      $queue->save();
+      // $queue = new Queue();
+      // $queue->shop_id = $shop->id;
+      // $queue->save();
 
-      return redirect()->route('shopowner.shop');
+      return redirect()->back();
+      // return redirect()->route('shopowner.shop');
     }
   }
 
