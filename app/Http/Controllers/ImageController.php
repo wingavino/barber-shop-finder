@@ -95,15 +95,16 @@ class ImageController extends Controller
     }
   }
 
-  public function deleteImage(Request $request, $id)
+  public function deleteImage(Request $request, $id, $image_id)
   {
-    $image = Image::where('shop_id', Auth::user()->shop->id)->where('id', $id)->first();
-    $file = public_path('img/'.Auth::user()->id.'/'.$image->path);
+    $shop = Shop::where('id', $id)->first();
+    $image = Image::where('shop_id', $shop->id)->where('id', $image_id)->first();
+    $file = public_path('img/'.$image->path);
     if(File::exists($file)){
         File::delete($file);
         if ($image) {
           $image->delete();
-          return redirect()->route('shopowner.shop.images');
+          return redirect()->route('admin.shop.images', ['id' => $shop->id]);
         }
     }
 
