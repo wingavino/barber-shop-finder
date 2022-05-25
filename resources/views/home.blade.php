@@ -145,17 +145,41 @@
                   '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
-                    '<a href="' + app_url +'/shop/' + shop.id + '">' +
-                      '<img src="/img/'+shop.logo+'" class="img-fluid" style="width: 150px">' +
-                    '</a>' +
-                    '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
-                    '<div id="bodyContent">' +
-                      "<p>" + shop.address + "</p>" +
-                      "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
-                    "</div>" +
-                  "</div>";
+                    '<a href="' + app_url +'/shop/' + shop.id + '">';
 
-                  attachInfoWindow(marker, contentString);
+                    $.ajax({
+                      url:'/shop/'+shop.id+'/logo',
+                      type:'GET',
+                      dataType:'json',
+                      success:function(response){
+                        if (!$.isEmptyObject(response)) {
+                          contentString += '<img src="/img/'+ response.path +'" class="img-fluid" style="width: 150px">';
+                        }
+                      },complete:function(){
+                        contentString +=
+                          '</a>' +
+                          '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
+                          '<div id="bodyContent">' +
+                            "<p>" + shop.address + "</p>";
+                        $.ajax({
+                          url:'/shop/'+shop.id+'/open_hours',
+                          type:'GET',
+                          dataType:'json',
+                          success:function(response){
+                            $.each(response, function(key, open_hours) {
+                              contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start + ' ~ ' + open_hours.time_end + '</p>';
+                            })
+                          },complete:function(){
+                            contentString+=
+                                "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
+                              "</div>" +
+                            "</div>";
+                            attachInfoWindow(marker, contentString);
+                          }
+                        })
+                      }
+                    })
+
               });
 
               console.log(markers);
