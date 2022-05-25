@@ -238,18 +238,18 @@ class ShopController extends Controller
     return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
   }
 
-  public function editShopServices(Request $request, $id)
+  public function editShopServices(Request $request, $id, $service_id)
   {
-    $shop = Auth::user()->shop;
+    $shop = Shop::where('id', $id)->first();
     if ($shop) {
-      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
         $shop_service->name = $request->name;
         $shop_service->price = $request->price;
         $shop_service->save();
       }
     }
-    return redirect()->route('shopowner.shop.services');
+    return redirect()->route('admin.shop.services', ['id' => $shop->id]);
   }
 
   public function deleteShopServices(Request $request, $id)
