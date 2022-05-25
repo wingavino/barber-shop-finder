@@ -347,8 +347,7 @@ class ShopController extends Controller
       // $queue->shop_id = $shop->id;
       // $queue->save();
 
-      return redirect()->back();
-      // return redirect()->route('shopowner.shop');
+      return redirect()->route('admin.shop', ['id' => $shop->id]);
     }
   }
 
