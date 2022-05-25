@@ -34,6 +34,35 @@ class ShopController extends Controller
     }
   }
 
+  public function showShopsList(Request $request)
+  {
+    $shops = DB::table('shops')
+                  ->leftJoin('images', 'images.shop_id', '=', 'shops.id')
+                  ->where('shops.hidden', false)
+                  ->where('images.type', 'logo')
+                  ->select('shops.*', 'images.path as logo')
+                  ->get();
+
+    if ($request->type != 'all') {
+      $shops = DB::table('shops')
+                    ->leftJoin('images', 'images.shop_id', '=', 'shops.id')
+                    ->where('shops.hidden', false)
+                    ->where('shops.type', $request->type)
+                    ->where('images.type', 'logo')
+                    ->select('shops.*', 'images.path as logo')
+                    ->get();
+    }
+
+    $open_hours = DB::table('open_hours')->get();
+    $open_hours = $open_hours->crossJoin($shops);
+
+    if ($request->ajax()) {
+      return response()->json(array('shops' => $shops, 'open_hours' => $open_hours, 'type' => $request->type));
+    }
+
+    return route('home');
+  }
+
   public function showShop($id)
   {
     $shop = Shop::where('id', $id)->first();

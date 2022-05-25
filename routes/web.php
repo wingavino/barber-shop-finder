@@ -37,7 +37,7 @@ Route::get('/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 's
 Route::get('/shop/{id}/reviews/add', [App\Http\Controllers\ShopController::class, 'showShopAddReview'])->name('shop.reviews.add'); //Shows Add Shop Review Page
 Route::post('/shop/{id}/reviews/add', [App\Http\Controllers\ReviewController::class, 'addShopReview'])->name('shop.reviews.add'); //Handles functions for Add Shop Review Page
 Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}', [App\Http\Controllers\ReviewController::class, 'reportReview'])->name('shop.reviews.report'); //Handles functions for Reporting a Shop Review
-
+Route::get('/shops/list', [App\Http\Controllers\ShopController::class, 'showShopsList'])->name('shops.list'); //Shows Add Shop Review Page
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
 

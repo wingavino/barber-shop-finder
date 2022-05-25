@@ -8,7 +8,7 @@
   var app_url = "{{env('APP_URL')}}";
 </script>
 
-<script defer type="text/javascript" src="{{ asset('js/maps/index.js') }}"></script>
+<script defer type="text/javascript" src="{{ asset('js/maps/map.js') }}"></script>
 
 <script defer type="text/javascript" src="{{ asset('js/maps/search.js') }}"></script>
 
@@ -44,12 +44,16 @@
               <div class="row">
                 <div class="col-12">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="" value="salon" >
-                    <label class="form-check-label" for="inlineCheckbox1">Salon</label>
+                    <input class="form-check-input" type="radio"  name="type" value="all" checked>
+                    <label class="form-check-label" for="type">All</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="" value="barber" >
-                    <label class="form-check-label" for="inlineCheckbox1">Barber</label>
+                    <input class="form-check-input" type="radio"  name="type" value="salon">
+                    <label class="form-check-label" for="type">Salon</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio"  name="type" value="barber">
+                    <label class="form-check-label" for="type">Barber</label>
                   </div>
                 </div>
               </div>
@@ -85,6 +89,84 @@
       </div>
     </div>
     <div class="col-12 col-lg-8 order-last" style="width: 100%; height: 80vh">
+      <script>
+      $(document).ready(function(){
+
+        $('input[type=radio][name=type]').change(function() {
+          updateShopList(this.value);
+        });
+
+        function updateShopList(shopType){
+          $.ajax({
+            url:'/shops/list',
+            type:'GET',
+            data: {
+              type: shopType
+            },
+            dataType:'json',
+            success:function(response){
+              $.each(markers, function (key, mark) {
+                mark.setMap(null);
+              });
+              markers = [];
+
+              $('#shops-list').empty();
+              $.each(response.shops, function(key, shop) {
+                var marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(shop.lat, shop.lng),
+                  map: map,
+                  title: shop.name
+                });
+
+                markers.push(marker);
+
+                var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
+
+                var listItem = document.createElement('a');
+                listItem.href = '#map';
+                listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
+                var bold = document.createElement("strong");
+                var listItemContent = document.createTextNode(shop.name.toString());
+                bold.appendChild(listItemContent);
+                var br = document.createElement("br");
+                var listItemAddress = document.createTextNode(shop.address.toString());
+                listItem.appendChild(bold);
+                listItem.appendChild(br);
+                listItem.appendChild(listItemAddress);
+
+                $(listItem).on("click", () => {
+                  // Triggers a click event on the marker which pans the map and opens the InfoWindow
+                  new google.maps.event.trigger( markers[key], 'click' );
+                });
+
+                $('#shops-list').append(listItem);
+
+                var contentString =
+                  '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<a href="' + app_url +'/shop/' + shop.id + '">' +
+                      '<img src="/img/'+shop.logo+'" class="img-fluid" style="width: 150px">' +
+                    '</a>' +
+                    '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
+                    '<div id="bodyContent">' +
+                      "<p>" + shop.address + "</p>" +
+                      "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
+                    "</div>" +
+                  "</div>";
+
+                  attachInfoWindow(marker, contentString);
+              });
+
+              console.log(markers);
+            },error:function(err){
+
+            }
+          })
+        }
+        updateShopList($('input[type=radio][name=type]:checked').val());
+      });
+      </script>
       <div id="map" style="width:100%;height:100%"></div>
     </div>
   </div>
