@@ -151,7 +151,11 @@ var infowindow;
           '</div>';
           for (var l = 0; l < logos.length; l++) {
             if (logos[l].shop_id == shop.id) {
-              contentString += '<img src="'+app_url+'/img/'+logos[l].path+'" class="img-fluid" style="width: 150px">';
+              contentString +=
+                '<a href="' + app_url +'/shop/' + shop.id + '">' +
+                  '<img src="'+app_url+'/img/'+logos[l].path+'" class="img-fluid" style="width: 150px">' +
+                '</a>'
+                ;
             }
           }
           contentString +=
