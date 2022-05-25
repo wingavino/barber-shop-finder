@@ -130,9 +130,27 @@
                 bold.appendChild(listItemContent);
                 var br = document.createElement("br");
                 var listItemAddress = document.createTextNode(shop.address.toString());
+
                 listItem.appendChild(bold);
                 listItem.appendChild(br);
                 listItem.appendChild(listItemAddress);
+
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition((position) => {
+                    var device = new google.maps.Marker({
+                      position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                      map: map,
+                    });
+                    var br = document.createElement("br");
+                    listItem.appendChild(br);
+                    var listItemDistance = document.createTextNode(haversine_distance(device, marker).toFixed(2) + " km");
+                    listItem.appendChild(listItemDistance);
+                  },
+                  () => {
+                    
+                  });
+                }
+
 
                 $(listItem).on("click", () => {
                   // Triggers a click event on the marker which pans the map and opens the InfoWindow
@@ -182,7 +200,7 @@
 
               });
 
-              console.log(markers);
+              // console.log(markers);
             },error:function(err){
 
             }
