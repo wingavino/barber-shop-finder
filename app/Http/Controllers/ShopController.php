@@ -217,9 +217,9 @@ class ShopController extends Controller
     return view('admin/shop-services-add', ['shop' => $shop]);
   }
 
-  public function addShopServices(Request $request)
+  public function addShopServices($id, Request $request)
   {
-    $shop = Auth::user()->shop;
+    $shop = Shop::where('id', $id)->first();
     if ($shop) {
       $shop_service = new ShopServices;
       $shop_service->shop_id = $shop->id;
@@ -227,7 +227,7 @@ class ShopController extends Controller
       $shop_service->price = $request->price;
       $shop_service->save();
     }
-    return redirect()->route('shopowner.shop.services');
+    return redirect()->route('admin.shop.services', ['id' => $shop->id]);
   }
 
   public function showEditShopServices($id)
