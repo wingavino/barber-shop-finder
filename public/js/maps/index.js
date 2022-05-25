@@ -2,6 +2,7 @@ let map;
 var shops = [];
 var open_hours = [];
 var reviews = [];
+var logos = [];
 var markers = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
@@ -20,6 +21,12 @@ async function getOpenHours() {
 
 async function getReviews() {
   let response = await fetch (app_url + '/api/reviews');
+  let data = await response.json();
+  return data;
+};
+
+async function getImages() {
+  let response = await fetch (app_url + '/api/images');
   let data = await response.json();
   return data;
 };
@@ -82,6 +89,20 @@ function listReviews(data) {
   });
 }
 
+function listLogos(data) {
+  Object.entries(data.logos).forEach(([key, value]) => {
+    logos.push({
+      'id':  value.id,
+      'shop_id': value.shop_id,
+      'user_id': value.user_id,
+      'path': value.path,
+      'type': value.type,
+      'created_at': value.created_at,
+      'updated_at': value.updated_at,
+    });
+  });
+}
+
 var infowindow;
   async function initMap() {
     await getShops()
@@ -97,6 +118,11 @@ var infowindow;
     await getReviews()
     .then(
       data => listReviews(data),
+    );
+
+    await getImages()
+    .then(
+      data => listLogos(data),
     );
 
     map = new google.maps.Map(document.getElementById("map"), {
@@ -122,7 +148,13 @@ var infowindow;
       var contentString =
         '<div id="content">' +
           '<div id="siteNotice">' +
-          "</div>" +
+          '</div>';
+          for (var l = 0; l < logos.length; l++) {
+            if (logos[l].shop_id == shop.id) {
+              contentString += '<img src="'+app_url+'/img/'+logos[l].path+'" class="img-fluid" style="width: 150px">';
+            }
+          }
+          contentString +=
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
           '<div id="bodyContent">' +
             // "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b></p>" +
