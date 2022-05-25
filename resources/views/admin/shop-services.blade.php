@@ -34,6 +34,7 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Service Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Actions</th>
@@ -44,6 +45,7 @@
                           @isset($shop_services)
                             @foreach ($shop_services as $shop_service => $service)
                             <tr>
+                              <td>{{ $service->id }}</td>
                               <td>{{ $service->name }}</td>
                               <td>₱{{ $service->price }}</td>
 
@@ -72,7 +74,7 @@
                               @csrf
                               <div class="row">
                                 <div class="col-md-12">
-                                  <p>Please confirm that you want to delete the following shop.</p>
+                                  <p>Please confirm that you want to delete the following service.</p>
                                   <h4 id='name'></h4>
                                 </div>
                               </div>
