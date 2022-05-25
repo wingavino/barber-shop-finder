@@ -106,11 +106,12 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
     $shop_services = $shop->shop_services;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     if (Auth::user() && Auth::user()->type == 'admin') {
-      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
     }else {
-      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
+      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
     }
   }
 
@@ -140,14 +141,15 @@ class ShopController extends Controller
   public function showShopReviews($id)
   {
     $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
     $shop_reviews = Review::where('shop_id', $shop->id)->get();
     $review_count = Review::where('shop_id', $shop->id)->count();
     $review_average = Review::where('shop_id', $shop->id)->avg('rating');
 
     if (Auth::user() && Auth::user()->type =='admin') {
-      return view('admin/shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+      return view('admin/shop-reviews', ['shop' => $shop, 'logo' => $logo, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
     }else {
-      return view('shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+      return view('shop-reviews', ['shop' => $shop, 'logo' => $logo, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
     }
   }
 
@@ -213,8 +215,9 @@ class ShopController extends Controller
   public function showAddShopServices($id)
   {
     $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('admin/shop-services-add', ['shop' => $shop]);
+    return view('admin/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
   }
 
   public function addShopServices($id, Request $request)
@@ -383,7 +386,7 @@ class ShopController extends Controller
     if ($shop) {
       $shop->name = $request->name;
       $shop->type = $request->type;
-      
+
       if (Auth::user()->type == 'admin') {
         $shop->owner_id = $request->owner_id;
       }else {
@@ -430,9 +433,10 @@ class ShopController extends Controller
   public function showShopSettings($id)
   {
     $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     if (Auth::user()->type == 'admin') {
-      return view('admin/shop-settings', ['shop' => $shop]);
+      return view('admin/shop-settings', ['shop' => $shop, 'logo' => $logo]);
     }
   }
 

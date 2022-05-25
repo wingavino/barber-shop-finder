@@ -13,11 +13,12 @@ class ImageController extends Controller
   public function showUploadImage($id)
   {
     $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     if (Auth::user()->type == 'admin') {
-      return view('admin/shop-images-upload', ['shop' => $shop]);
+      return view('admin/shop-images-upload', ['shop' => $shop, 'logo' => $logo]);
     }else {
-      return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
+      return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop, 'logo' => $logo]);
     }
   }
 
