@@ -24,7 +24,7 @@
               </div>
               <div class="card-body">
                 <div class="row text-center justify-content-center">
-                  <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.delete') }}" data-id="{{ Auth::user()->shop->id }}" data-name="{{ Auth::user()->shop->name }}">Delete Shop</button>
+                  <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shops.delete', ['id' => $shop->id]) }}" data-id="{{ $shop->id }}" data-name="{{ $shop->name }}">Delete Shop</button>
                 </div>
               </div>
           </div>
