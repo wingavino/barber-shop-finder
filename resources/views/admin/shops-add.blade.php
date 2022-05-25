@@ -29,8 +29,8 @@
 
                           <div class="col-md-6">
                               <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
-                                <option value="salon">Salon</option>
-                                <option value="barber">Barber</option>
+                                <option value="Salon">Salon</option>
+                                <option value="Barber">Barber</option>
                               </select>
 
                               @error('type')

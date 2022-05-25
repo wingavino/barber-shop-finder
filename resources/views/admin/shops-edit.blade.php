@@ -29,8 +29,8 @@
 
                         <div class="col-md-6">
                             <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
-                              <option value="salon" {{ $shop->type == 'salon' ? 'selected' : '' }}>Salon</option>
-                              <option value="barber" {{ $shop->type == 'barber' ? 'selected' : ''}}>Barber</option>
+                              <option value="Salon" {{ $shop->type == 'salon' ? 'selected' : '' }}>Salon</option>
+                              <option value="Barber" {{ $shop->type == 'barber' ? 'selected' : ''}}>Barber</option>
                             </select>
 
                             @error('type')
