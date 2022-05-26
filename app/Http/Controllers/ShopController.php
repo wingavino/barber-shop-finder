@@ -266,6 +266,7 @@ class ShopController extends Controller
       $shop_service = new ShopServices;
       $shop_service->shop_id = $shop->id;
       $shop_service->name = $request->name;
+      $shop_service->category = $request->category;
       $shop_service->price = $request->price;
       $shop_service->save();
     }
@@ -287,6 +288,7 @@ class ShopController extends Controller
       $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
         $shop_service->name = $request->name;
+        $shop_service->category = $request->category;
         $shop_service->price = $request->price;
         $shop_service->save();
       }
