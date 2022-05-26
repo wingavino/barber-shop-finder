@@ -6,6 +6,7 @@ var logos = [];
 var markers = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
+var radiusCircle;
 
 async function getShops() {
   let response = await fetch (app_url + '/api/shops');
@@ -42,7 +43,7 @@ function haversine_distance(mk1, mk2) {
   return d;
 }
 
-async function initMap() {
+function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: philippines.lat, lng: philippines.lng },
     zoom: 13,
@@ -51,17 +52,17 @@ async function initMap() {
     streetViewControl: true,
   });
 
-  // var blueCircle = {
-  //       strokeColor: "#a3acf9",
-  //       strokeOpacity: 0.8,
-  //       strokeWeight: 2,
-  //       fillColor: "#a3acf9",
-  //       fillOpacity: 0.35,
-  //       map: map,
-  //       center: map.center,
-  //       radius: 5000 // in meters
-  //   };
-  //   var radiusCircle = new google.maps.Circle(blueCircle);
+  var blueCircle = {
+        strokeColor: "#a3acf9",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#a3acf9",
+        fillOpacity: 0.35,
+        map: map,
+        center: map.center,
+        radius: 5000 // in meters
+    };
+  radiusCircle = new google.maps.Circle(blueCircle);
 
   infowindow = new google.maps.InfoWindow();
 
@@ -110,25 +111,6 @@ function attachInfoWindow(marker, info) {
   });
 }
 
-function getLocation(device) {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        console.log('Location enabled: ' + device.position);
-        // updateRadius(radiusCircle, device);
-      },
-      () => {
-        device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-        console.log('Location disabled: ' + device.position);
-      }
-    );
-  }else {
-    device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-    console.log('Location permission not available: ' + device.position);
-  }
-}
-
 function getDistance(marker1, marker2, addUnit=false) {
   if (addUnit) {
     return haversine_distance(marker1, marker2).toFixed(2) + " km";
@@ -140,9 +122,13 @@ function getDistance(marker1, marker2, addUnit=false) {
 
 function updateRadius(radiusCircle, marker, radius=null) {
   if (radius != null) {
-
+    console.log(radius);
+    radiusCircle.setRadius(Number(radius * 1000));
+    radiusCircle.setCenter(marker.position);
+    map.panTo(marker.position);
   }else {
-    radiusCircle.bindTo('center', marker, 'position');
+    radiusCircle.setCenter(marker.position);
+    map.panTo(marker.position);
   }
 }
 

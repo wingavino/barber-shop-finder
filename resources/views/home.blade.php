@@ -116,15 +116,16 @@
             philippines.lng
           )
         }
-        getLocation(device);        
+        getLocation(device);
+        updateRadius(radiusCircle, device);
 
         $('#max_distance').on('input', function() {
           $('#max_distance_indicator').text(this.value);
+          updateRadius(radiusCircle, device, this.value);
         });
 
         $('#max_distance').on('change', function() {
           $('#max_distance_indicator').text(this.value);
-          // updateRadius(radiusCircle, device);
           getLocation(device);
           updateShopList($('input[type=radio][name=type]:checked').val());
         });
@@ -132,6 +133,30 @@
         $('input[type=radio][name=type]').change(function() {
           updateShopList(this.value);
         });
+
+        function getLocation(device) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                // console.log('Location enabled: ' + device.position);
+                updateRadius(radiusCircle, device);
+                updateShopList($('input[type=radio][name=type]:checked').val());
+              },
+              () => {
+                device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+                // console.log('Location disabled: ' + device.position);
+                updateRadius(radiusCircle, device);
+                updateShopList($('input[type=radio][name=type]:checked').val());
+              }
+            );
+          }else {
+            device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+            updateRadius(radiusCircle, device);
+            updateShopList($('input[type=radio][name=type]:checked').val());
+            // console.log('Location permission not available: ' + device.position);
+          }
+        }
 
         function updateShopList(shopType){
           $.ajax({
