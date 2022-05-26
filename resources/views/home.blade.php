@@ -86,7 +86,7 @@
                       <input class="form-control-range" type="range" id="max_distance"  name="type" min="1" max="50" step="1" value=5>
                     </div>
                     <div class="col-2">
-                      <label id="max_distance_indicator" for="max_distance">10</label>
+                      <label id="max_distance_indicator" for="max_distance">5</label>
                     </div>
                   </div>
                 </div>
@@ -116,7 +116,7 @@
             philippines.lng
           )
         }
-        getLocation(device);
+        getLocation(device);        
 
         $('#max_distance').on('input', function() {
           $('#max_distance_indicator').text(this.value);
