@@ -142,3 +142,183 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   );
   infoWindow.open(map);
 }
+
+$(document).ready(function(){
+  var device = {
+    position: new google.maps.LatLng(
+      philippines.lat,
+      philippines.lng
+    )
+  }
+  getLocation(device);
+
+  $('#max_distance').on('input', function() {
+    $('#max_distance_indicator').text(this.value);
+    updateRadius(radiusCircle, device, this.value);
+  });
+
+  $('#max_distance').on('change', function() {
+    $('#max_distance_indicator').text(this.value);
+    updateLocation(device);
+    updateShopList($('input[type=radio][name=type]:checked').val());
+  });
+
+  $('input[type=radio][name=type]').change(function() {
+    updateShopList(this.value);
+  });
+
+  function getLocation(device) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          // console.log('Location enabled: ' + device.position);
+          updateRadius(radiusCircle, device);
+          updateShopList($('input[type=radio][name=type]:checked').val());
+          map.panTo(device.position);
+        },
+        () => {
+          device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+          // console.log('Location disabled: ' + device.position);
+          updateRadius(radiusCircle, device);
+          updateShopList($('input[type=radio][name=type]:checked').val());
+          map.panTo(device.position);
+        }
+      );
+    }else {
+      device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+      // console.log('Location permission not available: ' + device.position);
+      updateRadius(radiusCircle, device);
+      updateShopList($('input[type=radio][name=type]:checked').val());
+      map.panTo(device.position);
+    }
+  }
+
+  function updateLocation(device) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          // console.log('Location enabled: ' + device.position);
+          updateRadius(radiusCircle, device);
+        },
+        () => {
+          device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+          // console.log('Location disabled: ' + device.position);
+          updateRadius(radiusCircle, device);
+        }
+      );
+    }else {
+      device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+      updateRadius(radiusCircle, device);
+      // console.log('Location permission not available: ' + device.position);
+    }
+  }
+
+  function updateShopList(shopType){
+    $.ajax({
+      url:'/shops/list',
+      type:'GET',
+      data: {
+        type: shopType
+      },
+      dataType:'json',
+      success:function(response){
+        $.each(markers, function (key, mark) {
+          mark.setMap(null);
+        });
+        markers = [];
+
+        $('#shops-list').empty();
+        $.each(response.shops, function(key, shop) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(shop.lat, shop.lng),
+            map: map,
+            title: shop.name
+          });
+
+          if (getDistance(device, marker) > $("#max_distance").val()) {
+            marker.setMap(null);
+            return false;
+          }
+
+          markers.push(marker);
+
+          var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
+
+          var listItem = document.createElement('a');
+          listItem.href = '#map';
+          listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
+          var bold = document.createElement("strong");
+          var listItemContent = document.createTextNode(shop.name.toString());
+          bold.appendChild(listItemContent);
+          var br = document.createElement("br");
+          var listItemAddress = document.createTextNode(shop.address.toString());
+
+          listItem.appendChild(bold);
+          listItem.appendChild(br);
+          listItem.appendChild(listItemAddress);
+
+          var br = document.createElement("br");
+          listItem.appendChild(br);
+
+          updateLocation(device);
+          var listItemDistance = document.createTextNode(getDistance(device, marker, true));
+          listItem.appendChild(listItemDistance);
+
+          $(listItem).on("click", () => {
+            // Triggers a click event on the marker which pans the map and opens the InfoWindow
+            new google.maps.event.trigger( markers[key], 'click' );
+          });
+
+          $('#shops-list').append(listItem);
+
+          var contentString =
+            '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<a href="' + app_url +'/shop/' + shop.id + '">';
+
+              $.ajax({
+                url:'/shop/'+shop.id+'/logo',
+                type:'GET',
+                dataType:'json',
+                success:function(response){
+                  if (!$.isEmptyObject(response)) {
+                    contentString += '<img src="/img/'+ response.path +'" class="img-fluid" style="width: 150px">';
+                  }
+                },complete:function(){
+                  contentString +=
+                    '</a>' +
+                    '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
+                    '<div id="bodyContent">' +
+                      "<p>" + shop.address + "</p>";
+                  $.ajax({
+                    url:'/shop/'+shop.id+'/open_hours',
+                    type:'GET',
+                    dataType:'json',
+                    success:function(response){
+                      $.each(response, function(key, open_hours) {
+                        contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start.slice(0, -3) + ' ~ ' + open_hours.time_end.slice(0, -3) + '</p>';
+                      })
+                    },complete:function(){
+                      contentString+=
+                          "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
+                        "</div>" +
+                      "</div>";
+                      attachInfoWindow(marker, contentString);
+                    }
+                  })
+                }
+              })
+
+        });
+
+        // console.log(markers);
+      },error:function(err){
+
+      }
+    })
+  }
+  updateShopList($('input[type=radio][name=type]:checked').val());
+});
