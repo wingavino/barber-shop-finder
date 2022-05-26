@@ -42,6 +42,20 @@ class ShopController extends Controller
       $shops = Shop::where('hidden', false)->where('type', $request->type)->get();
     }
 
+    if ($request->services) {
+      // Check Each Shop
+      foreach ($shops as $shop_key => $shop) {
+        // Check Each Service Filter
+        foreach ($request->services as $service_key => $service) {
+          // Check Shop's Services
+          if (!$shop->shop_services->where('category', $service)->first()) {
+            $shops->forget($shop_key);
+            break;
+          }
+        }
+      }
+    }
+
     if ($request->ajax()) {
       return response()->json(array('shops' => $shops, 'type' => $request->type));
     }

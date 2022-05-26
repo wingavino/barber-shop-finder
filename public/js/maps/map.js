@@ -4,9 +4,11 @@ var open_hours = [];
 var reviews = [];
 var logos = [];
 var markers = [];
+var services = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
 var radiusCircle;
+
 
 async function getShops() {
   let response = await fetch (app_url + '/api/shops');
@@ -167,6 +169,15 @@ $(document).ready(function(){
     updateShopList(this.value);
   });
 
+  $("input[type=checkbox][name='service[]']").change(function() {
+    if (this.checked) {
+      services.push(this.value);
+    }else {
+      services.splice($.inArray(this.value, services), 1);
+    }
+    updateShopList($('input[type=radio][name=type]:checked').val(), services);
+  });
+
   function getLocation(device) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -215,12 +226,13 @@ $(document).ready(function(){
     }
   }
 
-  function updateShopList(shopType){
+  function updateShopList(shopType, services=null){
     $.ajax({
       url:'/shops/list',
       type:'GET',
       data: {
-        type: shopType
+        type: shopType,
+        services: services,
       },
       dataType:'json',
       success:function(response){
