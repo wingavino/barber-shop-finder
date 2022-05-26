@@ -43,7 +43,7 @@
                               <select class="custom-select" id="category" name="category" aria-label="Select Service Category">
                                 <option value="Haircut" selected>Haircut</option>
                                 <option value="Kid's Haircut">Kid's Haircut</option>
-                                <option value="Hair Spa">Facial Shave</option>
+                                <option value="Facial Shave">Facial Shave</option>
                                 <option value="Hair Color">Hair Color</option>
                                 <option value="Hair Treatment">Hair Treatment</option>
                                 <option value="Perm">Perm</option>

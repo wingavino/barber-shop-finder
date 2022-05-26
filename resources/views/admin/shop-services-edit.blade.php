@@ -51,6 +51,29 @@
                         </div>
 
                         <div class="form-group row">
+                          <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+
+                          <div class="col-md-6">
+                              <select class="custom-select" id="category" name="category" aria-label="Select Service Category">
+                                <option value="Haircut" {{ $shop_service->category == 'Haircut' ? 'selected' : '' }}>Haircut</option>
+                                <option value="Kid's Haircut" {{ $shop_service->category == "Kid's Haircut" ? 'selected' : '' }}>Kid's Haircut</option>
+                                <option value="Facial Shave" {{ $shop_service->category == 'Facial Shave' ? 'selected' : '' }}>Facial Shave</option>
+                                <option value="Hair Color" {{ $shop_service->category == 'Hair Color' ? 'selected' : '' }}>Hair Color</option>
+                                <option value="Hair Treatment" {{ $shop_service->category == 'Hair Treatment' ? 'selected' : '' }}>Hair Treatment</option>
+                                <option value="Perm" {{ $shop_service->category == 'Perm' ? 'selected' : '' }}>Perm</option>
+                                <option value="Rebond" {{ $shop_service->category == 'Rebond' ? 'selected' : '' }}>Rebond</option>
+                                <option value="Other" {{ $shop_service->category == 'Other' ? 'selected' : '' }}>Other</option>
+                              </select>
+
+                              @error('category')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
+
+                        <div class="form-group row">
                           <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
                           <div class="col-md-6">
                             <div class="input-group">
