@@ -162,11 +162,11 @@ $(document).ready(function(){
   $('#max_distance').on('change', function() {
     $('#max_distance_indicator').text(this.value);
     updateLocation(device);
-    updateShopList($('input[type=radio][name=type]:checked').val());
+    updateShopList($('input[type=radio][name=type]:checked').val(), services);
   });
 
   $('input[type=radio][name=type]').change(function() {
-    updateShopList(this.value);
+    updateShopList(this.value, services);
   });
 
   $("input[type=checkbox][name='service[]']").change(function() {
@@ -185,14 +185,14 @@ $(document).ready(function(){
           device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           // console.log('Location enabled: ' + device.position);
           updateRadius(radiusCircle, device);
-          updateShopList($('input[type=radio][name=type]:checked').val());
+          updateShopList($('input[type=radio][name=type]:checked').val(), services);
           map.panTo(device.position);
         },
         () => {
           device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
           // console.log('Location disabled: ' + device.position);
           updateRadius(radiusCircle, device);
-          updateShopList($('input[type=radio][name=type]:checked').val());
+          updateShopList($('input[type=radio][name=type]:checked').val(), services);
           map.panTo(device.position);
         }
       );
@@ -200,7 +200,7 @@ $(document).ready(function(){
       device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
       // console.log('Location permission not available: ' + device.position);
       updateRadius(radiusCircle, device);
-      updateShopList($('input[type=radio][name=type]:checked').val());
+      updateShopList($('input[type=radio][name=type]:checked').val(), services);
       map.panTo(device.position);
     }
   }
@@ -332,5 +332,5 @@ $(document).ready(function(){
       }
     })
   }
-  updateShopList($('input[type=radio][name=type]:checked').val());
+  updateShopList($('input[type=radio][name=type]:checked').val(), services);
 });
