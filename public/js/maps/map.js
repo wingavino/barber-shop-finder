@@ -111,30 +111,6 @@ function attachInfoWindow(marker, info) {
   });
 }
 
-function getLocation(device) {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        // console.log('Location enabled: ' + device.position);
-        updateRadius(radiusCircle, device);
-        map.panTo(device.position);
-      },
-      () => {
-        device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-        // console.log('Location disabled: ' + device.position);
-        updateRadius(radiusCircle, device);
-        map.panTo(device.position);
-      }
-    );
-  }else {
-    device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-    // console.log('Location permission not available: ' + device.position);
-    updateRadius(radiusCircle, device);
-    map.panTo(device.position);
-  }
-}
-
 function getDistance(marker1, marker2, addUnit=false) {
   if (addUnit) {
     return haversine_distance(marker1, marker2).toFixed(2) + " km";
@@ -146,13 +122,10 @@ function getDistance(marker1, marker2, addUnit=false) {
 
 function updateRadius(radiusCircle, marker, radius=null) {
   if (radius != null) {
-    console.log(radius);
     radiusCircle.setRadius(Number(radius * 1000));
     radiusCircle.setCenter(marker.position);
-    map.panTo(marker.position);
   }else {
     radiusCircle.setCenter(marker.position);
-    map.panTo(marker.position);
   }
 }
 
