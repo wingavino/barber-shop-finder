@@ -116,7 +116,7 @@
             philippines.lng
           )
         }
-        getLocation(device);
+        updateLocation(device);
         updateRadius(radiusCircle, device);
 
         $('#max_distance').on('input', function() {
@@ -134,7 +134,7 @@
           updateShopList(this.value);
         });
 
-        function getLocation(device) {
+        function updateLocation(device) {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
               (position) => {
