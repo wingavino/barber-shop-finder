@@ -116,8 +116,7 @@
             philippines.lng
           )
         }
-        updateLocation(device);
-        updateRadius(radiusCircle, device);
+        getLocation(device);
 
         $('#max_distance').on('input', function() {
           $('#max_distance_indicator').text(this.value);
@@ -126,13 +125,40 @@
 
         $('#max_distance').on('change', function() {
           $('#max_distance_indicator').text(this.value);
-          getLocation(device);
+          updateLocation(device);
           updateShopList($('input[type=radio][name=type]:checked').val());
         });
 
         $('input[type=radio][name=type]').change(function() {
           updateShopList(this.value);
         });
+
+        function getLocation(device) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                // console.log('Location enabled: ' + device.position);
+                updateRadius(radiusCircle, device);
+                updateShopList($('input[type=radio][name=type]:checked').val());
+                map.panTo(device.position);
+              },
+              () => {
+                device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+                // console.log('Location disabled: ' + device.position);
+                updateRadius(radiusCircle, device);
+                updateShopList($('input[type=radio][name=type]:checked').val());
+                map.panTo(device.position);
+              }
+            );
+          }else {
+            device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+            // console.log('Location permission not available: ' + device.position);
+            updateRadius(radiusCircle, device);
+            updateShopList($('input[type=radio][name=type]:checked').val());
+            map.panTo(device.position);
+          }
+        }
 
         function updateLocation(device) {
           if (navigator.geolocation) {
@@ -141,19 +167,16 @@
                 device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 // console.log('Location enabled: ' + device.position);
                 updateRadius(radiusCircle, device);
-                updateShopList($('input[type=radio][name=type]:checked').val());
               },
               () => {
                 device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
                 // console.log('Location disabled: ' + device.position);
                 updateRadius(radiusCircle, device);
-                updateShopList($('input[type=radio][name=type]:checked').val());
               }
             );
           }else {
             device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
             updateRadius(radiusCircle, device);
-            updateShopList($('input[type=radio][name=type]:checked').val());
             // console.log('Location permission not available: ' + device.position);
           }
         }
@@ -220,7 +243,7 @@
                 var br = document.createElement("br");
                 listItem.appendChild(br);
 
-                getLocation(device);
+                updateLocation(device);
                 var listItemDistance = document.createTextNode(getDistance(device, marker, true));
                 listItem.appendChild(listItemDistance);
 
