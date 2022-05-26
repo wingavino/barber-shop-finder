@@ -80,6 +80,10 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" name="service[]" value="Hair Color">
+                    <label class="form-check-label">Hair Color</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="service[]" value="Hair Color">
                     <label class="form-check-label">Hair Treatment</label>
                   </div>
                   <div class="form-check form-check-inline">
