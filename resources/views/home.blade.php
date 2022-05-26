@@ -67,35 +67,35 @@
                     <label class="form-check-label" for="">All</label>
                   </div> -->
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service1' name="service[]" value="Haircut">
+                    <input class="form-check-input service" type="checkbox" id='service1' name="service[]" value="Haircut">
                     <label class="form-check-label" for="service1">Haircut</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service2' name="service[]" value="Kid's Haircut">
+                    <input class="form-check-input service" type="checkbox" id='service2' name="service[]" value="Kid's Haircut">
                     <label class="form-check-label"for="service2">Kid's Haircut</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service3' name="service[]" value="Facial Shave">
+                    <input class="form-check-input service" type="checkbox" id='service3' name="service[]" value="Facial Shave">
                     <label class="form-check-label"for="service3">Facial Shave</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service4' name="service[]" value="Hair Color">
+                    <input class="form-check-input service" type="checkbox" id='service4' name="service[]" value="Hair Color">
                     <label class="form-check-label"for="service4">Hair Color</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service5' name="service[]" value="Hair Color">
+                    <input class="form-check-input service" type="checkbox" id='service5' name="service[]" value="Hair Color">
                     <label class="form-check-label"for="service5">Hair Treatment</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service6' name="service[]" value="Perm">
+                    <input class="form-check-input service" type="checkbox" id='service6' name="service[]" value="Perm">
                     <label class="form-check-label"for="service6">Perm</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service7' name="service[]" value="Rebond">
+                    <input class="form-check-input service" type="checkbox" id='service7' name="service[]" value="Rebond">
                     <label class="form-check-label"for="service7">Rebond</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id='service8' name="service[]" value="Other">
+                    <input class="form-check-input service" type="checkbox" id='service8' name="service[]" value="Other">
                     <label class="form-check-label"for="service8">Other</label>
                   </div>
                 </div>
@@ -132,202 +132,6 @@
       </div>
     </div>
     <div class="col-12 col-lg-8 order-last" style="width: 100%; height: 80vh">
-      <script>
-      $(document).ready(function(){
-        var device = {
-          position: new google.maps.LatLng(
-            philippines.lat,
-            philippines.lng
-          )
-        }
-        getLocation(device);
-
-        $('#max_distance').on('input', function() {
-          $('#max_distance_indicator').text(this.value);
-          updateRadius(radiusCircle, device, this.value);
-        });
-
-        $('#max_distance').on('change', function() {
-          $('#max_distance_indicator').text(this.value);
-          updateLocation(device);
-          updateShopList($('input[type=radio][name=type]:checked').val());
-        });
-
-        $('input[type=radio][name=type]').change(function() {
-          updateShopList(this.value);
-        });
-
-        function getLocation(device) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                // console.log('Location enabled: ' + device.position);
-                updateRadius(radiusCircle, device);
-                updateShopList($('input[type=radio][name=type]:checked').val());
-                map.panTo(device.position);
-              },
-              () => {
-                device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-                // console.log('Location disabled: ' + device.position);
-                updateRadius(radiusCircle, device);
-                updateShopList($('input[type=radio][name=type]:checked').val());
-                map.panTo(device.position);
-              }
-            );
-          }else {
-            device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-            // console.log('Location permission not available: ' + device.position);
-            updateRadius(radiusCircle, device);
-            updateShopList($('input[type=radio][name=type]:checked').val());
-            map.panTo(device.position);
-          }
-        }
-
-        function updateLocation(device) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                // console.log('Location enabled: ' + device.position);
-                updateRadius(radiusCircle, device);
-              },
-              () => {
-                device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-                // console.log('Location disabled: ' + device.position);
-                updateRadius(radiusCircle, device);
-              }
-            );
-          }else {
-            device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-            updateRadius(radiusCircle, device);
-            // console.log('Location permission not available: ' + device.position);
-          }
-        }
-
-        function updateShopList(shopType){
-          $.ajax({
-            url:'/shops/list',
-            type:'GET',
-            data: {
-              type: shopType
-            },
-            dataType:'json',
-            success:function(response){
-              $.each(markers, function (key, mark) {
-                mark.setMap(null);
-              });
-              markers = [];
-
-              $('#shops-list').empty();
-              $.each(response.shops, function(key, shop) {
-                var marker = new google.maps.Marker({
-                  position: new google.maps.LatLng(shop.lat, shop.lng),
-                  map: map,
-                  title: shop.name
-                });
-
-                if (getDistance(device, marker) > $("#max_distance").val()) {
-                  marker.setMap(null);
-                  return false;
-                }
-
-                markers.push(marker);
-
-                var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
-
-                var listItem = document.createElement('a');
-                listItem.href = '#map';
-                listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
-                var bold = document.createElement("strong");
-                var listItemContent = document.createTextNode(shop.name.toString());
-                bold.appendChild(listItemContent);
-                var br = document.createElement("br");
-                var listItemAddress = document.createTextNode(shop.address.toString());
-
-                listItem.appendChild(bold);
-                listItem.appendChild(br);
-                listItem.appendChild(listItemAddress);
-
-                // if (navigator.geolocation) {
-                //   navigator.geolocation.getCurrentPosition((position) => {
-                //     var device = new google.maps.Marker({
-                //       position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                //       map: map,
-                //     });
-                //     var br = document.createElement("br");
-
-                //   },
-                //   () => {
-                //
-                //   });
-                // }
-
-
-                var br = document.createElement("br");
-                listItem.appendChild(br);
-
-                updateLocation(device);
-                var listItemDistance = document.createTextNode(getDistance(device, marker, true));
-                listItem.appendChild(listItemDistance);
-
-                $(listItem).on("click", () => {
-                  // Triggers a click event on the marker which pans the map and opens the InfoWindow
-                  new google.maps.event.trigger( markers[key], 'click' );
-                });
-
-                $('#shops-list').append(listItem);
-
-                var contentString =
-                  '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<a href="' + app_url +'/shop/' + shop.id + '">';
-
-                    $.ajax({
-                      url:'/shop/'+shop.id+'/logo',
-                      type:'GET',
-                      dataType:'json',
-                      success:function(response){
-                        if (!$.isEmptyObject(response)) {
-                          contentString += '<img src="/img/'+ response.path +'" class="img-fluid" style="width: 150px">';
-                        }
-                      },complete:function(){
-                        contentString +=
-                          '</a>' +
-                          '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
-                          '<div id="bodyContent">' +
-                            "<p>" + shop.address + "</p>";
-                        $.ajax({
-                          url:'/shop/'+shop.id+'/open_hours',
-                          type:'GET',
-                          dataType:'json',
-                          success:function(response){
-                            $.each(response, function(key, open_hours) {
-                              contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start.slice(0, -3) + ' ~ ' + open_hours.time_end.slice(0, -3) + '</p>';
-                            })
-                          },complete:function(){
-                            contentString+=
-                                "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
-                              "</div>" +
-                            "</div>";
-                            attachInfoWindow(marker, contentString);
-                          }
-                        })
-                      }
-                    })
-
-              });
-
-              // console.log(markers);
-            },error:function(err){
-
-            }
-          })
-        }
-        updateShopList($('input[type=radio][name=type]:checked').val());
-      });
-      </script>
       <div id="map" style="width:100%;height:100%"></div>
     </div>
   </div>
