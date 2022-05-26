@@ -44,16 +44,16 @@
               <div class="row">
                 <div class="col-12">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio"  name="type" value="all" checked>
-                    <label class="form-check-label" for="type">All</label>
+                    <input class="form-check-input" type="radio" id="type1"  name="type" value="all" checked>
+                    <label class="form-check-label" for="type1">All</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio"  name="type" value="salon">
-                    <label class="form-check-label" for="type">Salon</label>
+                    <input class="form-check-input" type="radio" id="type2"  name="type" value="salon">
+                    <label class="form-check-label" for="type2">Salon</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio"  name="type" value="barber">
-                    <label class="form-check-label" for="type">Barber</label>
+                    <input class="form-check-input" type="radio" id="type3"  name="type" value="barber">
+                    <label class="form-check-label" for="type3">Barber</label>
                   </div>
                 </div>
               </div>
@@ -67,36 +67,36 @@
                     <label class="form-check-label" for="">All</label>
                   </div> -->
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Haircut">
-                    <label class="form-check-label">Haircut</label>
+                    <input class="form-check-input" type="checkbox" id='service1' name="service[]" value="Haircut">
+                    <label class="form-check-label" for="service1">Haircut</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Kid's Haircut">
-                    <label class="form-check-label">Kid's Haircut</label>
+                    <input class="form-check-input" type="checkbox" id='service2' name="service[]" value="Kid's Haircut">
+                    <label class="form-check-label"for="service2">Kid's Haircut</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Facial Shave">
-                    <label class="form-check-label">Facial Shave</label>
+                    <input class="form-check-input" type="checkbox" id='service3' name="service[]" value="Facial Shave">
+                    <label class="form-check-label"for="service3">Facial Shave</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Hair Color">
-                    <label class="form-check-label">Hair Color</label>
+                    <input class="form-check-input" type="checkbox" id='service4' name="service[]" value="Hair Color">
+                    <label class="form-check-label"for="service4">Hair Color</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Hair Color">
-                    <label class="form-check-label">Hair Treatment</label>
+                    <input class="form-check-input" type="checkbox" id='service5' name="service[]" value="Hair Color">
+                    <label class="form-check-label"for="service5">Hair Treatment</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Perm">
-                    <label class="form-check-label">Perm</label>
+                    <input class="form-check-input" type="checkbox" id='service6' name="service[]" value="Perm">
+                    <label class="form-check-label"for="service6">Perm</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Rebond">
-                    <label class="form-check-label">Rebond</label>
+                    <input class="form-check-input" type="checkbox" id='service7' name="service[]" value="Rebond">
+                    <label class="form-check-label"for="service7">Rebond</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="service[]" value="Other">
-                    <label class="form-check-label">Other</label>
+                    <input class="form-check-input" type="checkbox" id='service8' name="service[]" value="Other">
+                    <label class="form-check-label"for="service8">Other</label>
                   </div>
                 </div>
               </div>
