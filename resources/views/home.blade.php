@@ -77,6 +77,21 @@
                 </div>
               </div>
             </li>
+            <li class="list-group-item">
+              Max Distance (km):
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-inline">
+                    <div class="col-10">
+                      <input class="form-control-range" type="range" id="max_distance"  name="type" min="1" max="50" step="1" value=5>
+                    </div>
+                    <div class="col-2">
+                      <label id="max_distance_indicator" for="max_distance">10</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -95,6 +110,24 @@
     <div class="col-12 col-lg-8 order-last" style="width: 100%; height: 80vh">
       <script>
       $(document).ready(function(){
+        var device = {
+          position: new google.maps.LatLng(
+            philippines.lat,
+            philippines.lng
+          )
+        }
+        getLocation(device);
+
+        $('#max_distance').on('input', function() {
+          $('#max_distance_indicator').text(this.value);
+        });
+
+        $('#max_distance').on('change', function() {
+          $('#max_distance_indicator').text(this.value);
+          // updateRadius(radiusCircle, device);
+          getLocation(device);
+          updateShopList($('input[type=radio][name=type]:checked').val());
+        });
 
         $('input[type=radio][name=type]').change(function() {
           updateShopList(this.value);
@@ -122,6 +155,11 @@
                   title: shop.name
                 });
 
+                if (getDistance(device, marker) > $("#max_distance").val()) {
+                  marker.setMap(null);
+                  return false;
+                }
+
                 markers.push(marker);
 
                 var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
@@ -139,22 +177,27 @@
                 listItem.appendChild(br);
                 listItem.appendChild(listItemAddress);
 
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition((position) => {
-                    var device = new google.maps.Marker({
-                      position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                      map: map,
-                    });
-                    var br = document.createElement("br");
-                    listItem.appendChild(br);
-                    var listItemDistance = document.createTextNode(haversine_distance(device, marker).toFixed(2) + " km");
-                    listItem.appendChild(listItemDistance);
-                  },
-                  () => {
+                // if (navigator.geolocation) {
+                //   navigator.geolocation.getCurrentPosition((position) => {
+                //     var device = new google.maps.Marker({
+                //       position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                //       map: map,
+                //     });
+                //     var br = document.createElement("br");
 
-                  });
-                }
+                //   },
+                //   () => {
+                //
+                //   });
+                // }
 
+
+                var br = document.createElement("br");
+                listItem.appendChild(br);
+
+                getLocation(device);
+                var listItemDistance = document.createTextNode(getDistance(device, marker, true));
+                listItem.appendChild(listItemDistance);
 
                 $(listItem).on("click", () => {
                   // Triggers a click event on the marker which pans the map and opens the InfoWindow

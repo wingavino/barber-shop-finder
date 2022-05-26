@@ -51,6 +51,18 @@ async function initMap() {
     streetViewControl: true,
   });
 
+  // var blueCircle = {
+  //       strokeColor: "#a3acf9",
+  //       strokeOpacity: 0.8,
+  //       strokeWeight: 2,
+  //       fillColor: "#a3acf9",
+  //       fillOpacity: 0.35,
+  //       map: map,
+  //       center: map.center,
+  //       radius: 5000 // in meters
+  //   };
+  //   var radiusCircle = new google.maps.Circle(blueCircle);
+
   infowindow = new google.maps.InfoWindow();
 
   map.addListener('click', function() {
@@ -98,14 +110,41 @@ function attachInfoWindow(marker, info) {
   });
 }
 
-function getLocation() {
+function getLocation(device) {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        // updateRadius(radiusCircle, device);
+      },
+      () => {
+        device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
+      }
+    );
+  }else {
+    device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
   }
 }
 
-function showPosition(position) {
-  return position;
+function getDistance(marker1, marker2, addUnit=false) {
+  if (addUnit) {
+    return haversine_distance(marker1, marker2).toFixed(2) + " km";
+  }else {
+    return haversine_distance(marker1, marker2);
+  }
+
+}
+
+function updateRadius(radiusCircle, marker, radius=null) {
+  if (radius != null) {
+
+  }else {
+    radiusCircle.bindTo('center', marker, 'position');
+  }
+}
+
+function showPosition(position, device) {
+  device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
