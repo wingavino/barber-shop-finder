@@ -36,6 +36,7 @@
                           <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Service Name</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Price</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -47,6 +48,7 @@
                             <tr>
                               <td>{{ $service->id }}</td>
                               <td>{{ $service->name }}</td>
+                              <td>{{ $service->category }}</td>
                               <td>₱{{ $service->price }}</td>
 
                               <td>
