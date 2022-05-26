@@ -83,7 +83,7 @@
                 <div class="col-12">
                   <div class="form-inline">
                     <div class="col-10">
-                      <input class="form-control-range" type="range" id="max_distance"  name="type" min="1" max="50" step="1" value=5>
+                      <input class="form-control-range" type="range" id="max_distance"  name="type" min="1" max="10" step="1" value=5>
                     </div>
                     <div class="col-2">
                       <label id="max_distance_indicator" for="max_distance">5</label>
