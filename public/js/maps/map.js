@@ -249,7 +249,7 @@ $(document).ready(function(){
             title: shop.name
           });
 
-          if (getDistance(device, marker) > $("#max_distance").val()) {
+          if (getDistance(device, marker) > $("#max_distance").val() && radiusCircle.radius > 0) {
             marker.setMap(null);
             return false;
           }
