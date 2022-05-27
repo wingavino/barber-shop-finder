@@ -34,7 +34,7 @@
             </div>
           </div>
           <a class="text-dark" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
-            <h5 class="card-title">Filter:</h5>
+            <h5 class="card-title" id="collapseFilterText">Filter -</h5>
           </a>
         </div>
         <div class="collapse show" id="collapseFilter">
@@ -122,7 +122,7 @@
       <div class="card" style="width: 100%;">
         <div class="card-header text-center">
           <a class="text-dark" data-toggle="collapse" href="#collapseShopList" role="button" aria-expanded="false" aria-controls="collapseShopList">
-            <h5 class="card-title">Barber Shops List</h5>
+            <h5 class="card-title" id="collapseShopListText">Shops List -</h5>
           </a>
         </div>
         <div class="collapse show" id="collapseShopList">
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-lg-8 order-last" style="width: 100%; height: 80vh">
+    <div class="col-12 col-lg-8 order-lg-last" style="width: 100%; height: 80vh">
       <div id="map" style="width:100%;height:100%"></div>
     </div>
   </div>
