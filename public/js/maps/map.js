@@ -245,7 +245,6 @@ $(document).ready(function(){
           mark.setMap(null);
         });
         markers = [];
-        shops = [];
         $('#shops-list').empty();
 
         // Loop through returned shops list
@@ -263,7 +262,6 @@ $(document).ready(function(){
           }
 
           markers.push(marker);
-          shops.push(shop);
 
           var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
 
@@ -290,8 +288,9 @@ $(document).ready(function(){
 
           $(listItem).on("click", () => {
             // Triggers a click event on the marker which pans the map and opens the InfoWindow
-            new google.maps.event.trigger( markers[key], 'click' );
+            new google.maps.event.trigger( marker, 'click' );
           });
+          
 
           $('#shops-list').append(listItem);
 
@@ -340,7 +339,7 @@ $(document).ready(function(){
         // After Looping through Shops List
         // $("#shops-list a").sort(sortShopList) // sort elements
         //         .appendTo('#shops-list'); // append again to the list
-        
+        // console.log(markers);
       },error:function(err){
 
       }
