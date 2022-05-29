@@ -53,11 +53,12 @@ class ShopController extends Controller
             break;
           }
         }
+
       }
     }
 
     if ($request->ajax()) {
-      return response()->json(array('shops' => $shops, 'type' => $request->type));
+      return response()->json(array('shops' => $shops, 'type' => $request->type, ));
     }
 
     return redirect()->route('home');
@@ -82,6 +83,20 @@ class ShopController extends Controller
 
     if ($request->ajax()) {
       return response()->json($open_hours);
+    }
+
+    return redirect()->route('home');
+  }
+
+  public function showShopRatings(Request $request, $id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    // $shop_reviews = Review::where('shop_id', $shop->id)->get();
+    $review_count = Review::where('shop_id', $shop->id)->count();
+    $review_average = round(Review::where('shop_id', $shop->id)->avg('rating'), 2);
+
+    if ($request->ajax()) {
+      return response()->json(array('review_count' => $review_count, 'review_average' => $review_average));
     }
 
     return redirect()->route('home');

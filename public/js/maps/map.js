@@ -314,19 +314,34 @@ $(document).ready(function(){
                     '<div id="bodyContent">' +
                       "<p>" + shop.address + "</p>";
                   $.ajax({
-                    url:'/shop/'+shop.id+'/open_hours',
+                    url:'/shop/'+shop.id+'/ratings',
                     type:'GET',
                     dataType:'json',
                     success:function(response){
-                      $.each(response, function(key, open_hours) {
-                        contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start.slice(0, -3) + ' ~ ' + open_hours.time_end.slice(0, -3) + '</p>';
-                      })
+                      console.log(response);
+                      if (response.review_count > 0) {
+                        // contentString += "<p>" + (parseFloat(response.review_average)).toFixed(2) + "&#9733 (" + response.review_count + ")</p>";
+                        contentString += "<p>" + response.review_average + "&#9733 (" + response.review_count + " reviews)</p>";
+                      }else {
+                        contentString += "<p>0&#9733"+ " (" + response.review_count + " reviews)</p>";
+                      }
                     },complete:function(){
-                      contentString+=
+                      $.ajax({
+                        url:'/shop/'+shop.id+'/open_hours',
+                        type:'GET',
+                        dataType:'json',
+                        success:function(response){
+                          $.each(response, function(key, open_hours) {
+                            contentString += '<p><b>' + weekdays[open_hours.day] + '</b> ' + open_hours.time_start.slice(0, -3) + ' ~ ' + open_hours.time_end.slice(0, -3) + '</p>';
+                          })
+                        },complete:function(){
+                          contentString+=
                           "<a href='" + app_url + "/shop/" + shop.id + "'>View Shop Page</a>" +
-                        "</div>" +
-                      "</div>";
-                      attachInfoWindow(marker, contentString);
+                          "</div>" +
+                          "</div>";
+                          attachInfoWindow(marker, contentString);
+                        }
+                      })
                     }
                   })
                 }

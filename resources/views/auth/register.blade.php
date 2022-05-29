@@ -12,11 +12,11 @@
                         {{ __('Register as User') }}
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                       <a class="nav-link" href="{{ route('register.shopowner') }}">
                         {{ __('Register as Shop Owner') }}
                       </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
 

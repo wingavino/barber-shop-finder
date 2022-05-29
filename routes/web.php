@@ -40,6 +40,7 @@ Route::post('/shop/{id}/reviews/report/{review_id}/{request_type}/user/{user_id}
 Route::get('/shops/list', [App\Http\Controllers\ShopController::class, 'showShopsList'])->name('shops.list'); //Shows Shops List
 Route::get('/shop/{id}/open_hours', [App\Http\Controllers\ShopController::class, 'showShopOpenHours'])->name('shop.open_hours'); //Shows Shop Open Hours
 Route::get('/shop/{id}/logo', [App\Http\Controllers\ShopController::class, 'showShopLogo'])->name('shop.logo'); //Shows Shop Logo
+Route::get('/shop/{id}/ratings', [App\Http\Controllers\ShopController::class, 'showShopRatings'])->name('shop.ratings'); //Shows Shop Logo
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
 
