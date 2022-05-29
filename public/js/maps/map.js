@@ -252,7 +252,7 @@ $(document).ready(function(){
           if (getDistance(device, marker) > $("#max_distance").val() && radiusCircle.radius > 0) {
             console.log('Removed' + shop.name + ' not within max distance of ' + $("#max_distance").val() + ' km. Radius: ' + radiusCircle.radius);
             marker.setMap(null);
-            return false;
+            return;
           }
           console.log('Added ' + shop.name + ' within max distance of ' + $("#max_distance").val() + ' km. Radius: ' + radiusCircle.radius);
 
