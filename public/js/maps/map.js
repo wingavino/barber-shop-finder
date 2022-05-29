@@ -290,7 +290,7 @@ $(document).ready(function(){
             // Triggers a click event on the marker which pans the map and opens the InfoWindow
             new google.maps.event.trigger( marker, 'click' );
           });
-          
+
 
           $('#shops-list').append(listItem);
 
@@ -337,8 +337,8 @@ $(document).ready(function(){
         });
 
         // After Looping through Shops List
-        // $("#shops-list a").sort(sortShopList) // sort elements
-        //         .appendTo('#shops-list'); // append again to the list
+        $("#shops-list a").sort(sortShopList) // sort elements
+                .appendTo('#shops-list'); // append again to the list
         // console.log(markers);
       },error:function(err){
 
