@@ -338,8 +338,9 @@ $(document).ready(function(){
         });
 
         // After Looping through Shops List
-        $("#shops-list a").sort(sortShopList) // sort elements
-                .appendTo('#shops-list'); // append again to the list
+        // $("#shops-list a").sort(sortShopList) // sort elements
+        //         .appendTo('#shops-list'); // append again to the list
+        
       },error:function(err){
 
       }
