@@ -145,6 +145,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
+function sortShopList(a, b){
+    return ($(b).data('distance')) < ($(a).data('distance')) ? 1 : -1;
+}
+
 $(document).ready(function(){
   var device = {
     position: new google.maps.LatLng(
@@ -236,12 +240,15 @@ $(document).ready(function(){
       },
       dataType:'json',
       success:function(response){
+        // Clear Previous Search
         $.each(markers, function (key, mark) {
           mark.setMap(null);
         });
         markers = [];
-
+        shops = [];
         $('#shops-list').empty();
+
+        // Loop through returned shops list
         $.each(response.shops, function(key, shop) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(shop.lat, shop.lng),
@@ -249,12 +256,14 @@ $(document).ready(function(){
             title: shop.name
           });
 
+          // Removes map marker if not within radius
           if (getDistance(device, marker) > $("#max_distance").val() && radiusCircle.radius > 0) {
             marker.setMap(null);
             return;
           }
 
           markers.push(marker);
+          shops.push(shop);
 
           var listItem = '<a href="#map"><li class="list-group-item list-group-item-action text-center">'+ shop.name +'</li></a>';
 
@@ -277,6 +286,7 @@ $(document).ready(function(){
           updateLocation(device);
           var listItemDistance = document.createTextNode(getDistance(device, marker, true));
           listItem.appendChild(listItemDistance);
+          $(listItem).data('distance', getDistance(device, marker));
 
           $(listItem).on("click", () => {
             // Triggers a click event on the marker which pans the map and opens the InfoWindow
@@ -324,9 +334,12 @@ $(document).ready(function(){
                 }
               })
 
+
         });
 
-        // console.log(markers);
+        // After Looping through Shops List
+        $("#shops-list a").sort(sortShopList) // sort elements
+                .appendTo('#shops-list'); // append again to the list
       },error:function(err){
 
       }
