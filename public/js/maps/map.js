@@ -299,7 +299,6 @@ $(document).ready(function(){
               '<div id="siteNotice">' +
               '</div>' +
               '<a href="' + app_url +'/shop/' + shop.id + '">';
-
               $.ajax({
                 url:'/shop/'+shop.id+'/logo',
                 type:'GET',
@@ -310,8 +309,8 @@ $(document).ready(function(){
                   }
                 },complete:function(){
                   contentString +=
-                    '</a>' +
                     '<h3 id="firstHeading" class="firstHeading">'+ shop.name +'</h3>' +
+                    '</a>' +
                     '<div id="bodyContent">' +
                       "<p>" + shop.address + "</p>";
                   $.ajax({
