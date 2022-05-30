@@ -44,6 +44,9 @@
 
     </style>
 
+    <!-- Google Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2408404042563109" crossorigin="anonymous"></script>
+    <!-- /Google Adsense -->
 
 </head>
 <body class="d-flex flex-column">
