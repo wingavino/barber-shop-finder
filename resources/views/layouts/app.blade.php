@@ -173,6 +173,7 @@
           <p>
             Contact Us at: <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a>
           </p>
+          <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
         </div>
 
       </div>
