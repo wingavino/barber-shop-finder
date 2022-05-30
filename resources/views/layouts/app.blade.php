@@ -45,7 +45,14 @@
     </style>
 
     <!-- Google Adsense -->
+    @guest
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2408404042563109" crossorigin="anonymous"></script>
+    @else
+      @if( Auth::user()->type != 'admin')
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2408404042563109" crossorigin="anonymous"></script>
+      @endif
+    @endguest
+
     <!-- /Google Adsense -->
 
 </head>
