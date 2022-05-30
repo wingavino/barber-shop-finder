@@ -187,14 +187,12 @@ $(document).ready(function(){
       navigator.geolocation.getCurrentPosition(
         (position) => {
           device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          // console.log('Location enabled: ' + device.position);
           updateRadius(radiusCircle, device);
           updateShopList($('input[type=radio][name=type]:checked').val(), services);
           map.panTo(device.position);
         },
         () => {
           device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-          // console.log('Location disabled: ' + device.position);
           updateRadius(radiusCircle, device);
           updateShopList($('input[type=radio][name=type]:checked').val(), services);
           map.panTo(device.position);
@@ -202,7 +200,6 @@ $(document).ready(function(){
       );
     }else {
       device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-      // console.log('Location permission not available: ' + device.position);
       updateRadius(radiusCircle, device);
       updateShopList($('input[type=radio][name=type]:checked').val(), services);
       map.panTo(device.position);
@@ -214,19 +211,16 @@ $(document).ready(function(){
       navigator.geolocation.getCurrentPosition(
         (position) => {
           device.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          // console.log('Location enabled: ' + device.position);
           updateRadius(radiusCircle, device);
         },
         () => {
           device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
-          // console.log('Location disabled: ' + device.position);
           updateRadius(radiusCircle, device);
         }
       );
     }else {
       device.position = new google.maps.LatLng(philippines.lat, philippines.lng);
       updateRadius(radiusCircle, device);
-      // console.log('Location permission not available: ' + device.position);
     }
   }
 
@@ -318,7 +312,6 @@ $(document).ready(function(){
                     type:'GET',
                     dataType:'json',
                     success:function(response){
-                      console.log(response);
                       if (response.review_count > 0) {
                         // contentString += "<p>" + (parseFloat(response.review_average)).toFixed(2) + "&#9733 (" + response.review_count + ")</p>";
                         contentString += "<p>" + response.review_average + "&#9733 (" + response.review_count + " reviews)</p>";
@@ -353,7 +346,7 @@ $(document).ready(function(){
         // After Looping through Shops List
         $("#shops-list a").sort(sortShopList) // sort elements
                 .appendTo('#shops-list'); // append again to the list
-        // console.log(markers);
+
       },error:function(err){
 
       }
