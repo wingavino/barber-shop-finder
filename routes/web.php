@@ -150,7 +150,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add'); //Handles functions for Adding/Registering a New Admin
   Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete'); //Handles functions for deleting an Admin
 
-  Route::get('/admin/pending-requests', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests'); //Shows Pending Requests Page
+  Route::get('/admin/pending-requests/{status?}', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests'); //Shows Pending Requests Page
   Route::post('/admin/pending-requests/{request_type}/{id}/reject', [App\Http\Controllers\PendingRequestController::class, 'rejectPendingRequest'])->name('admin.pending-requests.reject'); //Handles functions for Rejecting a Pending Request
 
   Route::get('/admin/shopowners', [App\Http\Controllers\ShopOwnerController::class, 'showShopOwners'])->name('admin.shopowners'); //Shows list of Shopowners Page

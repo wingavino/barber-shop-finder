@@ -17,7 +17,26 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3>{{ __('Requests List') }}</h3></div>
+                <div class="card-header">
+                  <h3>{{ __('Requests List') }}</h3>
+                  <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status) ? '' : 'active' }}" href="{{ route('admin.pending-requests') }}" aria-current="true" href="#">
+                        {{ __('Awaiting Action') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status && $status == 'approved') ? 'active' : '' }}" href="{{ route('admin.pending-requests', ['status' => 'approved']) }}">
+                        {{ __('Approved') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status && $status == 'rejected') ? 'active' : '' }}" href="{{ route('admin.pending-requests', ['status' => 'rejected']) }}">
+                        {{ __('Rejected') }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
                 <div class="card-body">
                   <!-- <div class="row justify-content-end text-right">
                     <div class="col-md-12">

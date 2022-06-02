@@ -105,14 +105,32 @@ class AdminController extends Controller
     return redirect()->route('admin.admins');
   }
 
-  public function showPendingRequestsPage()
+  public function showPendingRequestsPage($status = null)
   {
-    $data = DB::table('pending_requests')
-                ->leftJoin('users', 'user_id', '=', 'users.id')
-                ->leftJoin('shops', 'shop_id', '=', 'shops.id')
-                ->select('pending_requests.*', 'users.id as user_id','users.name as name', 'users.email as email', 'users.email_verified_at as email_verified_at', 'users.mobile as mobile', 'users.type as user_type', 'shops.id as shop_id','shops.name as shop_name')
-                ->where('pending_requests.approved', false)
-                ->get();
-    return view('admin/pending-requests', ['data' => $data]);
+    if ($status == 'approved') {
+      $data = DB::table('pending_requests')
+      ->leftJoin('users', 'user_id', '=', 'users.id')
+      ->leftJoin('shops', 'shop_id', '=', 'shops.id')
+      ->select('pending_requests.*', 'users.id as user_id','users.name as name', 'users.email as email', 'users.email_verified_at as email_verified_at', 'users.mobile as mobile', 'users.type as user_type', 'shops.id as shop_id','shops.name as shop_name')
+      ->where('pending_requests.approved', true)
+      ->get();
+    }elseif($status == 'rejected'){
+      $data = DB::table('pending_requests')
+      ->leftJoin('users', 'user_id', '=', 'users.id')
+      ->leftJoin('shops', 'shop_id', '=', 'shops.id')
+      ->select('pending_requests.*', 'users.id as user_id','users.name as name', 'users.email as email', 'users.email_verified_at as email_verified_at', 'users.mobile as mobile', 'users.type as user_type', 'shops.id as shop_id','shops.name as shop_name')
+      ->where('pending_requests.rejected', true)
+      ->get();
+    }
+    else {
+      $data = DB::table('pending_requests')
+      ->leftJoin('users', 'user_id', '=', 'users.id')
+      ->leftJoin('shops', 'shop_id', '=', 'shops.id')
+      ->select('pending_requests.*', 'users.id as user_id','users.name as name', 'users.email as email', 'users.email_verified_at as email_verified_at', 'users.mobile as mobile', 'users.type as user_type', 'shops.id as shop_id','shops.name as shop_name')
+      ->where('pending_requests.approved', false)
+      ->where('pending_requests.rejected', false)
+      ->get();
+    }
+    return view('admin/pending-requests', ['data' => $data, 'status' => $status]);
   }
 }
