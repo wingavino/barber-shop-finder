@@ -61,39 +61,53 @@
             <li class="list-group-item">
               By Service:
               <div class="row">
-                <div class="col-12">
                   <!-- <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="" value="all" checked>
                     <label class="form-check-label" for="">All</label>
                   </div> -->
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service1' name="service[]" value="Haircut">
                     <label class="form-check-label" for="service1">Haircut</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service2' name="service[]" value="Kid's Haircut">
                     <label class="form-check-label"for="service2">Kid's Haircut</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service3' name="service[]" value="Facial Shave">
                     <label class="form-check-label"for="service3">Facial Shave</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service4' name="service[]" value="Hair Color">
                     <label class="form-check-label"for="service4">Hair Color</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service5' name="service[]" value="Hair Color">
                     <label class="form-check-label"for="service5">Hair Treatment</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service6' name="service[]" value="Perm">
                     <label class="form-check-label"for="service6">Perm</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service7' name="service[]" value="Rebond">
                     <label class="form-check-label"for="service7">Rebond</label>
                   </div>
+                </div>
+                <div class="col-6">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input service" type="checkbox" id='service8' name="service[]" value="Other">
                     <label class="form-check-label"for="service8">Other</label>
