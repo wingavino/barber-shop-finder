@@ -91,9 +91,9 @@ class ShopController extends Controller
   public function showShopRatings(Request $request, $id)
   {
     $shop = Shop::where('id', $id)->first();
-    // $shop_reviews = Review::where('shop_id', $shop->id)->get();
-    $review_count = Review::where('shop_id', $shop->id)->count();
-    $review_average = round(Review::where('shop_id', $shop->id)->avg('rating'), 2);
+    $shop_reviews = Review::where('shop_id', $shop->id)->where('hidden', false)->get();
+    $review_count = $shop_reviews->count();
+    $review_average = round($shop_reviews->avg('rating'), 2);
 
     if ($request->ajax()) {
       return response()->json(array('review_count' => $review_count, 'review_average' => $review_average));
@@ -210,9 +210,9 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
-    $shop_reviews = Review::where('shop_id', $shop->id)->get();
-    $review_count = Review::where('shop_id', $shop->id)->count();
-    $review_average = Review::where('shop_id', $shop->id)->avg('rating');
+    $shop_reviews = Review::where('shop_id', $shop->id)->where('hidden', false)->get();
+    $review_count = $shop_reviews->count();
+    $review_average = $shop_reviews->avg('rating');
 
     if (Auth::user() && Auth::user()->type =='admin') {
       return view('admin/shop-reviews', ['shop' => $shop, 'logo' => $logo, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);

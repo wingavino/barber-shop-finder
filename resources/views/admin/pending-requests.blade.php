@@ -121,7 +121,7 @@
                                   <a class="btn btn-info col"
                                     data-toggle="modal"
                                     data-target="#requestModal"
-                                    data-reject-form-action=""
+                                    data-reject-form-action="{{ route('admin.shops.reviews.delete.reject', ['id' => $review->id, 'request_id' => $value->id]) }}"
                                     data-approve-form-action="{{ route('admin.shops.reviews.delete', ['id' => $review->id]) }}"
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
@@ -180,7 +180,7 @@
                                   <div class="col">
                                     <form class="" action="#" method="post" id='rejectForm'>
                                       @csrf
-                                      <button class="btn btn-danger col" id="approveRequestButton" type="submit">Reject</button>
+                                      <button class="btn btn-danger col" id="rejectRequestButton" type="submit">Reject</button>
                                     </form>
                                   </div>
                                 </div>
