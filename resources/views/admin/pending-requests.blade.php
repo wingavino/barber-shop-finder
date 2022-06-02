@@ -132,7 +132,7 @@
                                     data-reported-user-type="{{ $review->user->type }}"
                                     data-report-reason="{{ $value->report_reason }}"
                                     data-review-id="{{ $value->review_id }}"
-                                    data-review_text="{{ $review->review_text }}"
+                                    data-review-text="{{ $review->review_text }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"
                                     data-shop-url="{{ route('admin.shop', ['id' => $value->shop_id]) }}"
