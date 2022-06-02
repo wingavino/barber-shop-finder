@@ -44,7 +44,7 @@ class ReviewController extends Controller
     }
     return redirect()->route('shop.reviews', ['id' => $id]);
   }
-
+  
   public function deleteReview(Request $request, $id)
   {
     $review = Review::where('id', $id)->first();
