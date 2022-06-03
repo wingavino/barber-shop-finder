@@ -15,6 +15,13 @@ class TicketController extends Controller
     {
       $shop = Shop::where('id', '=', $id)->first();
       if (!Auth::user()->ticket) {
+
+        if (!$shop->queue) {
+          $queue = new Queue();
+          $queue->shop_id = $shop->id;
+          $queue->save();
+        }
+
         $last_ticket = $shop->queue->ticket->last();
         $ticket = new Ticket;
         $ticket->queue_id = $shop->queue->id;
@@ -40,6 +47,13 @@ class TicketController extends Controller
         if (Auth::user()->ticket->queue->shop_id == $id) {
           $ticket = Auth::user()->ticket;
           $ticket->delete();
+          $last_ticket = $shop->queue->ticket->last();
+          if ($last_ticket) {
+            $shop->queue->next_ticket = $last_ticket;
+          }else {
+            $shop->queue->next_ticket = null;
+          }
+          $shop->queue->save();
         }
       }
       return redirect()->back();
