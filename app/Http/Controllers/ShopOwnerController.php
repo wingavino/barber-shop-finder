@@ -125,6 +125,8 @@ class ShopOwnerController extends Controller
         Auth::login($user);
       }
     }
+
+    return redirect()->route('home');
   }
 
   public function showEditShopOwners($id, $type)
