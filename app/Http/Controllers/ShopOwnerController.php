@@ -154,6 +154,7 @@ class ShopOwnerController extends Controller
       $user->email = $data->email;
       $user->provider_id = $provider_id;
       //$user->avatar = $data->avatar;
+      $user->type = 'shopowner';
       $user->save();
 
       // Creates Request to change Account Type to Shop Owner
