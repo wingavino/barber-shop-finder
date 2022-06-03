@@ -29,14 +29,24 @@ class QueueNotification extends Mailable
      */
     public function build()
     {
-      if ($this->queue_position == 'current') {
-        return $this
-        ->subject('Saber Queue Update')
-        ->markdown('emails.queue-notification-current');
-      }else {
-        return $this
-        ->subject('Saber Queue Update')
-        ->markdown('emails.queue-notification');
-      }
+      switch ($this->queue_position) {
+        case 'current':
+          return $this
+          ->subject('Saber Queue Update')
+          ->markdown('emails.queue-notification-current');
+          break;
+
+        case 'on_hold':
+          return $this
+          ->subject('Saber Queue Update')
+          ->markdown('emails.queue-notification-on-hold');
+          break;
+
+        default:
+          return $this
+          ->subject('Saber Queue Update')
+          ->markdown('emails.queue-notification');
+          break;
+      }      
     }
 }
