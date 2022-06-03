@@ -34,7 +34,9 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Service Name</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Price</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -44,12 +46,14 @@
                           @isset($shop_services)
                             @foreach ($shop_services as $shop_service => $service)
                             <tr>
+                              <td>{{ $service->id }}</td>
                               <td>{{ $service->name }}</td>
+                              <td>{{ $service->category }}</td>
                               <td>₱{{ $service->price }}</td>
 
                               <td>
-                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.services.edit', ['id' => $service->id]) }}" type="button" role="button" name="button">Edit</a>
-                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.services.delete', ['id' => $service->id]) }}" data-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
+                                <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.services.edit', ['id' => $shop->id, 'service_id' => $service->id]) }}" type="button" role="button" name="button">Edit</a>
+                                <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.services.delete', ['id' => $shop->id,'service_id' => $service->id]) }}" data-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
                               </td>
                             </tr>
                             @endforeach

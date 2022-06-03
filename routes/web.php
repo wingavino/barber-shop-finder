@@ -107,9 +107,9 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add'); //Shows Add Service Page for Shop
   Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services'); //Shows Shop's Services Page for Shopowner
   Route::post('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'AddShopServices'])->name('shopowner.shop.services.add'); //Handles functions for Adding a Shop Service
-  Route::post('/shopowner/shop/services/{id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete'); //Handles functions for Deleting a Shop Service
-  Route::get('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit'); //Shows Edit Page for Shop Service
-  Route::post('/shopowner/shop/services/{id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit'); //Handles functions for Editing a Shop Service
+  Route::post('/shopowner/shop/{id}/services/{service_id}/delete', [App\Http\Controllers\ShopController::class, 'deleteShopServices'])->name('shopowner.shop.services.delete'); //Handles functions for Deleting a Shop Service
+  Route::get('/shopowner/shop/{id}/services/{service_id}/edit', [App\Http\Controllers\ShopController::class, 'showEditShopServices'])->name('shopowner.shop.services.edit'); //Shows Edit Page for Shop Service
+  Route::post('/shopowner/shop/{id}/services/{service_id}/edit', [App\Http\Controllers\ShopController::class, 'editShopServices'])->name('shopowner.shop.services.edit'); //Handles functions for Editing a Shop Service
   Route::get('/shopowner/shop/employees', [App\Http\Controllers\ShopController::class, 'showShopEmployeesAsShopOwner'])->name('shopowner.shop.employees'); //Shows Shop's Employees
   Route::get('/shopowner/shop/employees/add', [App\Http\Controllers\ShopController::class, 'showAddShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop
   Route::post('/shopowner/shop/employees/add', [App\Http\Controllers\EmployeeController::class, 'addShopEmployee'])->name('shopowner.shop.employees.add'); //Shows Add Employee Page for Shop

@@ -24,6 +24,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                          <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Shop Type') }}</label>
+
+                          <div class="col-md-6">
+                              <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
+                                <option value="Salon">Salon</option>
+                                <option value="Barber">Barber</option>
+                              </select>
+
+                              @error('type')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
+
                         <label for="open_hours" class="col-md-4 col-form-label text-md-right">{{ __('Open Hours') }}</label>
 
                         @for($i = 1; $i <= 7; $i++)
@@ -139,8 +156,8 @@
                               function initMap() {
 
                                 map = new google.maps.Map(document.getElementById("map"), {
-                                  center: { lat: 15.5000569, lng: 120.9109837 },
-                                  zoom: 8,
+                                  center: { lat: philippines.lat, lng: philippines.lng },
+                                  zoom: 14,
                                 });
 
                                 var marker = new google.maps.Marker({

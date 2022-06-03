@@ -92,8 +92,62 @@
                     </div>
                 </div>
 
+                <!-- Queue -->
+                @auth
                 <div class="form-group row">
+                  <div class="col-md-4">
+                     <div class="card">
+                       <div class="card-header">
+                         Queue
+                       </div>
+
+                       <div class="card-body">
+
+                         <h3>Now Serving:
+                             <button id="current_ticket" class="btn btn-danger disabled" type="button" name="button">None</button>
+                         </h3>
+
+                         <h3>
+                           Current Queue Length:
+                           @isset($shop->queue->ticket)
+                             {{ $shop->queue->ticket->count() }}
+                           @endisset
+                         </h3>
+
+                         @isset(Auth::user()->ticket)
+                           @if(Auth::user()->ticket->queue->shop_id == $shop->id)
+                           <h3>Your Ticket:
+                             <button class="btn btn-success disabled" type="button" name="button">
+                               {{ Auth::user()->ticket->ticket_number }}
+                             </button>
+                           </h3>
+                           <form method="POST" action="{{ route('shop.ticket.cancel', [$shop->id]) }}">
+                             @csrf
+                             <div class="form-group row mb-0 justify-content-center">
+                               <button type="submit" class="btn btn-danger col-md-12">
+                                 {{ __('Cancel Ticket') }}
+                               </button>
+                             </div>
+                           </form>
+                           @endif
+                         @else
+                           @if(Auth::user()->type == 'user')
+                           <form method="POST" action="{{ route('shop.ticket', [$shop->id]) }}">
+                             @csrf
+                             <div class="form-group row mb-0 justify-content-center">
+                               <button type="submit" class="btn btn-success col-md-12">
+                                   {{ __('Get New Ticket') }}
+                               </button>
+                             </div>
+                           </form>
+                           @endif
+                         @endisset
+                       </div>
+                     </div>
+                   </div>
                 </div>
+                @endauth
+                <!-- /Queue -->
               </form>
             </div>
           </div>

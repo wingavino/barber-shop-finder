@@ -10,10 +10,12 @@ $(document).ready(function(){
       type:'GET',
       dataType:'json',
       success:function(response){
-        var current_ticket = '';
+        var current_ticket = 'None';
+        var next_ticket = 'None';
         var btn_status = '';
 
         if(response.queue.current_ticket){
+          console.log(response.queue.current_ticket);
           current_ticket = response.queue.current_ticket + '<br>' + response.user.name;
           $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
         }else {
@@ -28,14 +30,15 @@ $(document).ready(function(){
           next_ticket = 'None';
           $('#next_ticket').removeClass('btn-primary').addClass('btn-danger');
         }
-
         $('#current_ticket').empty();
         $('#current_ticket').append(current_ticket);
         $('#next_ticket').empty();
         $('#next_ticket').append(next_ticket);
       },error:function(err){
         $('#current_ticket').empty();
+        $('#current_ticket').append(current_ticket);
         $('#next_ticket').empty();
+        $('#next_ticket').append(next_ticket);
       }
     }).then(function(){
       setTimeout(updateCurrentTicket, 5000);
@@ -164,7 +167,7 @@ $(document).ready(function(){
                                         @isset($shop->queue->next_ticket)
                                           {{ $shop->queue->next_ticket }}
                                         @else
-                                          <button class="btn btn-danger disabled" type="button" name="button">None</button>
+                                          <button class="btn btn-danger disabled" type="button" id="next_ticket" name="button">None</button>
                                         @endisset
                                       </h3>
                                     </form>

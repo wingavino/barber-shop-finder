@@ -280,17 +280,32 @@ class ShopController extends Controller
     return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
-  public function showAddShopServices($id)
+  public function showAddShopServices($id = null)
   {
-    $shop = Shop::where('id', $id)->first();
+    if ($id == null) {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('admin/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
+    if (Auth::user()->type == 'shopowner') {
+      return view('shopowner/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
+    }elseif(Auth::user()->type == 'admin'){
+      return view('admin/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
+    }else{
+      return redirect()->route('shop', ['id' => $shop->id]);
+    }
   }
 
-  public function addShopServices($id, Request $request)
+  public function addShopServices($id = null, Request $request)
   {
-    $shop = Shop::where('id', $id)->first();
+    if ($id == null) {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
       $shop_service = new ShopServices;
       $shop_service->shop_id = $shop->id;
@@ -299,20 +314,43 @@ class ShopController extends Controller
       $shop_service->price = $request->price;
       $shop_service->save();
     }
-    return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
-  public function showEditShopServices($id, $service_id)
+  public function showEditShopServices($id = null, $service_id)
   {
-    $shop = Shop::where('id', $id)->first();
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
 
-    return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    if (Auth::user()->type == 'shopowner') {
+      return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    }elseif(Auth::user()->type == 'admin'){
+      return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
-  public function editShopServices(Request $request, $id, $service_id)
+  public function editShopServices(Request $request, $id = null, $service_id)
   {
-    $shop = Shop::where('id', $id)->first();
+    if (Auth::user()->type = 'shopowner') {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
       $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
@@ -322,19 +360,36 @@ class ShopController extends Controller
         $shop_service->save();
       }
     }
-    return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
   public function deleteShopServices(Request $request, $id, $service_id)
   {
-    $shop = Shop::where('id', $id)->first();
+    if (Auth::user()->type = 'shopowner') {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
       $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
         $shop_service->delete();
       }
     }
-    return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
   public function showShopEdit()
@@ -381,13 +436,14 @@ class ShopController extends Controller
       $shop->name = $request->name;
       $shop->type = $request->type;
 
-      if ($request->owner_id) {
-        $shop->owner_id = $request->owner_id;
+      if (Auth::user()->type == 'admin') {
+        // $shop->owner_id = $request->owner_id;
+        // $shop->owner_name = $request->owner_name;
       }else {
         $shop->owner_id = Auth::user()->id;
+        $shop->owner_name = Auth::user()->name;
       }
 
-      $shop->owner_name = $request->owner_name;
 
       $shop->address = $request->address;
       $shop->lat = $request->lat;
@@ -418,11 +474,11 @@ class ShopController extends Controller
         return redirect()->back();
       }
 
-      // $queue = new Queue();
-      // $queue->shop_id = $shop->id;
-      // $queue->save();
+      $queue = new Queue();
+      $queue->shop_id = $shop->id;
+      $queue->save();
 
-      return redirect()->route('admin.shop', ['id' => $shop->id]);
+      return redirect()->route('shop', ['id' => $shop->id]);
     }
   }
 
