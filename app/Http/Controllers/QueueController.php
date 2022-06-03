@@ -20,9 +20,11 @@ class QueueController extends Controller
       $user = User::where('id', $current_ticket->user_id)->first();
     }
 
+    $on_hold_tickets = Ticket::where('queue_id', $queue_id)->where('on_hold', true)->get();
+
     if($request->ajax()){
       if ((Auth::user()->type == 'shopowner' && Auth::user()->shop->id == $queue->shop->id) OR Employee::where('user_id', Auth::user()->id)->where('shop_id', $queue->shop->id)->first()) {
-        return response()->json(array('queue'=>$queue, 'current_ticket'=>$current_ticket, 'user'=>$user));
+        return response()->json(array('queue'=>$queue, 'current_ticket'=>$current_ticket, 'on_hold_tickets' => $on_hold_tickets, 'user'=>$user));
       }else {
         return response()->json(array('queue'=>$queue));
       }

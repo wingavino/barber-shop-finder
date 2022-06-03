@@ -12,15 +12,36 @@ $(document).ready(function(){
       success:function(response){
         var current_ticket = 'None';
         var next_ticket = 'None';
+        var on_hold_ticket = 'None';
         var btn_status = '';
 
+        $('#on_hold_tickets').empty();
+
         if(response.queue.current_ticket){
-          console.log(response.queue.current_ticket);
           current_ticket = response.queue.current_ticket + '<br>' + response.user.name;
           $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
         }else {
           current_ticket = 'None';
           $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
+        }
+
+        if(response.on_hold_tickets){
+          $.each(response.on_hold_tickets, function(index, value){
+            console.log('index: ' + index + ' ticket: ' + value);
+            on_hold_ticket =
+              '<div class="col">' +
+                '<button class="btn btn-primary" type="submit" name="button">' +
+                  value.ticket_number +
+                '</button>' +
+              '</div>';
+              $('#on_hold_tickets').append(on_hold_ticket);
+          });
+        }else {
+          on_hold_ticket =
+            '<div class="col">' +
+              '<button class="btn btn-danger disabled" type="button" name="button">None</button>' +
+            '</div>';
+          $('#on_hold_tickets').append(on_hold_ticket);
         }
 
         if(response.queue.next_ticket){
@@ -36,9 +57,12 @@ $(document).ready(function(){
         $('#next_ticket').append(next_ticket);
       },error:function(err){
         $('#current_ticket').empty();
+        current_ticket = 'None';
         $('#current_ticket').append(current_ticket);
         $('#next_ticket').empty();
+        next_ticket = 'None';
         $('#next_ticket').append(next_ticket);
+        setTimeout(updateCurrentTicket, 5000);
       }
     }).then(function(){
       setTimeout(updateCurrentTicket, 5000);
@@ -129,7 +153,7 @@ $(document).ready(function(){
                                 </div>
 
                                 <div class="card-body text-center">
-                                  <div class="row">
+                                  <div id="on_hold_tickets" class="row">
                                     @empty($shop->queue->ticket->where('on_hold', true)->first())
                                     <div class="col">
                                       <button class="btn btn-danger disabled" type="button" name="button">None</button>
