@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\User;
 use App\Mail\QueueNotification;
 use Illuminate\Support\Facades\Mail;
+use Twilio\Rest\Client;
 use Auth;
 
 class TicketController extends Controller
@@ -130,19 +131,23 @@ class TicketController extends Controller
           $current_ticket->delete();
         }
 
-        // If there is no ticket in queue, this checks for tickets in the Hold Queue
-        if (!$shop->queue->current_ticket = $shop->queue->next_ticket) {
+        // If there is no ticket in queue to set as current ticket, this checks for tickets in the Hold Queue
+        $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->next_ticket)->first();
+        if ($current_ticket) {
+          $shop->queue->current_ticket = $current_ticket->ticket_number;
+        }else {
           $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', true)->first();
           if ($next_ticket) {
-            $shop->queue->current_ticket = $next_ticket->ticket_number;
             $next_ticket->on_hold = false;
+            $shop->queue->current_ticket = $next_ticket->ticket_number;
             $next_ticket->save();
+            $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
+            // Send email notification to current ticket
+            $this->sendNotification($current_ticket->user->email, 'current');
           }
-        }else {
-          $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
-          // Send email notification to current ticket
-          $this->sendNotification($current_ticket->user->email, 'current');
         }
+        // if (!$shop->queue->current_ticket = $shop->queue->next_ticket) {
+        // }
 
         $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->where('ticket_number', '!=', $shop->queue->current_ticket)->first();
         $shop->queue->next_ticket = null;
@@ -172,14 +177,14 @@ class TicketController extends Controller
         if ($current_ticket) {
           $current_ticket->on_hold = true;
           $current_ticket->save();
+          if ($current_ticket->user) {
+            // Send notification to ticket placed on hold
+            $this->sendNotification($current_ticket->user->email, 'on_hold');
+          }
         }
         $shop->queue->current_ticket = null;
         $shop->queue->save();
 
-        if ($current_ticket->user) {
-          // Send email notification to next in line
-          $this->sendNotification($current_ticket->user->email, 'on_hold');
-        }
       }
       return redirect()->back();
     }
@@ -189,6 +194,41 @@ class TicketController extends Controller
       $user = User::where('email', $email_address)->first();
       if ($user->email_verified_at != null) {
         Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position));
+      }
+
+      // TEMPORARY LIMIT ON UPDATES DUE TO COST
+      if ($queue_position == 'current') {
+        if ($user->mobile && $user->mobile_verified_at != null) {
+          // Send SMS Notification
+          $sid = env('TWILIO_SID');
+          $token = env('TWILIO_AUTH_TOKEN');
+          $twilio_phone_number = env('TWILIO_PHONE_NUMBER');
+          $twilio = new Client($sid, $token);
+
+          switch ($queue_position) {
+            case 'current':
+            $body = 'It is your turn to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+            break;
+
+            case 'on_hold':
+            $body = 'Your ticket has been placed on hold. Please try to arrive at the shop as soon as possible. ~Saber';
+            break;
+
+            default:
+            $body = 'You are next in line to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+            break;
+          }
+
+          $message = $twilio
+          ->messages
+          ->create(
+            $user->mobile,
+            [
+              'body' => $body,
+              'from' => $twilio_phone_number,
+            ]
+          );
+        }
       }
     }
 }
