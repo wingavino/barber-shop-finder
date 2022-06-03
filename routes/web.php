@@ -65,7 +65,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 // Shop Owner Registration Route
 Route::get('/register/shopowner', [App\Http\Controllers\ShopOwnerController::class, 'showRegistrationForm'])->name('register.shopowner'); //Shows Registration  Page for Shopowners
-Route::post('/register/shopowner/{pending_request?}', [App\Http\Controllers\ShopOwnerController::class, 'register'])->name('register.shopowner'); //Handles functions for Shopowner Registration Page
+Route::post('/register/shopowner/', [App\Http\Controllers\ShopOwnerController::class, 'addShopOwner'])->name('register.shopowner'); //Handles functions for Shopowner Registration Page
 
 // End User Routes
 

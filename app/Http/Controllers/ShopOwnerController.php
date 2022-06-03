@@ -109,15 +109,21 @@ class ShopOwnerController extends Controller
 
   public function addShopOwner(Request $request)
   {
-    $user = User::where('email', '=', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
 
     if (!$user) {
       $user = new User();
       $user->name = $request->name;
       $user->mobile = $request->mobile;
       $user->email = $request->email;
+      $user->password = $request->password;
       //$user->avatar = $data->avatar;
+      $user->type = 'shopowner';
       $user->save();
+
+      if (!Auth::check()) {
+        Auth::login($user);
+      }
     }
   }
 
