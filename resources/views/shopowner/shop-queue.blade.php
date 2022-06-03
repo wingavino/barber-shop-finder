@@ -100,14 +100,7 @@ $(document).ready(function(){
                         <div class="card-body text-center">
                           <h3>
                             <button class="btn btn-danger disabled" id="current_ticket" type="button" name="button">None</button>
-                            <!-- @isset($shop->queue->current_ticket)
-                              <h3>{{ $shop->queue->current_ticket }}</h3>
-                              @if(App\Models\Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first()->user)
-                              <h3>Name: {{ App\Models\Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first()->user->name }}</h3>
-                              @endif
-                            @else
-                              <button class="btn btn-danger disabled" id="current_ticket" type="button" name="button">None</button>
-                            @endisset -->
+                            
                           </h3>
                         </div>
 
