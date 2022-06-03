@@ -108,7 +108,7 @@ class TicketController extends Controller
           $next_ticket->save();
 
           // Send Email Notification
-          $this->sendEmail($next_ticket->user->email);
+          $this->sendEmail($next_ticket->user->email, 'current');
         }
         $shop->queue->save();
       }
@@ -150,7 +150,7 @@ class TicketController extends Controller
         if ($next_ticket) {
           $shop->queue->next_ticket = $next_ticket->ticket_number;
 
-          // Send email notification
+          // Send email notification to next in line
           $this->sendEmail($next_ticket->user->email);
         }
 
@@ -175,6 +175,11 @@ class TicketController extends Controller
         }
         $shop->queue->current_ticket = null;
         $shop->queue->save();
+
+        if ($current_ticket->user) {
+          // Send email notification to next in line
+          $this->sendEmail($current_ticket->user->email, 'on_hold');
+        }
       }
       return redirect()->back();
     }
