@@ -46,6 +46,13 @@ Route::get('/privacy-policy', [App\Http\Controllers\HomeController::class, 'show
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
 
+// Mobile Auth Routes
+Route::get('/mobile/verify', function () {
+    return view('auth.verify-mobile');
+})->middleware('auth')->name('verify.mobile');
+Route::post('/mobile/verify/', [App\Http\Controllers\UserController::class, 'verifyMobile'])->middleware('auth')->name('verify.mobile');
+Route::get('/mobile/verify/send', [App\Http\Controllers\UserController::class, 'sendMobileOTP'])->middleware('auth')->name('verify.mobile.send');
+
 // Laravel Auth Email Verification Routes
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

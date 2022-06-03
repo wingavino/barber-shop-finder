@@ -109,6 +109,15 @@
         </nav>
 
         <div id="liveAlertPlaceholder">
+          @if(session()->has('message'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                  {{ session()->get('message') }}
+                  <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+          @endif
+
           @include('layouts.user-ticket')
 
           @if(Auth::user())
@@ -144,6 +153,7 @@
               </div>
             @endif
 
+            <!-- Email Alert -->
             @if(Auth::user()->email_verified_at == '')
               @if(Auth::user()->type == 'shopowner')
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -167,6 +177,21 @@
                 </div>
               @endif
             @endif
+            <!-- /Email Alert -->
+
+            <!-- Mobile Alert -->
+            @if(Auth::user()->mobile && Auth::user()->mobile_verified_at == '')
+              <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <form class="" action="{{ route('verify.mobile.send') }}" method="get">
+                  @csrf
+                  <strong>Your account's phone number has not been verified. Please click <button class="btn btn-link mx-n2" type="submit">HERE</button> to verify your phone number.</strong>
+                </form>
+                <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            @endif
+            <!-- /Mobile Alert -->
           @endif
         </div>
 

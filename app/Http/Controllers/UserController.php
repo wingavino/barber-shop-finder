@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\PendingRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Twilio\Rest\Client;
 use Auth;
 
 class UserController extends Controller
@@ -70,5 +72,45 @@ class UserController extends Controller
         }
       }
       return redirect()->route('admin.shopowners');
+    }
+
+    public function verifyMobile(Request $request)
+    {
+      $data = $request->validate([
+        'verification_code' => ['required', 'numeric'],
+        'mobile' => ['required', 'string'],
+      ]);
+
+      $token = env('TWILIO_AUTH_TOKEN');
+      $twilio_sid = env('TWILIO_SID');
+      $twilio_verify_sid = env('TWILIO_VERIFY_SID');
+      $twilio = new Client($twilio_sid, $token);
+      $verification = $twilio->verify->v2->services($twilio_verify_sid)
+        ->verificationChecks
+        ->create($data['verification_code'], array('to' => $data['mobile']));
+      if ($verification->valid) {
+        $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
+        return redirect()->route('home')->with(['message' => 'Phone number verified']);
+      }
+      return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
+    }
+
+    public function sendMobileOTP()
+    {
+      // $data = $request->validate([
+      //   'mobile' => ['required', 'string'],
+      // ]);
+      $mobile = Auth::user()->mobile;
+
+      $token = env('TWILIO_AUTH_TOKEN');
+      $twilio_sid = env('TWILIO_SID');
+      $twilio_verify_sid = env('TWILIO_VERIFY_SID');
+      $twilio = new Client($twilio_sid, $token);
+
+      $verification = $twilio->verify->v2->services($twilio_verify_sid)
+        ->verifications
+        ->create($mobile, 'sms');
+
+      return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.']);
     }
 }
