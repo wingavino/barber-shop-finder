@@ -345,7 +345,7 @@ class ShopController extends Controller
 
   public function editShopServices(Request $request, $id = null, $service_id)
   {
-    if (Auth::user()->type = 'shopowner') {
+    if (Auth::user()->type == 'shopowner') {
       $shop = Auth::user()->shop;
     }else {
       $shop = Shop::where('id', $id)->first();
@@ -371,7 +371,7 @@ class ShopController extends Controller
 
   public function deleteShopServices(Request $request, $id, $service_id)
   {
-    if (Auth::user()->type = 'shopowner') {
+    if (Auth::user()->type == 'shopowner') {
       $shop = Auth::user()->shop;
     }else {
       $shop = Shop::where('id', $id)->first();
