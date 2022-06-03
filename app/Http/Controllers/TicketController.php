@@ -20,6 +20,7 @@ class TicketController extends Controller
           $queue = new Queue();
           $queue->shop_id = $shop->id;
           $queue->save();
+          $shop = Shop::where('id', '=', $id)->first();
         }
 
         $last_ticket = $shop->queue->ticket->last();
