@@ -17,6 +17,8 @@ use Auth;
 
 class ShopController extends Controller
 {
+  private $default_days = [1, 2, 3, 4, 5];
+
   public function showShops()
   {
     $data = DB::table('shops')
@@ -430,21 +432,25 @@ class ShopController extends Controller
 
   public function addShop(Request $request)
   {
-    $shop = Shop::where('name', '=', $request->name)->first();
-    if (!$shop) {
+    // $shop = Shop::where('name', '=', $request->name)->first();
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    }
+
+    if (!isset($shop)) {
       $shop = new Shop();
       $shop->name = $request->name;
       $shop->type = $request->type;
 
       if (Auth::user()->type == 'admin') {
         // $shop->owner_id = $request->owner_id;
-        // $shop->owner_name = $request->owner_name;
+        $shop->owner_name = $request->owner_name;
       }else {
         $shop->owner_id = Auth::user()->id;
         $shop->owner_name = Auth::user()->name;
       }
 
-
+      $shop->mobile = $request->mobile;
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
@@ -454,6 +460,10 @@ class ShopController extends Controller
       $open_hours_start = $request->input('open_hours_start');
       $open_hours_end = $request->input('open_hours_end');
 
+      if (!isset($open_hours_day)) {
+        $open_hours_day = $this->default_days;
+      }
+      
       if ($open_hours_day != null) {
         foreach ($open_hours_day as $day) {
           $open_hour = new OpenHours;
@@ -478,8 +488,8 @@ class ShopController extends Controller
       $queue->shop_id = $shop->id;
       $queue->save();
 
-      return redirect()->route('shop', ['id' => $shop->id]);
     }
+    return redirect()->route('shop', ['id' => $shop->id]);
   }
 
   public function showEditShop($id, Request $request)
@@ -513,12 +523,15 @@ class ShopController extends Controller
       $shop->name = $request->name;
       $shop->type = $request->type;
 
-      if (Auth::user()->type == 'shopowner') {
+      if (Auth::user()->type == 'shopowner' && $shop->id == Auth::user()->shop->id) {
         $shop->owner_id = Auth::user()->id;
+        $shop->owner_name = Auth::user()->name;
       }else {
         // $shop->owner_id = $request->owner_id;
+        $shop->owner_name = $request->owner_name;
       }
-      
+
+      $shop->mobile = $request->mobile;
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
@@ -532,6 +545,10 @@ class ShopController extends Controller
       $open_hours_start = $request->input('open_hours_start');
       $open_hours_end = $request->input('open_hours_end');
 
+      if ($open_hours_day == null) {
+        $open_hours_day = $this->default_days;
+      }
+
       foreach ($open_hours_day as $day) {
         $open_hour = OpenHours::where('shop_id', $shop->id)->where('day', $day)->first();
         if (!$open_hour) {
@@ -539,12 +556,15 @@ class ShopController extends Controller
         }
         $open_hour->shop_id = $shop->id;
         $open_hour->day = $day;
-        if ($open_hours_start[$day] != null) {
-          $open_hour->time_start = $open_hours_start[$day];
+        if (isset($open_hours_start[$day])) {
+          if ($open_hours_start[$day] != null) {
+            $open_hour->time_start = $open_hours_start[$day];
+          }
         }
-
-        if ($open_hours_end[$day] != null) {
-          $open_hour->time_end = $open_hours_end[$day];
+        if (isset($open_hours_end[$day])) {
+          if ($open_hours_end[$day] != null) {
+            $open_hour->time_end = $open_hours_end[$day];
+          }
         }
         $open_hour->save();
       }
