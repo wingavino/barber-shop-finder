@@ -513,11 +513,12 @@ class ShopController extends Controller
       $shop->name = $request->name;
       $shop->type = $request->type;
 
-      if (Auth::user()->type == 'admin') {
-        $shop->owner_id = $request->owner_id;
-      }else {
+      if (Auth::user()->type == 'shopowner') {
         $shop->owner_id = Auth::user()->id;
+      }else {
+        // $shop->owner_id = $request->owner_id;
       }
+      
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
