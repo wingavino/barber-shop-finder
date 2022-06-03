@@ -41,7 +41,7 @@ class TicketController extends Controller
           $shop->queue->save();
 
           // Send Email Notification
-          $this->sendEmail(Auth::user()->email);
+          $this->sendNotification(Auth::user()->email);
         }
       }
       return redirect()->back();
@@ -108,7 +108,7 @@ class TicketController extends Controller
           $next_ticket->save();
 
           // Send Email Notification
-          $this->sendEmail($next_ticket->user->email, 'current');
+          $this->sendNotification($next_ticket->user->email, 'current');
         }
         $shop->queue->save();
       }
@@ -141,7 +141,7 @@ class TicketController extends Controller
         }else {
           $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
           // Send email notification to current ticket
-          $this->sendEmail($current_ticket->user->email, 'current');
+          $this->sendNotification($current_ticket->user->email, 'current');
         }
 
         $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->where('ticket_number', '!=', $shop->queue->current_ticket)->first();
@@ -151,7 +151,7 @@ class TicketController extends Controller
           $shop->queue->next_ticket = $next_ticket->ticket_number;
 
           // Send email notification to next in line
-          $this->sendEmail($next_ticket->user->email);
+          $this->sendNotification($next_ticket->user->email);
         }
 
         $shop->queue->save();
@@ -178,13 +178,13 @@ class TicketController extends Controller
 
         if ($current_ticket->user) {
           // Send email notification to next in line
-          $this->sendEmail($current_ticket->user->email, 'on_hold');
+          $this->sendNotification($current_ticket->user->email, 'on_hold');
         }
       }
       return redirect()->back();
     }
 
-    public static function sendEmail($email_address, $queue_position = 'next')
+    public static function sendNotification($email_address, $queue_position = 'next', $mobile = null)
     {
       $user = User::where('email', $email_address)->first();
       if ($user->email_verified_at != null) {
