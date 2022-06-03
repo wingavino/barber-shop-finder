@@ -157,11 +157,11 @@ class ShopOwnerController extends Controller
       $user->save();
 
       // Creates Request to change Account Type to Shop Owner
-      $pending_request = new PendingRequest();
-      $pending_request->user_id = $user->id;
-      $pending_request->request_type = 'change-user-type';
-      $pending_request->change_to_user_type = 'shopowner';
-      $pending_request->save();
+      // $pending_request = new PendingRequest();
+      // $pending_request->user_id = $user->id;
+      // $pending_request->request_type = 'change-user-type';
+      // $pending_request->change_to_user_type = 'shopowner';
+      // $pending_request->save();
     }
 
     Auth::login($user);
