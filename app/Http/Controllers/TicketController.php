@@ -196,39 +196,36 @@ class TicketController extends Controller
         Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position));
       }
 
-      // TEMPORARY LIMIT ON UPDATES DUE TO COST
-      if ($queue_position == 'current') {
-        if ($user->mobile && $user->mobile_verified_at != null) {
-          // Send SMS Notification
-          $sid = env('TWILIO_SID');
-          $token = env('TWILIO_AUTH_TOKEN');
-          $twilio_phone_number = env('TWILIO_PHONE_NUMBER');
-          $twilio = new Client($sid, $token);
+      if ($user->mobile && $user->mobile_verified_at != null) {
+        // Send SMS Notification
+        $sid = env('TWILIO_SID');
+        $token = env('TWILIO_AUTH_TOKEN');
+        $twilio_phone_number = env('TWILIO_PHONE_NUMBER');
+        $twilio = new Client($sid, $token);
 
-          switch ($queue_position) {
-            case 'current':
-            $body = 'It is your turn to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
-            break;
+        switch ($queue_position) {
+          case 'current':
+          $body = 'It is your turn to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+          break;
 
-            case 'on_hold':
-            $body = 'Your ticket has been placed on hold. Please try to arrive at the shop as soon as possible. ~Saber';
-            break;
+          case 'on_hold':
+          $body = 'Your ticket has been placed on hold. Please try to arrive at the shop as soon as possible. ~Saber';
+          break;
 
-            default:
-            $body = 'You are next in line to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
-            break;
-          }
-
-          $message = $twilio
-          ->messages
-          ->create(
-            $user->mobile,
-            [
-              'body' => $body,
-              'from' => $twilio_phone_number,
-            ]
-          );
+          default:
+          $body = 'You are next in line to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+          break;
         }
+
+        $message = $twilio
+        ->messages
+        ->create(
+          $user->mobile,
+          [
+            'body' => $body,
+            'from' => $twilio_phone_number,
+          ]
+        );
       }
     }
 }
