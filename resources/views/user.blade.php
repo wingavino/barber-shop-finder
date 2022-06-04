@@ -97,7 +97,7 @@
                       </div>
                       @if(Auth::user()->type == 'user')
                       <div class="form-group row justify-content-center">
-                          <!-- <div class="col-md-6 offset-md-2">
+                          <div class="col-md-6 offset-md-2">
                             @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->first())
                               <a class="btn btn-primary disabled col-md-12" href="#" disabled>
                                   {{ __('Request to become a Shop Owner Submitted') }}
@@ -107,7 +107,7 @@
                                   {{ __('Request to become a Shop Owner') }}
                               </a>
                             @endif
-                          </div> -->
+                          </div>
                       </div>
                       @endif
                   </form>
