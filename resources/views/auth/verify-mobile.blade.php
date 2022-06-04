@@ -20,7 +20,7 @@
                         <div class="form-group row">
                           <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile')}}</label>
                           <div class="col-md-6">
-                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ Auth::user()->mobile }}" required>
+                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ Auth::user()->mobile }}" placeholder="+639xxxxxxxxx" required>
                             @error('mobile')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
