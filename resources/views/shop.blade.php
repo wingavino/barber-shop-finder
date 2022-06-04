@@ -21,7 +21,7 @@
 
         <div class="card-body">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8 order-last order-md-first">
               <form method="POST" action="#">
                 @csrf
 
@@ -61,7 +61,7 @@
 
                     @endswitch
                   </label>
-                  <div class="col-md-6 input-group">
+                  <div class="col-md-9 input-group">
                     <!-- <div class="input-group-prepend">
                       <div class="input-group-text">
                         <input id="open_hours_day_{{$i}}" type="checkbox" class="@error('open_hours_day_{{$i}}') is-invalid @enderror" name="open_hours_day[]" value="{{$i}}" checked>
@@ -87,7 +87,7 @@
                 <div class="form-group row">
                     <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
 
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $shop->address }}" readonly>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
             </div>
             <!-- Queue -->
               @auth
-              <div class="col-md-4">
+              <div class="col-md-4 order-first order-md-last">
                 <div class="card">
                 <div class="card-header">
                   Queue
