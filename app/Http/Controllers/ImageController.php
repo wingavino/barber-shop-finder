@@ -55,12 +55,16 @@ class ImageController extends Controller
             $fileModal->shop_id = $id;
             $fileModal->path = $img;
             $fileModal->type = 'images';
-
             $fileModal->save();
           }
         }
-
-       return redirect()->route('admin.shop.images', ['id' => $id]);
+    }
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.images', ['id' => $id]);
+    }elseif (Auth::user()->type == 'admin') {
+      return redirect()->route('admin.shop.images', ['id' => $id]);
+    }else {
+      return redirect()->route('home');
     }
   }
 
