@@ -18,7 +18,7 @@ class EmployeeController extends Controller
       $employee->shop_id = $shop->id;
       if ($request->email) {
         $employee->email = $request->email;
-        $link_user = User::where('email', $employee->email)->first()->id;
+        $link_user = User::where('email', $employee->email)->first();
         if ($link_user->type == 'user') {
           $employee->user_id = $link_user->id;
         }
