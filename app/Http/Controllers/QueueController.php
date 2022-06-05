@@ -32,4 +32,24 @@ class QueueController extends Controller
 
     return route('home');
   }
+
+  public function openShopQueue(Request $request)
+  {
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Auth::user()->shop;
+      $shop->queue->is_closed = false;
+      $shop->queue->save();
+    }
+    return back();
+  }
+
+  public function closeShopQueue(Request $request)
+  {
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Auth::user()->shop;
+      $shop->queue->is_closed = true;
+      $shop->queue->save();
+    }
+    return back();
+  }
 }
