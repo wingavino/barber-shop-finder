@@ -61,9 +61,11 @@ class EmployeeController extends Controller
         $employee->type = $request->type;
         if ($request->email) {
           $employee->email = $request->email;
-          $link_user = User::where('email', $employee->email)->first()->id;
-          if ($link_user->type == 'user') {
-            $employee->user_id = $link_user->id;
+          $link_user = User::where('email', $employee->email)->first();
+          if ($link_user) {
+            if ($link_user->type == 'user') {
+              $employee->user_id = $link_user->id;
+            }
           }
         }
         $employee->save();
