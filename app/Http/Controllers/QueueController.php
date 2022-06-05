@@ -39,6 +39,11 @@ class QueueController extends Controller
       $shop = Auth::user()->shop;
       $shop->queue->is_closed = false;
       $shop->queue->save();
+    }elseif (Auth::user()->type == 'user') {
+      $employee = Employee::where('user_id', Auth::user()->id)->first();
+      $shop = Shop::where('id', $employee->shop_id)->first();
+      $shop->queue->is_closed = false;
+      $shop->queue->save();
     }
     return back();
   }
@@ -47,6 +52,11 @@ class QueueController extends Controller
   {
     if (Auth::user()->type == 'shopowner') {
       $shop = Auth::user()->shop;
+      $shop->queue->is_closed = true;
+      $shop->queue->save();
+    }elseif (Auth::user()->type == 'user') {
+      $employee = Employee::where('user_id', Auth::user()->id)->first();
+      $shop = Shop::where('id', $employee->shop_id)->first();
       $shop->queue->is_closed = true;
       $shop->queue->save();
     }
