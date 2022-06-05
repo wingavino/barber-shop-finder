@@ -134,7 +134,14 @@
                             </form>
                             @endif
                         @else
-                          @if(Auth::user()->type == 'user')
+                          @if($shop->queue->is_closed)
+                            <div class="form-group row mb-0 justify-content-center">
+                              <button class="btn btn-danger col-md-12 disabled">
+                                {{ __('Queue is closed') }}
+                              </button>
+                            </div>
+                          @else
+                            @if(Auth::user()->type == 'user')
                             <form method="POST" action="{{ route('shop.ticket', [$shop->id]) }}">
                               @csrf
                               <div class="form-group row mb-0 justify-content-center">
@@ -143,6 +150,7 @@
                                 </button>
                               </div>
                             </form>
+                            @endif
                           @endif
                         @endisset
                       @endauth
