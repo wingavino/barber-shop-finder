@@ -83,6 +83,35 @@
                 </div>
                 @endforeach
 
+                <label for="contact" class="col col-form-label text-md-center"><h3>{{ __('Contact Information') }}</h3></label>
+                @isset($shop->owner_name)
+                <div class="form-group row">
+                  <label for="owner_name" class="col-md-3 col-form-label text-md-right">{{ __('Owner\'s Name') }}</label>
+
+                  <div class="col-md-9">
+                    <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ $shop->owner_name }}" readonly>
+                  </div>
+                </div>
+                @endisset
+                @isset($shop->user->mobile)
+                <div class="form-group row">
+                  <label for="owner_number" class="col-md-3 col-form-label text-md-right">{{ __('Owner\'s Phone Number') }}</label>
+
+                  <div class="col-md-9">
+                    <input id="owner_number" type="text" class="form-control @error('owner_number') is-invalid @enderror" name="owner_number" value="{{ $shop->user->mobile }}" readonly>
+                  </div>
+                </div>
+                @endisset
+                @isset($shop->mobile)
+                <div class="form-group row">
+                  <label for="mobile" class="col-md-3 col-form-label text-md-right">{{ __('Shop Phone Number') }}</label>
+
+                  <div class="col-md-9">
+                    <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ $shop->mobile }}" readonly>
+                  </div>
+                </div>
+                @endisset
+
                 <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
                 <div class="form-group row">
                     <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
