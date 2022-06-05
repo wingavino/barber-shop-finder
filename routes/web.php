@@ -141,6 +141,8 @@ Route::middleware('isEmployee')->group(function(){
   Route::post('/employee/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('employee.shop.queue.hold'); //Handles functions for putting Current Queue Ticket on Hold
   Route::post('/employee/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('employee.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
   Route::post('/employee/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('employee.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
+  Route::post('/employee/shop/queue/open', [App\Http\Controllers\QueueController::class, 'openShopQueue'])->name('employee.shop.queue.open'); //Opens Shop Queue for Employee
+  Route::post('/employee/shop/queue/close', [App\Http\Controllers\QueueController::class, 'closeShopQueue'])->name('employee.shop.queue.close'); //Close Shop Queue for Employee
   Route::get('/employee/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsEmployee'])->name('employee.shop.reviews'); //Shows Shop's Reviews Page for Employee
   Route::get('/employee/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsEmployee'])->name('employee.shop.services'); //Shows Shop's Services Page for Employee
   Route::get('/employee/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('employee.shop.services.add'); //Shows Add Service Page for Shop
