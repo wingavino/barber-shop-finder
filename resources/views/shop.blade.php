@@ -153,6 +153,14 @@
                             @endif
                           @endif
                         @endisset
+                      @else
+                        @if($shop->queue->is_closed)
+                          <div class="form-group row mb-0 justify-content-center">
+                            <button class="btn btn-danger col-md-12 disabled">
+                              {{ __('Queue is closed') }}
+                            </button>
+                          </div>
+                        @endif
                       @endauth
                     @else
                       <h3>Queueing online unavailable for this shop</h3>
