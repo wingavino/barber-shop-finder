@@ -93,14 +93,40 @@ $(document).ready(function(){
                     <!-- Current Ticket -->
                     <div class="col-md-6">
                       <div class="card">
-                        <div class="card-header bg-success">
-                          Current Ticket
-                        </div>
+                        @if($shop_queue->is_closed)
+                          <div class="card-header bg-light">
+                            <div class="row">
+                              <div class="col-3">
+                                Current Ticket
+                              </div>
+                              <div class="col-9 text-right">
+                                <form method="POST" action="{{ route('shopowner.shop.queue.open') }}">
+                                  @csrf
+                                  <button class="btn btn-danger" type="submit" name="button">Closed</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        @else
+                          <div class="card-header bg-light">
+                            <div class="row">
+                              <div class="col-3">
+                                Current Ticket
+                              </div>
+                              <div class="col-9 text-right">
+                                <form method="POST" action="{{ route('shopowner.shop.queue.close') }}">
+                                  @csrf
+                                  <button class="btn btn-success" type="submit" name="button">Open</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        @endif
 
                         <div class="card-body text-center">
                           <h3>
                             <button class="btn btn-danger disabled" id="current_ticket" type="button" name="button">None</button>
-                            
+
                           </h3>
                         </div>
 
