@@ -18,7 +18,8 @@ class Review extends Model
       'shop_id',
       'user_id',
       'rating',
-      'review_text'
+      'review_text',
+      'hidden',
     ];
 
     public function shop()
