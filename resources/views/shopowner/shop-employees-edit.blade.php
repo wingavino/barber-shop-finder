@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="card-body text-center">
-                  <h3>{{ __('Edit Shop Service') }}</h3>
+                  <h3>{{ __('Edit Shop Employee') }}</h3>
                   @isset($employee)
                     <form method="POST" action="{{ route('shopowner.shop.employees.edit', ['id' => $employee->id]) }}">
                         @csrf
