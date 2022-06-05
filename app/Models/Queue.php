@@ -16,6 +16,7 @@ class Queue extends Model
      */
     protected $fillable = [
         'shop_id',
+        'is_closed',
         'previous_ticket',
         'current_ticket',
         'next_ticket'
