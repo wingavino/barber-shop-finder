@@ -108,6 +108,8 @@ Route::middleware('isShopOwner')->group(function(){
   Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue'); //Shows Shop's Queue Page for Shopowner
   Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish'); //Handles functions for finishing/ending Current Queue Ticket
   Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold'); //Handles functions for putting Current Queue Ticket on Hold
+  Route::post('/shopowner/shop/queue/open', [App\Http\Controllers\QueueController::class, 'openShopQueue'])->name('shopowner.shop.queue.open'); //Opens Shop Queue for Shopowner
+  Route::post('/shopowner/shop/queue/close', [App\Http\Controllers\QueueController::class, 'closeShopQueue'])->name('shopowner.shop.queue.close'); //Close Shop Queue for Shopowner
   Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
   Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
   Route::get('/shopowner/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('shopowner.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
