@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Auth;
 
 class ShopOwnerController extends Controller
@@ -160,6 +161,7 @@ class ShopOwnerController extends Controller
       $user = new User();
       $user->name = $data->name;
       $user->email = $data->email;
+      $user->email_verified_at = Carbon::now();
       $user->provider_id = $provider_id;
       //$user->avatar = $data->avatar;
       $user->type = 'shopowner';
