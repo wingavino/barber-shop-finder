@@ -160,7 +160,17 @@ $(document).ready(function(){
                     <div class="col-md-6">
                       <div class="card">
                         <div class="card-header bg-light">
-                          Next Ticket
+                          <div class="row">
+                            <div class="col-3">
+                              Next Ticket
+                            </div>
+                            <div class="col-9 text-right">
+                              <form method="POST" action="{{ route('shopowner.shop.queue.next.notify') }}">
+                                @csrf
+                                <button class="btn btn-dark" type="submit" name="button">Notify</button>
+                              </form>
+                            </div>
+                          </div>
                         </div>
 
                         <div class="card-body text-center">
