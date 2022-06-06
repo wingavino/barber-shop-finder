@@ -28,7 +28,7 @@
                   <a class="btn btn-primary" href="{{ route('shopowner.shop') }}">Back</a>
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Logo</h3>
-                    <form action="{{ route('shopowner.shop.images.logo.upload') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('shopowner.shop.images.logo.upload', ['id' => Auth::user()->shop->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
