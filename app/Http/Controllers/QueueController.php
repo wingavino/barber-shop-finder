@@ -15,7 +15,7 @@ class QueueController extends Controller
   public function getCurrentTicket(Request $request, $queue_id)
   {
     $queue = Queue::where('id', $queue_id)->first();
-    $current_ticket = Ticket::where('queue_id', $queue_id)->first();
+    $current_ticket = Ticket::where('queue_id', $queue_id)->where('on_hold', false)->first();
     if ($current_ticket) {
       $user = User::where('id', $current_ticket->user_id)->first();
     }
