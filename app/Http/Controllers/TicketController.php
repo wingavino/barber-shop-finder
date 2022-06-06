@@ -189,6 +189,24 @@ class TicketController extends Controller
       return redirect()->back();
     }
 
+    public function notifyNextInLine(Request $request, $id = null)
+    {
+      if (Auth::user()->type == 'shopowner') {
+        $shop = Auth::user()->shop;
+      }else {
+        $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
+      }
+
+      if ($shop) {
+        $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->first();
+        if ($next_ticket) {
+          // Send email notification to current ticket
+          $this->sendNotification($next_ticket->user->email, 'next');
+        }
+      }
+      return redirect()->back();
+    }
+
     public static function sendNotification($email_address, $queue_position = 'next', $mobile = null)
     {
       $user = User::where('email', $email_address)->first();
