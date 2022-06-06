@@ -65,7 +65,7 @@
                   <!-- Image Upload -->
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Images</h3>
-                    <form action="{{ route('shopowner.shop.images.upload', ['id' => Auth::user()->shop->id]) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('shopowner.shop.images.upload', ['id' => $shop->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
