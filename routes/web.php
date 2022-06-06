@@ -112,6 +112,7 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/queue/close', [App\Http\Controllers\QueueController::class, 'closeShopQueue'])->name('shopowner.shop.queue.close'); //Close Shop Queue for Shopowner
   Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
   Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
+  Route::post('/shopowner/shop/queue/next/notify', [App\Http\Controllers\TicketController::class, 'notifyNextInLine'])->name('shopowner.shop.queue.next.notify'); //Handles functions for notifying the next in line
   Route::get('/shopowner/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviewsAsOwner'])->name('shopowner.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
   Route::get('/shopowner/shop/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('shopowner.shop.services.add'); //Shows Add Service Page for Shop
   Route::get('/shopowner/shop/services', [App\Http\Controllers\ShopController::class, 'showShopServicesAsOwner'])->name('shopowner.shop.services'); //Shows Shop's Services Page for Shopowner
