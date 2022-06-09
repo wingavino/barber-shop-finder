@@ -201,6 +201,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/shop/reviews/delete/{id}/reject/{request_id}', [App\Http\Controllers\ReviewController::class, 'rejectDeleteReview'])->name('admin.shops.reviews.delete.reject'); //Handles functions for rejecting a request to delete a Shop Review
   Route::get('/admin/shop/{id}/settings', [App\Http\Controllers\ShopController::class, 'showShopSettings'])->name('admin.shop.settings'); //Shows Shop's Settings Page for Shopowner
   Route::post('/admin/shops/approve/{id}', [App\Http\Controllers\ShopController::class, 'approveShop'])->name('admin.shops.approve'); //Handles functions for Approving a New Shop
+  Route::get('/admin/users/{id}/hash-password', [App\Http\Controllers\UserController::class, 'hashPassword'])->name('admin.users.hashPassword'); //Temporary Function
 });
 
 // Google Authentication
