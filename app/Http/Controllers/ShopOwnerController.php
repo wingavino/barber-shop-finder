@@ -117,13 +117,14 @@ class ShopOwnerController extends Controller
       $user->name = $request->name;
       $user->mobile = $request->mobile;
       $user->email = $request->email;
-      $user->password = $request->password;
+      $user->password = Hash::make($request->password);
       //$user->avatar = $data->avatar;
       $user->type = 'shopowner';
       $user->save();
 
       if (!Auth::check()) {
         Auth::login($user);
+        $request->user()->sendEmailVerificationNotification();
       }
     }
 
