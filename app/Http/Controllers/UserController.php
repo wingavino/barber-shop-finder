@@ -113,4 +113,15 @@ class UserController extends Controller
 
       return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.']);
     }
+
+    public function hashPassword(Request $request, $id)
+    {
+      if ($id) {
+        $user = User::where('id', $id)->first();
+        $user->password = Hash::make($user->password);
+        $user->save();
+      }
+
+      return redirect()->route('home');
+    }
 }
