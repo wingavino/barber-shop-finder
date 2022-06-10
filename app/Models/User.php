@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function ticket()
     {
-      return $this->hasOne(Ticket::class);
+      return $this->hasMany(Ticket::class);
     }
 
     public function review()

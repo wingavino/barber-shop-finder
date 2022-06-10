@@ -2,6 +2,43 @@
 
 @section('content')
 
+<script>
+$(document).ready(function(){
+  function updateCurrentTicket(){
+    $.ajax({
+      url:'/queue/{{ $shop->queue->id }}/current_ticket',
+      type:'GET',
+      dataType:'json',
+      success:function(response){
+        var current_ticket = '';
+        var btn_status = '';
+
+        if(response.queue.current_ticket){
+          current_ticket = response.queue.current_ticket;
+
+          $('#current_ticket').removeClass('btn-danger').addClass('btn-primary');
+        }else {
+          current_ticket = 'None';
+
+          $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
+        }
+
+        $('#current_ticket').empty();
+
+        $('#current_ticket').append(current_ticket);
+
+      },error:function(err){
+
+        $('#current_ticket').empty();
+      }
+    }).then(function(){
+      setTimeout(updateCurrentTicket, 3000);
+    });
+  }
+  updateCurrentTicket();
+});
+</script>
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-2 col-sm-4">
@@ -146,11 +183,11 @@
                       </h3>
 
                       @auth
-                        @isset(Auth::user()->ticket)
-                          @if(Auth::user()->ticket->queue->shop_id == $shop->id)
+                        @if(Auth::user()->ticket->where('queue_id', $shop->queue->id)->first())
+                          @if(Auth::user()->ticket->where('queue_id', $shop->queue->id)->first()->queue->shop_id == $shop->id)
                             <h3>Your Ticket:
                               <button class="btn btn-success disabled" type="button" name="button">
-                                {{ Auth::user()->ticket->ticket_number }}
+                                {{ Auth::user()->ticket->where('queue_id', $shop->queue->id)->first()->ticket_number }}
                               </button>
                             </h3>
                             <form method="POST" action="{{ route('shop.ticket.cancel', [$shop->id]) }}">
@@ -181,7 +218,7 @@
                             </form>
                             @endif
                           @endif
-                        @endisset
+                        @endif
                       @else
                         @if($shop->queue->is_closed)
                           <div class="form-group row mb-0 justify-content-center">

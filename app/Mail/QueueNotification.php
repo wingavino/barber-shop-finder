@@ -16,10 +16,11 @@ class QueueNotification extends Mailable
      *
      * @return void
      */
-    public function __construct($email, $queue_position)
+    public function __construct($email, $queue_position, $shop_name)
     {
         $this->email = $email;
         $this->queue_position = $queue_position;
+        $this->shop_name = $shop_name;
     }
 
     /**
@@ -33,20 +34,29 @@ class QueueNotification extends Mailable
         case 'current':
           return $this
           ->subject('Saber Queue Update')
-          ->markdown('emails.queue-notification-current');
+          ->markdown('emails.queue-notification-current')
+          ->with([
+              'shop_name' => $this->shop_name,
+          ]);
           break;
 
         case 'on_hold':
           return $this
           ->subject('Saber Queue Update')
-          ->markdown('emails.queue-notification-on-hold');
+          ->markdown('emails.queue-notification-on-hold')
+          ->with([
+              'shop_name' => $this->shop_name,
+          ]);
           break;
 
         default:
           return $this
           ->subject('Saber Queue Update')
-          ->markdown('emails.queue-notification');
+          ->markdown('emails.queue-notification')
+          ->with([
+              'shop_name' => $this->shop_name,
+          ]);
           break;
-      }      
+      }
     }
 }

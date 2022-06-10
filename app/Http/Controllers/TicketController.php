@@ -18,31 +18,33 @@ class TicketController extends Controller
     public function getTicket(Request $request, $id)
     {
       $shop = Shop::where('id', '=', $id)->first();
-      if (!Auth::user()->ticket) {
+      if ($shop) {
+        if (!Auth::user()->ticket->where('queue_id', $shop->queue->id)->first()) {
 
-        if (!$shop->queue) {
-          $queue = new Queue();
-          $queue->shop_id = $shop->id;
-          $queue->save();
-          $shop = Shop::where('id', '=', $id)->first();
-        }
+          if (!$shop->queue) {
+            $queue = new Queue();
+            $queue->shop_id = $shop->id;
+            $queue->save();
+            $shop = Shop::where('id', '=', $id)->first();
+          }
 
-        $last_ticket = $shop->queue->ticket->last();
-        $ticket = new Ticket;
-        $ticket->queue_id = $shop->queue->id;
-        $ticket->user_id = Auth::user()->id;
-        $ticket->ticket_number = 1;
-        if ($last_ticket) {
-          $ticket->ticket_number = $last_ticket->ticket_number + 1;
-        }
-        $ticket->save();
+          $last_ticket = $shop->queue->ticket->last();
+          $ticket = new Ticket;
+          $ticket->queue_id = $shop->queue->id;
+          $ticket->user_id = Auth::user()->id;
+          $ticket->ticket_number = 1;
+          if ($last_ticket) {
+            $ticket->ticket_number = $last_ticket->ticket_number + 1;
+          }
+          $ticket->save();
 
-        if (!$shop->queue->next_ticket) {
-          $shop->queue->next_ticket = $ticket->ticket_number;
-          $shop->queue->save();
+          if (!$shop->queue->next_ticket) {
+            $shop->queue->next_ticket = $ticket->ticket_number;
+            $shop->queue->save();
 
-          // Send Email Notification
-          $this->sendNotification(Auth::user()->email);
+            // Send Email Notification
+            $this->sendNotification(Auth::user()->email, 'next', $shop);
+          }
         }
       }
       return redirect()->back();
@@ -51,9 +53,12 @@ class TicketController extends Controller
     public function cancelTicket(Request $request, $id)
     {
       $shop = Shop::where('id', '=', $id)->first();
-      if (Auth::user()->ticket) {
-        if (Auth::user()->ticket->queue->shop_id == $id) {
-          $ticket = Auth::user()->ticket;
+      if (Auth::user()->ticket->where('queue_id', $shop->queue->id)->first()) {
+        if (Auth::user()->ticket->where('queue_id', $shop->queue->id)->first()->queue->shop_id == $id) {
+          $ticket = Auth::user()->ticket->where('queue_id', $shop->queue->id)->first();
+          if ($shop->queue->current_ticket == $ticket->ticket_number) {
+            $shop->queue->current_ticket = null;
+          }
           $ticket->delete();
           $last_ticket = $shop->queue->ticket->last();
           if ($last_ticket) {
@@ -109,7 +114,7 @@ class TicketController extends Controller
           $next_ticket->save();
 
           // Send Email Notification
-          $this->sendNotification($next_ticket->user->email, 'current');
+          $this->sendNotification($next_ticket->user->email, 'current', $shop);
         }
         $shop->queue->save();
       }
@@ -129,12 +134,14 @@ class TicketController extends Controller
         $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
         if ($current_ticket) {
           $current_ticket->delete();
+          $shop->queue->current_ticket = null;
         }
 
         // If there is no ticket in queue to set as current ticket, this checks for tickets in the Hold Queue
         $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->next_ticket)->first();
         if ($current_ticket) {
           $shop->queue->current_ticket = $current_ticket->ticket_number;
+          $this->sendNotification($current_ticket->user->email, 'current', $shop);
         }else {
           $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', true)->first();
           if ($next_ticket) {
@@ -143,7 +150,7 @@ class TicketController extends Controller
             $next_ticket->save();
             $current_ticket = Ticket::where('queue_id', $shop->queue->id)->where('ticket_number', $shop->queue->current_ticket)->first();
             // Send email notification to current ticket
-            $this->sendNotification($current_ticket->user->email, 'current');
+            $this->sendNotification($current_ticket->user->email, 'current', $shop);
           }
         }
         // if (!$shop->queue->current_ticket = $shop->queue->next_ticket) {
@@ -156,7 +163,7 @@ class TicketController extends Controller
           $shop->queue->next_ticket = $next_ticket->ticket_number;
 
           // Send email notification to next in line
-          $this->sendNotification($next_ticket->user->email);
+          $this->sendNotification($next_ticket->user->email, 'next', $shop);
         }
 
         $shop->queue->save();
@@ -179,7 +186,7 @@ class TicketController extends Controller
           $current_ticket->save();
           if ($current_ticket->user) {
             // Send notification to ticket placed on hold
-            $this->sendNotification($current_ticket->user->email, 'on_hold');
+            $this->sendNotification($current_ticket->user->email, 'on_hold', $shop);
           }
         }
         $shop->queue->current_ticket = null;
@@ -201,17 +208,17 @@ class TicketController extends Controller
         $next_ticket = Ticket::where('queue_id', $shop->queue->id)->where('on_hold', false)->first();
         if ($next_ticket) {
           // Send email notification to current ticket
-          $this->sendNotification($next_ticket->user->email, 'next');
+          $this->sendNotification($next_ticket->user->email, 'next', $shop);
         }
       }
       return redirect()->back();
     }
 
-    public static function sendNotification($email_address, $queue_position = 'next', $mobile = null)
+    public static function sendNotification($email_address, $queue_position = 'next', $shop = null)
     {
       $user = User::where('email', $email_address)->first();
       if ($user->email_verified_at != null) {
-        Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position));
+        Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position, $shop->name));
       }
 
       if ($user->mobile && $user->mobile_verified_at != null) {
@@ -223,15 +230,15 @@ class TicketController extends Controller
 
         switch ($queue_position) {
           case 'current':
-          $body = 'It is your turn to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+          $body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop as soon as possible. ~Saber';
           break;
 
           case 'on_hold':
-          $body = 'Your ticket has been placed on hold. Please try to arrive at the shop as soon as possible. ~Saber';
+          $body = 'Your ticket has been placed on hold '.$shop->name.'. Please try to arrive at the shop as soon as possible. ~Saber';
           break;
 
           default:
-          $body = 'You are next in line to be serviced. Please try to arrive at the shop as soon as possible. ~Saber';
+          $body = 'You are next in line to be serviced '.$shop->name.'. Please try to arrive at the shop as soon as possible. ~Saber';
           break;
         }
 
