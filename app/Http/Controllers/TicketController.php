@@ -57,7 +57,7 @@ class TicketController extends Controller
           $ticket->delete();
           $last_ticket = $shop->queue->ticket->last();
           if ($last_ticket) {
-            $shop->queue->next_ticket = $last_ticket;
+            $shop->queue->next_ticket = $last_ticket->ticket_number;
           }else {
             $shop->queue->next_ticket = null;
           }
