@@ -12,6 +12,7 @@ $(document).ready(function(){
       success:function(response){
         var current_ticket = '';
         var btn_status = '';
+        var queue_length = 0;
 
         if(response.queue.current_ticket){
           current_ticket = response.queue.current_ticket;
@@ -23,13 +24,18 @@ $(document).ready(function(){
           $('#current_ticket').removeClass('btn-primary').addClass('btn-danger');
         }
 
-        $('#current_ticket').empty();
+        if (response.queue_length) {
+          queue_length = response.queue_length;
+        }
 
+        $('#current_ticket').empty();
+        $('#queue_length').empty();
         $('#current_ticket').append(current_ticket);
+        $('#queue_length').append('Current Queue Length: ' + queue_length);
 
       },error:function(err){
-
         $('#current_ticket').empty();
+        $('#queue_length').empty();
       }
     }).then(function(){
       setTimeout(updateCurrentTicket, 3000);
@@ -175,7 +181,7 @@ $(document).ready(function(){
                         <button id="current_ticket" class="btn btn-danger disabled" type="button" name="button">None</button>
                       </h3>
 
-                      <h3>
+                      <h3 id="queue_length">
                         Current Queue Length:
                         @isset($shop->queue->ticket)
                           {{ $shop->queue->ticket->count() }}
