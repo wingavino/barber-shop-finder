@@ -140,14 +140,14 @@ class ShopOwnerController extends Controller
   //Google Authentication
   public function redirectToGoogle()
   {
-    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    config(['services.google.redirect' => env('APP_URL').'/register/shopowner/google/callback']);
     return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
   }
 
   //Google Callback
   public function handleGoogleCallback()
   {
-    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    config(['services.google.redirect' => env('APP_URL').'/register/shopowner/google/callback']);
     $user = Socialite::driver('google')->user();
     $provider_id = 'google';
     $this->_registerOrLoginUser($user, $provider_id);
