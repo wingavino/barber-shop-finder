@@ -282,6 +282,14 @@ class ShopController extends Controller
     return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
+  public function showShopQueueAsAdmin($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_queue = $shop->queue;
+
+    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+  }
+
   public function showAddShopServices($id = null)
   {
     if ($id == null) {
