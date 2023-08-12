@@ -300,7 +300,7 @@ class ShopController extends Controller
     }
   }
 
-  public function addShopServices($id = null, Request $request)
+  public function addShopServices(Request $request, $id = null)
   {
     if ($id == null) {
       $shop = Auth::user()->shop;
@@ -326,7 +326,7 @@ class ShopController extends Controller
     }
   }
 
-  public function showEditShopServices($id = null, $service_id)
+  public function showEditShopServices($service_id, $id = null)
   {
     if (Auth::user()->type == 'shopowner') {
       $shop = Auth::user()->shop;
