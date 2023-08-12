@@ -270,6 +270,7 @@ class ShopController extends Controller
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
@@ -278,6 +279,7 @@ class ShopController extends Controller
   {
     $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
     $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
@@ -286,6 +288,7 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
     $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     return view('admin/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
