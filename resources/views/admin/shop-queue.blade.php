@@ -86,7 +86,7 @@ $(document).ready(function(){
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  @include('shopowner.shop-nav-tabs')
+                  @include('admin.shop-nav-tabs')
                 </div>
                 <div class="card-body">
                   <div class="row">
