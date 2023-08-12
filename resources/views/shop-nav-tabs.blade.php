@@ -39,6 +39,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link {{ (Route::currentRouteName() == 'shop.queue' || Route::currentRouteName() == 'admin.shop.queue') ? 'active' : '' }}" href="{{ route('admin.shop.queue', ['id' => $shop->id]) }}">
+          {{ __('Queue') }}
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link {{ (Route::currentRouteName() == 'shop.reviews' || Route::currentRouteName() == 'shop.reviews.add' || Route::currentRouteName() == 'admin.shop.reviews') ? 'active' : '' }}" href="{{ route('shop.reviews', ['id' => $shop->id]) }}">
           {{ __('Reviews') }}
         </a>
