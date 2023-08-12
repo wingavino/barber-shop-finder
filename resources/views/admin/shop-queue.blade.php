@@ -76,7 +76,7 @@ $(document).ready(function(){
     <div class="row justify-content-center">
         <div class="col-md-2 col-sm-4">
           @isset($logo)
-          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+          <img src="{{ asset('img/shop/'.$shop->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
           @endisset
         </div>
         <div class="col-8 col-sm-12 text-center">
