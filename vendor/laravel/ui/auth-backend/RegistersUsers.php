@@ -28,7 +28,7 @@ trait RegistersUsers
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function register($pending_request = null, Request $request)
+    public function register(Request $request, $pending_request = null)
     {
         $this->validator($request->all())->validate();
 
