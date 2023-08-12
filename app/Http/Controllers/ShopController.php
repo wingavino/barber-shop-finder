@@ -272,7 +272,7 @@ class ShopController extends Controller
     $shop_queue = $shop->queue;
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
   public function showShopQueueAsEmployee()
@@ -281,7 +281,7 @@ class ShopController extends Controller
     $shop_queue = $shop->queue;
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
   public function showShopQueueAsAdmin($id)
@@ -290,7 +290,7 @@ class ShopController extends Controller
     $shop_queue = $shop->queue;
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('admin/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('admin/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
   public function showAddShopServices($id = null)
