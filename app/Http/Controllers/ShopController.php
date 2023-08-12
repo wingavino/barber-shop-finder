@@ -287,7 +287,7 @@ class ShopController extends Controller
     $shop = Shop::where('id', $id)->first();
     $shop_queue = $shop->queue;
 
-    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('admin/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
   }
 
   public function showAddShopServices($id = null)
