@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-2 col-sm-4">
           @isset($logo)
-          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+          <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
           @endisset
         </div>
         <div class="col-8 col-sm-12 text-center">
@@ -49,7 +49,7 @@
                       @foreach($images as $image)
                         <div class="col-6">
                           <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}">
-                            <img src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}" class="img-thumbnail" alt="...">
+                            <img src="{{ asset('img/'.$image->path) }}" class="img-thumbnail" alt="...">
                           </a>
                         </div>
                       @endforeach
