@@ -10,8 +10,12 @@ use File;
 
 class ImageController extends Controller
 {
-  public function showUploadImage($id)
+  public function showUploadImage($id = null)
   {
+    if ($id == null) {
+      $id = Auth::user()->shop()->id;
+    }
+    
     $shop = Shop::where('id', $id)->first();
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
