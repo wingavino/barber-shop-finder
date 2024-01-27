@@ -348,7 +348,7 @@ class ShopController extends Controller
     $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
 
     if (Auth::user()->type == 'shopowner') {
-      error_log('Shop ID: ' . $shop->id . ' Service ID: ' . $shop_service->id);
+      error_log('Shop: ' . $shop . ' Service: ' . $shop_service);
       return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
     }elseif(Auth::user()->type == 'admin'){
       return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
