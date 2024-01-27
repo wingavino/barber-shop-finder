@@ -340,12 +340,9 @@ class ShopController extends Controller
   public function showEditShopServices($id = null, $service_id)
   {
     $shop = Shop::where('id', $id)->first();
-    error_log('Shop: ' . $shop);
 
     $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
-    error_log(' Service: ' . $shop_service);
-
-    error_log(' User Type: ' . Auth::user()->type);
+    
     if (Auth::user()->type == 'shopowner') {
       return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
     }elseif(Auth::user()->type == 'admin'){
