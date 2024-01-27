@@ -172,19 +172,6 @@ class ShopController extends Controller
     return view('employee/shop-images', ['shop' => $shop, 'images' => $images, 'logo' => $logo]);
   }
 
-  public function showShopServices($id)
-  {
-    $shop = Shop::where('id', $id)->first();
-    $shop_services = $shop->shop_services;
-    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
-
-    if (Auth::user() && Auth::user()->type == 'admin') {
-      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
-    }else {
-      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
-    }
-  }
-
   public function showShopEmployeesAsShopOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
@@ -248,6 +235,19 @@ class ShopController extends Controller
     $shop = Shop::where('id', $id)->first();
 
     return view('shop-reviews-add', ['shop' => $shop,'id' => $shop->id]);
+  }
+
+  public function showShopServices($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_services = $shop->shop_services;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
+    }else {
+      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
+    }
   }
 
   public function showShopServicesAsOwner()
@@ -348,7 +348,9 @@ class ShopController extends Controller
     $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
 
     if (Auth::user()->type == 'shopowner') {
-      return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+      return view('shopowner/shop-services-edit')
+        ->with('shop', $shop)
+        ->with('shop_service', $shop_service);
     }elseif(Auth::user()->type == 'admin'){
       return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
     }else{
