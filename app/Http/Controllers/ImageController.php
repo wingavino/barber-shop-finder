@@ -104,7 +104,7 @@ class ImageController extends Controller
     }
   }
 
-  public function deleteImage(Request $request, $id, $image_id)
+  public function deleteImage($id, $image_id, Request $request)
   {
     $shop = Shop::where('id', $id)->first();
     $image = Image::where('shop_id', $shop->id)->where('id', $image_id)->first();
