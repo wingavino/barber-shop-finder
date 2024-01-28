@@ -32,7 +32,7 @@
                       <h4>Logo</h4>
                     @isset($logo)
                         <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $logo->id]) }}" data-id="{{ $logo->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}">
-                          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-thumbnail" alt="...">
+                          <img src="{{ asset('img/'.$logo->path) }}" class="img-thumbnail" alt="...">
                         </a>
                     @else
                       <img src="https://via.placeholder.com/1000?text=No+Image" class="img-fluid img-thumbnail" alt="...">
