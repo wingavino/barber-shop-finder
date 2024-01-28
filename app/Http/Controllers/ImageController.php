@@ -113,7 +113,14 @@ class ImageController extends Controller
         File::delete($file);
         if ($image) {
           $image->delete();
-          return redirect()->route('admin.shop.images', ['id' => $shop->id]);
+
+          if(Auth::user()->type == 'shopowner'){
+            return redirect()->route('shopowner.shop.images');
+          }elseif (Auth::user()->type == 'admin'){
+            return redirect()->route('admin.shop.images', ['id' => $shop->id]);
+          }else {
+            return redirect()->route('shop.images', ['id' => $shop->id]);
+          }          
         }
     }
 
