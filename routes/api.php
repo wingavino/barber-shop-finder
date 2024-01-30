@@ -26,3 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/email', [NotificationController::class, 'email']);
+
+Route::post('/validate-phone-number', [\App\Http\Controllers\PhoneNumberController::class, 'show']);
+
