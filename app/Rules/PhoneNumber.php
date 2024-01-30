@@ -22,7 +22,7 @@ class PhoneNumber implements Rule
 
     public function message()
     {
-        return 'The phone number has to be in either national or international format.';
+        return 'The phone number has to be in the international format.';
     }
 
 }
