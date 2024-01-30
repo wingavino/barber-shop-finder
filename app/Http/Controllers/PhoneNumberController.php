@@ -18,10 +18,10 @@ class PhoneNumberController extends Controller
     public function show(Request $request)
     {
         $lookupService = new PhoneNumberLookupService(
-            env('TWILIO_AUTH_SID'), 
+            env('TWILIO_SID'), 
             env('TWILIO_AUTH_TOKEN')
         );
-        
+
         $validated = $request->validate([
             'phone_number' => [
                 'required', 
