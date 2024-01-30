@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    private $service;
-
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -40,6 +38,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
+
+    private $service;
+    
     public function __construct(PhoneNumberLookupService $service)
     {
         $this->middleware('guest');
