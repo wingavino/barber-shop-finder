@@ -17,7 +17,7 @@ class TwilioLookupServiceProvider extends ServiceProvider
     {
         $this->app->singleton(PhoneNumberLookupService::class, function ($app) {
             return new PhoneNumberLookupService(
-                env('TWILIO_AUTH_SID'), 
+                env('TWILIO_SID'), 
                 env('TWILIO_AUTH_TOKEN')
             );
         });
