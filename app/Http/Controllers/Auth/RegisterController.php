@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
 
     private $service;
-    
+
     public function __construct(PhoneNumberLookupService $service)
     {
         $this->middleware('guest');
@@ -55,11 +55,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $lookupService = new PhoneNumberLookupService(
-            env('TWILIO_SID'), 
-            env('TWILIO_AUTH_TOKEN')
-        );
-
         return Validator::make($data, [
             'name' => ['required', 'alpha_dash', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
