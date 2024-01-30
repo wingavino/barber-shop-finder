@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'name' => ['required', 'alpha_dash', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'mobile' => ['regex:/^(+63)[0-9]{10}/', new PhoneNumber($this->service)],
+            'mobile' => [new PhoneNumber($this->service)],
         ]);
     }
 
