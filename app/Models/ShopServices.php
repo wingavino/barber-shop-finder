@@ -17,6 +17,7 @@ class ShopServices extends Model
     protected $fillable = [
         'shop_id',
         'name',
+        'category',
         'price',
     ];
 

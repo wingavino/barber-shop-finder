@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-2 col-sm-4">
           @isset($logo)
-          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+          <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
           @endisset
         </div>
         <div class="col-8 col-sm-12 text-center">
@@ -25,14 +25,14 @@
 
                 <div class="card-body">
                   <div class="col text-right">
-                    <a class="btn btn-info" type="button" role="button" href="{{ route('shopowner.shop.images.upload') }}">Upload</a>
+                    <a class="btn btn-info" type="button" role="button" href="{{ route('shopowner.shop.images.upload', ['id' => $shop->id]) }}">Upload</a>
                   </div>
                   <div class="row justify-content-center text-center">
                     <div class="col-3">
                       <h4>Logo</h4>
                     @isset($logo)
-                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $logo->id]) }}" data-id="{{ $logo->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}">
-                          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-thumbnail" alt="...">
+                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $shop->id, 'image_id' => $logo->id]) }}" data-id="{{ $logo->id }}" data-src="{{ asset('img/'.$logo->path) }}">
+                          <img src="{{ asset('img/'.$logo->path) }}" class="img-thumbnail" alt="...">
                         </a>
                     @else
                       <img src="https://via.placeholder.com/1000?text=No+Image" class="img-fluid img-thumbnail" alt="...">
@@ -48,8 +48,8 @@
                     @isset($images)
                       @foreach($images as $image)
                         <div class="col-6">
-                          <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}">
-                            <img src="{{ asset('img/'.Auth::user()->id.'/'.$image->path) }}" class="img-thumbnail" alt="...">
+                          <a href="#" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('shopowner.shop.images.delete', ['id' => $shop->id, 'image_id' => $image->id]) }}" data-id="{{ $image->id }}" data-src="{{ asset('img/'.$image->path) }}">
+                            <img src="{{ asset('img/'.$image->path) }}" class="img-thumbnail" alt="...">
                           </a>
                         </div>
                       @endforeach

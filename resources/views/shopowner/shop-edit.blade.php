@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="col-md-2 col-sm-4">
             @isset($logo)
-            <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+            <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
             @endisset
           </div>
           <div class="col-8 col-sm-12 text-center">
@@ -36,6 +36,23 @@
                           @enderror
                       </div>
                   </div>
+
+                  <div class="form-group row">
+                    <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Shop Type') }}</label>
+
+                    <div class="col-md-6">
+                        <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
+                          <option value="Salon" {{ $shop->type == 'salon' ? 'selected' : '' }}>Salon</option>
+                          <option value="Barber" {{ $shop->type == 'barber' ? 'selected' : ''}}>Barber</option>
+                        </select>
+
+                        @error('type')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
 
                   <label for="open_hours" class="col col-form-label text-md-center"><h3>{{ __('Open Hours') }}</h3></label>
 
@@ -186,8 +203,8 @@
                           );
 
                           map = new google.maps.Map(document.getElementById("map"), {
-                            center: { lat: 15.5000569, lng: 120.9109837 },
-                            zoom: 8,
+                            center: { lat: philippines.lat, lng: philippines.lng },
+                            zoom: 14,
                           });
 
                           for (var i = 0; i < shops.length; i++) {

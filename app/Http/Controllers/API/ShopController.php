@@ -16,7 +16,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $shops = Shop::all()->where('approved', true);
+        $shops = Shop::all()->where('hidden', false);
 
         return response([
           'shops' => ShopResource::collection($shops),

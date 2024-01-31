@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Auth;
 
 class ShopOwnerController extends Controller
@@ -109,16 +110,25 @@ class ShopOwnerController extends Controller
 
   public function addShopOwner(Request $request)
   {
-    $user = User::where('email', '=', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
 
     if (!$user) {
       $user = new User();
       $user->name = $request->name;
       $user->mobile = $request->mobile;
       $user->email = $request->email;
+      $user->password = Hash::make($request->password);
       //$user->avatar = $data->avatar;
+      $user->type = 'shopowner';
       $user->save();
+
+      if (!Auth::check()) {
+        Auth::login($user);
+        $request->user()->sendEmailVerificationNotification();
+      }
     }
+
+    return redirect()->route('home');
   }
 
   public function showEditShopOwners($id, $type)
@@ -130,14 +140,14 @@ class ShopOwnerController extends Controller
   //Google Authentication
   public function redirectToGoogle()
   {
-    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    config(['services.google.redirect' => env('APP_URL').'/register/shopowner/google/callback']);
     return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
   }
 
   //Google Callback
   public function handleGoogleCallback()
   {
-    config(['services.google.redirect' => 'http://localhost:8000/register/shopowner/google/callback']);
+    config(['services.google.redirect' => env('APP_URL').'/register/shopowner/google/callback']);
     $user = Socialite::driver('google')->user();
     $provider_id = 'google';
     $this->_registerOrLoginUser($user, $provider_id);
@@ -152,16 +162,18 @@ class ShopOwnerController extends Controller
       $user = new User();
       $user->name = $data->name;
       $user->email = $data->email;
+      $user->email_verified_at = Carbon::now();
       $user->provider_id = $provider_id;
       //$user->avatar = $data->avatar;
+      $user->type = 'shopowner';
       $user->save();
 
       // Creates Request to change Account Type to Shop Owner
-      $pending_request = new PendingRequest();
-      $pending_request->user_id = $user->id;
-      $pending_request->request_type = 'change-user-type';
-      $pending_request->change_to_user_type = 'shopowner';
-      $pending_request->save();
+      // $pending_request = new PendingRequest();
+      // $pending_request->user_id = $user->id;
+      // $pending_request->request_type = 'change-user-type';
+      // $pending_request->change_to_user_type = 'shopowner';
+      // $pending_request->save();
     }
 
     Auth::login($user);

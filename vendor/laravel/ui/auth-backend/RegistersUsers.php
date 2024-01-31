@@ -6,7 +6,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\PendingRequest;
 
 trait RegistersUsers
 {
@@ -28,34 +27,13 @@ trait RegistersUsers
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function register($pending_request = null, Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all()), $pending_request));
-
-        $this->guard()->login($user);
-
-        if ($response = $this->registered($request, $user, $pending_request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
-    }
-
-    /**
-     * Handle an admin registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    public function registerNoLogin(Request $request)
+    public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {
             return $response;
@@ -83,14 +61,8 @@ trait RegistersUsers
      * @param  mixed  $user
      * @return mixed
      */
-    protected function registered(Request $request, $user, $pending_request = null)
+    protected function registered(Request $request, $user)
     {
-        if ($pending_request != null) {
-          $new_pending_request = new PendingRequest();
-          $new_pending_request->user_id = $user->id;
-          $new_pending_request->request_type = $pending_request;
-          $new_pending_request->change_to_user_type = 'shopowner';
-          $new_pending_request->save();
-        }
+        //
     }
 }

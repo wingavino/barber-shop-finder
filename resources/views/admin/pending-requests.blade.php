@@ -17,7 +17,26 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3>{{ __('Requests List') }}</h3></div>
+                <div class="card-header">
+                  <h3>{{ __('Requests List') }}</h3>
+                  <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status) ? '' : 'active' }}" href="{{ route('admin.pending-requests') }}" aria-current="true" href="#">
+                        {{ __('Awaiting Action') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status && $status == 'approved') ? 'active' : '' }}" href="{{ route('admin.pending-requests', ['status' => 'approved']) }}">
+                        {{ __('Approved') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($status && $status == 'rejected') ? 'active' : '' }}" href="{{ route('admin.pending-requests', ['status' => 'rejected']) }}">
+                        {{ __('Rejected') }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
                 <div class="card-body">
                   <!-- <div class="row justify-content-end text-right">
                     <div class="col-md-12">
@@ -121,7 +140,7 @@
                                   <a class="btn btn-info col"
                                     data-toggle="modal"
                                     data-target="#requestModal"
-                                    data-reject-form-action=""
+                                    data-reject-form-action="{{ route('admin.shops.reviews.delete.reject', ['id' => $review->id, 'request_id' => $value->id]) }}"
                                     data-approve-form-action="{{ route('admin.shops.reviews.delete', ['id' => $review->id]) }}"
                                     data-id="{{ $value->id }}"
                                     data-user-id="{{ $value->user_id }}"
@@ -132,7 +151,7 @@
                                     data-reported-user-type="{{ $review->user->type }}"
                                     data-report-reason="{{ $value->report_reason }}"
                                     data-review-id="{{ $value->review_id }}"
-                                    data-review_text="{{ $review->review_text }}"
+                                    data-review-text="{{ $review->review_text }}"
                                     data-shop-id="{{ $value->shop_id }}"
                                     data-shop-name="{{ $value->shop_name }}"
                                     data-shop-url="{{ route('admin.shop', ['id' => $value->shop_id]) }}"
@@ -180,7 +199,7 @@
                                   <div class="col">
                                     <form class="" action="#" method="post" id='rejectForm'>
                                       @csrf
-                                      <button class="btn btn-danger col" id="approveRequestButton" type="submit">Reject</button>
+                                      <button class="btn btn-danger col" id="rejectRequestButton" type="submit">Reject</button>
                                     </form>
                                   </div>
                                 </div>

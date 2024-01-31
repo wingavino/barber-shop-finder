@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-2 col-sm-4">
           @isset($logo)
-          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+          <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
           @endisset
         </div>
         <div class="col-8 col-sm-12 text-center">
@@ -41,9 +41,9 @@
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Account ID</th>
+                            <!-- <th scope="col">Account ID</th> -->
                             <th scope="col">Employee Name</th>
-                            <th scope="col">Email</th>
+                            <!-- <th scope="col">Email</th> -->
                             <th scope="col">Type</th>
                             <th scope="col">Actions</th>
                           </tr>
@@ -53,9 +53,9 @@
                             @foreach ($employees as $shop_employee => $employee)
                             <tr>
                               <td>{{ $employee->id }}</td>
-                              <td>{{ $employee->user_id }}</td>
+                              <!-- <td>{{ $employee->user_id }}</td> -->
                               <td>{{ $employee->name }}</td>
-                              <td>{{ $employee->email }}</td>
+                              <!-- <td>{{ $employee->email }}</td> -->
                               <td>{{ $employee->type }}</td>
                               <td>
                                 <a class="btn btn-primary col-md-4" href="{{ route('shopowner.shop.employees.edit', ['id' => $employee->id]) }}" type="button" role="button" name="button">Edit</a>

@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="col-md-2 col-sm-4">
               @isset($logo)
-              <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+              <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
               @endisset
             </div>
             <div class="col-8 col-sm-12 text-center">
@@ -28,7 +28,7 @@
                   <a class="btn btn-primary" href="{{ route('shopowner.shop') }}">Back</a>
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Logo</h3>
-                    <form action="{{ route('shopowner.shop.images.logo.upload') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('shopowner.shop.images.logo.upload', ['id' => Auth::user()->shop->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
@@ -65,7 +65,7 @@
                   <!-- Image Upload -->
                   <div class="container mt-5">
                     <h3 class="text-center mb-5">Upload Images</h3>
-                    <form action="{{ route('shopowner.shop.images.upload') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('shopowner.shop.images.upload', ['id' => $shop->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">

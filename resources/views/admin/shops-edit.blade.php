@@ -25,27 +25,47 @@
                       </div>
 
                       <div class="form-group row">
-                          <label for="owner_id" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Shop Type') }}</label>
+
+                        <div class="col-md-6">
+                            <select class="custom-select" id="type" name="type" aria-label="Select Shop Type">
+                              <option value="Salon" {{ $shop->type == 'salon' ? 'selected' : '' }}>Salon</option>
+                              <option value="Barber" {{ $shop->type == 'barber' ? 'selected' : ''}}>Barber</option>
+                            </select>
+
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                      <div class="form-group row">
+                          <label for="owner_name" class="col-md-4 col-form-label text-md-right">{{ __('Owner Name') }}</label>
 
                           <div class="col-md-6">
-                              <!-- <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ old('owner_name') }}" required autocomplete="owner_name"> -->
-                              <select class="custom-select" id="owner_id" name="owner_id" aria-label="Select Owner Name">
-                                <option value="">None</option>
-                                @if ($shop->owner_id == 1)
-                                  <option value="1" selected>Admin</option>
-                                @else
-                                  <option value="1">Admin</option>
-                                @endif
-                                @foreach($shopowners as $shopowner)
-                                  @if (isset($shop->user->id) && $shop->user->id == $shopowner->id)
-                                    <option value="{{$shopowner->id}}" selected>{{$shopowner->id . ' - ' . $shopowner->name}}</option>
-                                  @else
-                                    <option value="{{$shopowner->id}}">{{$shopowner->id . ' - ' . $shopowner->name}}</option>
-                                  @endif
-                                @endforeach
-                              </select>
+                            @if($shop->owner_id != null)
+                              <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ __($shop->owner_name) }}" disabled required autocomplete="owner_name">
+                            @else
+                              <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ __($shop->owner_name) }}" required autocomplete="owner_name">
+                            @endif
 
-                              @error('owner_name')
+                            @error('owner_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                          </div>
+                      </div>
+
+                      <div class="form-group row">
+                          <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }} (Optional)</label>
+
+                          <div class="col-md-6">
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ __($shop->mobile) }}" autocomplete="mobile">
+
+                              @error('mobile')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>

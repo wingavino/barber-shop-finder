@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-2 col-sm-4">
           @isset($logo)
-          <img src="{{ asset('img/'.Auth::user()->id.'/'.$logo->path) }}" class="img-fluid" alt="...">
+          <img src="{{ asset('img/'.$logo->path) }}" class="img-fluid" alt="...">
           @endisset
         </div>
         <div class="col-8 col-sm-12 text-center">
@@ -35,6 +35,29 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                          <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+
+                          <div class="col-md-6">
+                              <select class="custom-select" id="category" name="category" aria-label="Select Service Category">
+                                <option value="Haircut" selected>Haircut</option>
+                                <option value="Kid's Haircut">Kid's Haircut</option>
+                                <option value="Facial Shave">Facial Shave</option>
+                                <option value="Hair Color">Hair Color</option>
+                                <option value="Hair Treatment">Hair Treatment</option>
+                                <option value="Perm">Perm</option>
+                                <option value="Rebond">Rebond</option>
+                                <option value="Other">Other</option>
+                              </select>
+
+                              @error('category')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                          </div>
+                      </div>
 
                         <div class="form-group row">
                           <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>

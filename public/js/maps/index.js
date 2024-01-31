@@ -2,6 +2,7 @@ let map;
 var shops = [];
 var open_hours = [];
 var reviews = [];
+var logos = [];
 var markers = [];
 var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
@@ -24,12 +25,18 @@ async function getReviews() {
   return data;
 };
 
+async function getImages() {
+  let response = await fetch (app_url + '/api/images');
+  let data = await response.json();
+  return data;
+};
+
 var marker
 
 function listShops(data) {
   Object.entries(data.shops).forEach(([key, value]) => {
     var listItem = document.createElement('a');
-    listItem.href = '#';
+    listItem.href = '#map';
     listItem.classList.add('list-group-item', 'list-group-item-action', 'text-center');
     var bold = document.createElement("strong");
     var listItemContent = document.createTextNode(value.name.toString());
@@ -82,6 +89,20 @@ function listReviews(data) {
   });
 }
 
+function listLogos(data) {
+  Object.entries(data.logos).forEach(([key, value]) => {
+    logos.push({
+      'id':  value.id,
+      'shop_id': value.shop_id,
+      'user_id': value.user_id,
+      'path': value.path,
+      'type': value.type,
+      'created_at': value.created_at,
+      'updated_at': value.updated_at,
+    });
+  });
+}
+
 var infowindow;
   async function initMap() {
     await getShops()
@@ -97,6 +118,11 @@ var infowindow;
     await getReviews()
     .then(
       data => listReviews(data),
+    );
+
+    await getImages()
+    .then(
+      data => listLogos(data),
     );
 
     map = new google.maps.Map(document.getElementById("map"), {
@@ -122,7 +148,17 @@ var infowindow;
       var contentString =
         '<div id="content">' +
           '<div id="siteNotice">' +
-          "</div>" +
+          '</div>';
+          for (var l = 0; l < logos.length; l++) {
+            if (logos[l].shop_id == shop.id) {
+              contentString +=
+                '<a href="' + app_url +'/shop/' + shop.id + '">' +
+                  '<img src="'+app_url+'/img/'+logos[l].path+'" class="img-fluid" style="width: 150px">' +
+                '</a>'
+                ;
+            }
+          }
+          contentString +=
           '<h3 id="firstHeading" class="firstHeading">'+ shop.title +'</h3>' +
           '<div id="bodyContent">' +
             // "<p><b>("+ shop.position.lat + ", " + shop.position.lng +")</b></p>" +
@@ -168,13 +204,54 @@ var infowindow;
           infowindow.setContent(info);
           infowindow.open(marker.get("map"), marker);
           map.panTo(marker.getPosition());
-          map.setZoom(13);
+          // map.setZoom(15);
         });
       }
     }
+
+    const locationButton = document.createElement("button");
+
+    locationButton.textContent = "Go to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            infowindow.setPosition(pos);
+            infowindow.setContent("Location found.");
+            // infowindow.open(map);
+            map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infowindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infowindow, map.getCenter());
+      }
+    });
+
 
     map.addListener('click', function() {
       if (infowindow) infowindow.close();
     });
 
   }
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  infoWindow.open(map);
+}

@@ -14,7 +14,7 @@ class ReviewController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
     if ($shop) {
-      $review = Review::where('shop_id', $shop->id)->where('user_id', Auth::user()->id)->first();
+      $review = Review::where('shop_id', $shop->id)->where('user_id', Auth::user()->id)->where('hidden', false)->first();
       if (!$review) {
         $review = new Review;
         $review->shop_id = $id;
@@ -51,11 +51,25 @@ class ReviewController extends Controller
     if ($review) {
       $reports = PendingRequest::where('request_type', 'report-review')->where('review_id', $review->id)->get();
       if ($reports) {
-        foreach ($reports as $report => $value) {
-          $value->delete();
+        foreach ($reports as $report) {
+          $report->rejected = false;
+          $report->approved = true;
+          $report->save();
         }
       }
-      $review->delete();
+      $review->hidden = true;
+      $review->save();
+    }
+    return redirect()->route('admin.pending-requests');
+  }
+
+  public function rejectDeleteReview(Request $request, $id, $request_id)
+  {
+    $report = PendingRequest::where('request_type', 'report-review')->where('id', $request_id)->first();
+    if ($report) {
+          $report->rejected = true;
+          $report->approved = false;
+          $report->save();
     }
     return redirect()->route('admin.pending-requests');
   }

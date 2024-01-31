@@ -25,7 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'provider_id',
         'avatar',
         'type',
-        'id_verified_at'
+        'id_verified_at',
+        'mobile_verified_at'
     ];
 
     /**
@@ -64,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function ticket()
     {
-      return $this->hasOne(Ticket::class);
+      return $this->hasMany(Ticket::class);
     }
 
     public function review()

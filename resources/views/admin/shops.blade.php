@@ -14,9 +14,9 @@
                 <div class="card-header"><h3>{{ __('Shops List') }}</h3></div>
                 <div class="card-body">
                   <div class="row justify-content-end text-right">
-                    <!-- <div class="col-md-12">
+                    <div class="col-md-12">
                       <a class="btn btn-success col-md-2" href="{{ route('admin.shops.add') }}" type="button" role="button" name="button">Add New Shop</a>
-                    </div> -->
+                    </div>
                   </div>
 
                   <div class="row">
@@ -41,7 +41,11 @@
                             @foreach ($data as $key => $value)
                             <tr>
                               <th scope="row">{{ $value->id }}</th>
-                              <td>{{ $value->name }}</td>
+                              <td>
+                                <a href="{{ route('admin.shop', ['id' => $value->id]) }}">
+                                  {{ $value->name }}
+                                </a>
+                              </td>
                               <td>{{ $value->address }}</td>
                               <td>{{ $value->owner_name }}</td>
                               <td>

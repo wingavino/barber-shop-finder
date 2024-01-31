@@ -17,11 +17,13 @@ use Auth;
 
 class ShopController extends Controller
 {
+  private $default_days = [1, 2, 3, 4, 5];
+
   public function showShops()
   {
     $data = DB::table('shops')
                 ->leftJoin('users', 'shops.owner_id', '=', 'users.id')
-                ->select('shops.*', 'users.id as owner_id', 'users.name as owner_name', 'users.mobile')
+                ->select('shops.*', 'users.id as owner_id', 'users.mobile')
                 ->get();
     switch (Auth::user()->type) {
       case 'admin':
@@ -34,20 +36,91 @@ class ShopController extends Controller
     }
   }
 
+  public function showShopsList(Request $request)
+  {
+    $shops = Shop::where('hidden', false)->get();
+
+    if ($request->type != 'all') {
+      $shops = Shop::where('hidden', false)->where('type', $request->type)->get();
+    }
+
+    if ($request->services) {
+      // Check Each Shop
+      foreach ($shops as $shop_key => $shop) {
+        // Check Each Service Filter
+        foreach ($request->services as $service_key => $service) {
+          // Check Shop's Services
+          if (!$shop->shop_services->where('category', $service)->first()) {
+            $shops->forget($shop_key);
+            break;
+          }
+        }
+
+      }
+    }
+
+    if ($request->ajax()) {
+      return response()->json(array('shops' => $shops, 'type' => $request->type, ));
+    }
+
+    return redirect()->route('home');
+  }
+
+  public function showShopLogo(Request $request, $id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $id)->where('type', 'logo')->first();
+
+    if ($request->ajax()) {
+      return response()->json($logo);
+    }
+
+    return redirect()->route('home');
+  }
+
+  public function showShopOpenHours(Request $request, $id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $open_hours = OpenHours::where('shop_id', $shop->id)->get()->sortBy('day');
+
+    if ($request->ajax()) {
+      return response()->json($open_hours);
+    }
+
+    return redirect()->route('home');
+  }
+
+  public function showShopRatings(Request $request, $id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_reviews = Review::where('shop_id', $shop->id)->where('hidden', false)->get();
+    $review_count = $shop_reviews->count();
+    $review_average = round($shop_reviews->avg('rating'), 2);
+
+    if ($request->ajax()) {
+      return response()->json(array('review_count' => $review_count, 'review_average' => $review_average));
+    }
+
+    return redirect()->route('home');
+  }
+
   public function showShop($id)
   {
     $shop = Shop::where('id', $id)->first();
 
-    if (!$shop->approved) {
-      if (Auth::user()->type == 'user' && $shop->owner_id != Auth::user()->id) {
-        return redirect()->route('home');
-      }
+    if ($shop->hidden) {
+      return redirect()->route('home');
     }
 
     $open_hours = OpenHours::where('shop_id', $id)->get()->sortBy('day');
     $logo = Image::where('shop_id', $id)->where('type', 'logo')->first();
 
-    return view('shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    }else {
+      return view('shop', ['shop' => $shop, 'open_hours' => $open_hours, 'logo' => $logo]);
+    }
+
   }
 
   public function showShopAsShopOwner()
@@ -72,8 +145,13 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', $id)->first();
     $images = Image::where('shop_id', $id)->where('type', 'images')->get();
+    $logo = Image::where('shop_id', $id)->where('type', 'logo')->first();
 
-    return view('shop-images', ['shop' => $shop, 'images' => $images]);
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop-images', ['shop' => $shop, 'logo' => $logo, 'images' => $images]);
+    }else {
+      return view('shop-images', ['shop' => $shop, 'logo' => $logo, 'images' => $images]);
+    }
   }
 
   public function showShopImagesAsShopOwner()
@@ -92,14 +170,6 @@ class ShopController extends Controller
     $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
     return view('employee/shop-images', ['shop' => $shop, 'images' => $images, 'logo' => $logo]);
-  }
-
-  public function showShopServices($id)
-  {
-    $shop = Shop::where('id', $id)->first();
-    $shop_services = $shop->shop_services;
-
-    return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services]);
   }
 
   public function showShopEmployeesAsShopOwner()
@@ -128,11 +198,16 @@ class ShopController extends Controller
   public function showShopReviews($id)
   {
     $shop = Shop::where('id', $id)->first();
-    $shop_reviews = Review::where('shop_id', $shop->id)->get();
-    $review_count = Review::where('shop_id', $shop->id)->count();
-    $review_average = Review::where('shop_id', $shop->id)->avg('rating');
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+    $shop_reviews = Review::where('shop_id', $shop->id)->where('hidden', false)->get();
+    $review_count = $shop_reviews->count();
+    $review_average = $shop_reviews->avg('rating');
 
-    return view('shop-reviews', ['shop' => $shop, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    if (Auth::user() && Auth::user()->type =='admin') {
+      return view('admin/shop-reviews', ['shop' => $shop, 'logo' => $logo, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    }else {
+      return view('shop-reviews', ['shop' => $shop, 'logo' => $logo, 'shop_reviews' => $shop_reviews, 'review_count' => $review_count, 'review_average' => $review_average]);
+    }
   }
 
   public function showShopReviewsAsOwner()
@@ -162,6 +237,19 @@ class ShopController extends Controller
     return view('shop-reviews-add', ['shop' => $shop,'id' => $shop->id]);
   }
 
+  public function showShopServices($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $shop_services = $shop->shop_services;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    if (Auth::user() && Auth::user()->type == 'admin') {
+      return view('admin/shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
+    }else {
+      return view('shop-services', ['shop' => $shop, 'shop_services' => $shop_services, 'logo' => $logo]);
+    }
+  }
+
   public function showShopServicesAsOwner()
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
@@ -182,70 +270,135 @@ class ShopController extends Controller
   {
     $shop = Shop::where('owner_id', Auth::user()->id)->first();
     $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('shopowner/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
   public function showShopQueueAsEmployee()
   {
     $shop = Employee::where('user_id', Auth::user()->id)->first()->shop;
     $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue]);
+    return view('employee/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
-  public function showAddShopServices()
+  public function showShopQueueAsAdmin($id)
   {
-    $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    $shop = Shop::where('id', $id)->first();
+    $shop_queue = $shop->queue;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
 
-    return view('shopowner/shop-services-add', ['shop' => $shop]);
+    return view('admin/shop-queue', ['shop' => $shop, 'shop_queue' => $shop_queue, 'logo' => $logo]);
   }
 
-  public function addShopServices(Request $request)
+  public function showAddShopServices($id = null)
   {
-    $shop = Auth::user()->shop;
+    if ($id == null) {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    if (Auth::user()->type == 'shopowner') {
+      return view('shopowner/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
+    }elseif(Auth::user()->type == 'admin'){
+      return view('admin/shop-services-add', ['shop' => $shop, 'logo' => $logo]);
+    }else{
+      return redirect()->route('shop', ['id' => $shop->id]);
+    }
+  }
+
+  public function addShopServices(Request $request, $id = null)
+  {
+    if ($id == null) {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
       $shop_service = new ShopServices;
       $shop_service->shop_id = $shop->id;
       $shop_service->name = $request->name;
+      $shop_service->category = $request->category;
       $shop_service->price = $request->price;
       $shop_service->save();
     }
-    return redirect()->route('shopowner.shop.services');
+
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
-  public function showEditShopServices($id)
+  public function showEditShopServices($id = null, $service_id)
   {
-    $shop = Auth::user()->shop;
-    $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+    $shop = Shop::where('id', $id)->first();
 
-    return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
+    
+    if (Auth::user()->type == 'shopowner') {
+      return view('shopowner/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    }elseif(Auth::user()->type == 'admin'){
+      return view('admin/shop-services-edit', ['shop' => $shop, 'shop_service' => $shop_service]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
-  public function editShopServices(Request $request, $id)
+  public function editShopServices(Request $request, $id = null, $service_id)
   {
-    $shop = Auth::user()->shop;
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
-      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
         $shop_service->name = $request->name;
+        $shop_service->category = $request->category;
         $shop_service->price = $request->price;
         $shop_service->save();
       }
     }
-    return redirect()->route('shopowner.shop.services');
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
-  public function deleteShopServices(Request $request, $id)
+  public function deleteShopServices(Request $request, $id, $service_id)
   {
-    $shop = Auth::user()->shop;
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Auth::user()->shop;
+    }else {
+      $shop = Shop::where('id', $id)->first();
+    }
+
     if ($shop) {
-      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $id)->first();
+      $shop_service = ShopServices::where('shop_id', $shop->id)->where('id', $service_id)->first();
       if ($shop_service) {
         $shop_service->delete();
       }
     }
-    return redirect()->route('shopowner.shop.services');
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.services', ['id' => $shop->id]);
+    }elseif(Auth::user()->type == 'admin'){
+      return redirect()->route('admin.shop.services', ['id' => $shop->id]);
+    }else{
+      return redirect()->route('shop,services', ['id' => $shop->id]);
+    }
   }
 
   public function showShopEdit()
@@ -286,17 +439,25 @@ class ShopController extends Controller
 
   public function addShop(Request $request)
   {
-    $shop = Shop::where('name', '=', $request->name)->first();
-    if (!$shop) {
+    // $shop = Shop::where('name', '=', $request->name)->first();
+    if (Auth::user()->type == 'shopowner') {
+      $shop = Shop::where('owner_id', Auth::user()->id)->first();
+    }
+
+    if (!isset($shop)) {
       $shop = new Shop();
       $shop->name = $request->name;
+      $shop->type = $request->type;
 
-      if ($shop->owner_id) {
-        $shop->owner_id = $request->owner_id;
+      if (Auth::user()->type == 'admin') {
+        // $shop->owner_id = $request->owner_id;
+        $shop->owner_name = $request->owner_name;
       }else {
         $shop->owner_id = Auth::user()->id;
+        $shop->owner_name = Auth::user()->name;
       }
 
+      $shop->mobile = $request->mobile;
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
@@ -306,6 +467,10 @@ class ShopController extends Controller
       $open_hours_start = $request->input('open_hours_start');
       $open_hours_end = $request->input('open_hours_end');
 
+      if (!isset($open_hours_day)) {
+        $open_hours_day = $this->default_days;
+      }
+      
       if ($open_hours_day != null) {
         foreach ($open_hours_day as $day) {
           $open_hour = new OpenHours;
@@ -326,19 +491,12 @@ class ShopController extends Controller
         return redirect()->back();
       }
 
-
-      $pending_request = new PendingRequest();
-      $pending_request->user_id = Auth::user()->id;
-      $pending_request->request_type = 'add-new-shop';
-      $pending_request->shop_id = $shop->id;
-      $pending_request->save();
-
       $queue = new Queue();
       $queue->shop_id = $shop->id;
       $queue->save();
 
-      return redirect()->route('shopowner.shop');
     }
+    return redirect()->route('shop', ['id' => $shop->id]);
   }
 
   public function showEditShop($id, Request $request)
@@ -367,22 +525,36 @@ class ShopController extends Controller
 
   public function editShop($id, Request $request)
   {
-    $shop = Shop::where('id', '=', $id)->first();
+    $shop = Shop::where('id', $id)->first();
     if ($shop) {
       $shop->name = $request->name;
-      if (Auth::user()->type == 'admin') {
-        $shop->owner_id = $request->owner_id;
-      }else {
+      $shop->type = $request->type;
+
+      if (Auth::user()->type == 'shopowner' && $shop->id == Auth::user()->shop->id) {
         $shop->owner_id = Auth::user()->id;
+        $shop->owner_name = Auth::user()->name;
+      }else {
+        // $shop->owner_id = $request->owner_id;
+        $shop->owner_name = $request->owner_name;
       }
+
+      $shop->mobile = $request->mobile;
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
       $shop->save();
 
+      foreach ($shop->open_hours as $current_open_hours) {
+        $current_open_hours->delete();
+      }
+
       $open_hours_day = $request->input('open_hours_day');
       $open_hours_start = $request->input('open_hours_start');
       $open_hours_end = $request->input('open_hours_end');
+
+      if ($open_hours_day == null) {
+        $open_hours_day = $this->default_days;
+      }
 
       foreach ($open_hours_day as $day) {
         $open_hour = OpenHours::where('shop_id', $shop->id)->where('day', $day)->first();
@@ -391,12 +563,15 @@ class ShopController extends Controller
         }
         $open_hour->shop_id = $shop->id;
         $open_hour->day = $day;
-        if ($open_hours_start[$day] != null) {
-          $open_hour->time_start = $open_hours_start[$day];
+        if (isset($open_hours_start[$day])) {
+          if ($open_hours_start[$day] != null) {
+            $open_hour->time_start = $open_hours_start[$day];
+          }
         }
-
-        if ($open_hours_end[$day] != null) {
-          $open_hour->time_end = $open_hours_end[$day];
+        if (isset($open_hours_end[$day])) {
+          if ($open_hours_end[$day] != null) {
+            $open_hour->time_end = $open_hours_end[$day];
+          }
         }
         $open_hour->save();
       }
@@ -404,12 +579,22 @@ class ShopController extends Controller
 
     switch (Auth::user()->type) {
       case 'admin':
-      return redirect()->route('admin.shops');
+      return redirect()->route('admin.shop', ['id' => $shop->id]);
       break;
 
       default:
       return redirect()->route('shopowner.shop');
       break;
+    }
+  }
+
+  public function showShopSettings($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    if (Auth::user()->type == 'admin') {
+      return view('admin/shop-settings', ['shop' => $shop, 'logo' => $logo]);
     }
   }
 

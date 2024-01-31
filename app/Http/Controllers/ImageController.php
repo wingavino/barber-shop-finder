@@ -4,14 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use App\Models\Shop;
 use Auth;
 use File;
 
 class ImageController extends Controller
 {
-  public function showUploadImage()
+  public function showUploadImage($id = null)
   {
-    return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop]);
+    if ($id == null) {
+      $id = Auth::user()->shop->id;
+    }
+    
+    $shop = Shop::where('id', $id)->first();
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+
+    if (Auth::user()->type == 'admin') {
+      return view('admin/shop-images-upload', ['shop' => $shop, 'logo' => $logo]);
+    }else {
+      return view('shopowner/shop-images-upload', ['shop' => Auth::user()->shop, 'logo' => $logo]);
+    }
   }
 
   public function showUploadID()
@@ -24,7 +36,7 @@ class ImageController extends Controller
     return view('shopowner/image-shop-document-upload');
   }
 
-  public function uploadImage(Request $request)
+  public function uploadImage($id, Request $request)
   {
     $request->validate([
       'imageFile' => 'required',
@@ -35,28 +47,32 @@ class ImageController extends Controller
         foreach($request->file('imageFile') as $image)
         {
             $name = $image->getClientOriginalName();
-            $image->move(public_path().'/img/'.Auth::user()->id.'/shop/', $name);
+            $image->move(public_path().'/img/shop/'.$id, $name);
             $imgData[] = $name;
         }
 
         foreach ($imgData as $img) {
-          $img = "shop/" . $img;
-          $file = Image::where('shop_id', Auth::user()->shop->id)->where('path', $img)->first();
+          $img = "shop/". $id . '/' . $img;
+          $file = Image::where('shop_id', $id)->where('path', $img)->first();
           if (!$file) {
             $fileModal = new Image();
-            $fileModal->shop_id = Auth::user()->shop->id;
+            $fileModal->shop_id = $id;
             $fileModal->path = $img;
             $fileModal->type = 'images';
-
             $fileModal->save();
           }
         }
-
-       return redirect()->route('shopowner.shop.images');
+    }
+    if (Auth::user()->type == 'shopowner') {
+      return redirect()->route('shopowner.shop.images', ['id' => $id]);
+    }elseif (Auth::user()->type == 'admin') {
+      return redirect()->route('admin.shop.images', ['id' => $id]);
+    }else {
+      return redirect()->route('home');
     }
   }
 
-  public function uploadLogo(Request $request)
+  public function uploadLogo($id, Request $request)
   {
     $request->validate([
       'logoFile' => 'required',
@@ -67,36 +83,44 @@ class ImageController extends Controller
       $image = $request->file('logoFile');
       $name = 'logo';
       $extension = $image->getClientOriginalExtension();
-      $name = 'shop/logo/'.$name.'.'.$extension;
+      $name = 'shop/' .$id. '/logo/'.$name.'.'.$extension;
       $logoData = $name;
 
-      $file = Image::where('shop_id', Auth::user()->shop->id)->where('type', 'logo')->first();
+      $file = Image::where('shop_id', $id)->where('type', 'logo')->first();
       if ($file) {
-        $file->path = $imgData;
+        $file->path = $logoData;
         $file->save();
       }else {
         $fileModal = new Image();
-        $fileModal->shop_id = Auth::user()->shop->id;
+        $fileModal->shop_id = $id;
         $fileModal->path = $logoData;
         $fileModal->type = 'logo';
 
         $fileModal->save();
       }
-      $image->move(public_path().'/img/'.Auth::user()->id.'/shop/logo/', $name);
+      $image->move(public_path().'/img/shop/' .$id. '/logo/', $name);
 
-       return redirect()->route('shopowner.shop.images');
+       return redirect()->route('admin.shop.images', ['id' => $id]);
     }
   }
 
-  public function deleteImage(Request $request, $id)
+  public function deleteImage($id, $image_id, Request $request)
   {
-    $image = Image::where('shop_id', Auth::user()->shop->id)->where('id', $id)->first();
-    $file = public_path('img/'.Auth::user()->id.'/'.$image->path);
+    $shop = Shop::where('id', $id)->first();
+    $image = Image::where('shop_id', $shop->id)->where('id', $image_id)->first();
+    $file = public_path('img/'.$image->path);
     if(File::exists($file)){
         File::delete($file);
         if ($image) {
           $image->delete();
-          return redirect()->route('shopowner.shop.images');
+
+          if(Auth::user()->type == 'shopowner'){
+            return redirect()->route('shopowner.shop.images');
+          }elseif (Auth::user()->type == 'admin'){
+            return redirect()->route('admin.shop.images', ['id' => $shop->id]);
+          }else {
+            return redirect()->route('shop.images', ['id' => $shop->id]);
+          }          
         }
     }
 
