@@ -167,19 +167,19 @@ $(document).ready(function(){
 
   $('#collapseFilter').on('show.bs.collapse', function () {
     $('#collapseFilterText').text("Filter -");
-  })
+  });
 
   $('#collapseFilter').on('hide.bs.collapse', function () {
     $('#collapseFilterText').text("Filter +");
-  })
+  });
 
   $('#collapseShopList').on('show.bs.collapse', function () {
     $('#collapseShopListText').text("Shops List -");
-  })
+  });
 
   $('#collapseShopList').on('hide.bs.collapse', function () {
     $('#collapseShopListText').text("Shops List +");
-  })
+  });
 
   $('#max_distance').on('input', function() {
     $('#max_distance_indicator').text(this.value);
