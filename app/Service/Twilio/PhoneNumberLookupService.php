@@ -14,7 +14,7 @@ class PhoneNumberLookupService
         $this->client = new Client($authSID, $authToken);
     }
 
-    public function validate(string $phoneNumber): bool
+    public function validate(string $phoneNumber = null): bool
     {
         if (empty($phoneNumber)) {
             return false;
