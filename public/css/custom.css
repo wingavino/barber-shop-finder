@@ -7,7 +7,7 @@
 }
 
 .third-color{
-  background: #f5ebe0;
+  background: #fffff;
 }
 
 .fourth-color{
@@ -15,23 +15,33 @@
 }
 
 .fifth-color{
-  background: #d5bdaf;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, #0038ff69 10px, #0038ff69 30px, transparent 30px, transparent 60px, #f7000054 60px, #f7000054 80px, transparent 80px, transparent 90px, transparent 90px, transparent 100px);
+  padding:12px;
+}
+.sixth-color{
+	background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), linear-gradient(to bottom, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.02) 61%, rgba(0,0,0,0.02) 73%), linear-gradient(33deg, rgba(255,255,255,0.20) 0%, rgba(0,0,0,0.20) 100%);
+ background-blend-mode: normal,color-burn;
 }
 
-.sixth-color{
-  background: #625750;
+.seventh-color{
+	
 }
+
 
 a, a:hover {
   color: black;
 }
 
 .card, .modal-header, .modal-footer{
-  background: #d5bdaf;
+ background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, #0038ff69 10px, #0038ff69 30px, transparent 30px, transparent 60px, #f7000054 60px, #f7000054 80px, transparent 80px, transparent 90px, transparent 90px, transparent 100px);
+
+
 }
 
 .card-body, .modal-body, .img-thumbnail{
-  background: #e3d5ca;
+background-color: #E4E4E1;
+ background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+ 	background-blend-mode: normal, multiply;
 }
 
 .img-thumbnail{
@@ -40,7 +50,9 @@ a, a:hover {
 }
 
 .nav-tabs .nav-link.active {
-  background: #e3d5ca;
+  background-color: #E4E4E1;
+ background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+ 	background-blend-mode: normal, multiply;
   border: 2px solid transparent;
   border-color: #e3d5ca, #e3d5ca, #e3d5ca;
   color: black;
@@ -48,11 +60,13 @@ a, a:hover {
 }
 
 input.form-control {
-  background-color: #edede9;
+ background-image: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%);
+
 }
 
 .list-group-item {
-  background-color: #e3d5ca;
+ background-image: radial-gradient(at top center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.03) 100%), linear-gradient(to top, rgba(255,255,255,0.1) 0%, rgba(143,152,157,0.60) 100%);
+ 	background-blend-mode: normal, multiply;
 }
 
 .btn-primary, .btn-info {
@@ -62,7 +76,7 @@ input.form-control {
 }
 
 .btn-primary:link, .btn-info:link {
-  background: #6f5f5f;
+  background: red;
   border-color: #6f5f5f;
   color: white;
 }
@@ -70,7 +84,7 @@ input.form-control {
 .btn-primary:focus, .btn-info:focus{
   background: #625750;
   border-color: #625750;
-  color: white;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 .btn-primary:visited, .btn-info:visited{
@@ -90,3 +104,8 @@ input.form-control {
   border-color: #625750;
   color: white;
 }
+
+input.form-control-range{
+	background-image: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%);
+}
+
