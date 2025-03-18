@@ -63,6 +63,9 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+        // if($user->type == 'shopowner')
+        // {
+        //     Route('request', ['id' => Auth::user()->id, 'request_type' => 'change-user-type', 'user_type' => 'shopowner']);
+        // }
     }
 }

@@ -12,7 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <script type="text/javascript" async>
       var app_url = "{{env('APP_URL')}}";
     </script>
@@ -23,6 +23,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Google Maps -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -44,9 +45,9 @@
 
     </style>
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column third-color">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm fifth-color">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('index') }}">
                   <img class="img-fluid" src="{{ asset('img/logo.png') }}" alt="" width="100">
@@ -129,7 +130,7 @@
               </div>
             @elseif(Auth::user()->pending_request->where('request_type', 'change-user-type')->where('rejected', true)->first())
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Your request to change account type to Shop Owner was rejected. Please click <a href="{{ route('shopowner.img.id') }}">HERE</a> to upload documents to verify your profile. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
+                <strong>Your request to change account type to Shop Owner was rejected. Please click <a href="{{ route('shopowner.img.id') }}">HERE</a> to upload documents to verify your profile. Your shop will be hidden from the list and map until this is approved. You may contact the administrators at <a href="mailto:saber.shop.finder@gmail.com">saber.shop.finder@gmail.com</a> for further concerns.</strong>
                 <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -160,9 +161,9 @@
                     @csrf
                     <strong>Your account's email has not been verified. Please verify your email address before you continue to create a shop. If you have not received an email containing the verification link, please click <button class="btn btn-link mx-n2" type="submit">HERE</button> to resend the link.</strong>
                   </form>
-                  <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                  </button> -->
+                  </button>
                 </div>
               @else
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -170,9 +171,9 @@
                     @csrf
                     <strong>Your account's email has not been verified. If you have not received an email containing the verification link, please click <button class="btn btn-link mx-n2" type="submit">HERE</button> to resend the link.</strong>
                   </form>
-                  <!-- <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                  <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                  </button> -->
+                  </button>
                 </div>
               @endif
             @endif
@@ -198,7 +199,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="navbar mt-auto bg-white justify-content-center shadow">
+    <footer class="navbar mt-auto justify-content-center shadow fifth-color">
       <div class="row">
         <div class="col-12 text-center">
           <p>
@@ -206,7 +207,10 @@
           </p>
           <!-- <a href="{{ route('privacy-policy') }}">Privacy Policy</a> -->
         </div>
-
+        <div class="col-12 text-center">
+          <a href="{{ route('terms')}}">{{ __('Terms of Service') }}</a>
+          <a href="{{ route('privacy-policy') }}">{{ __('Privacy Policy') }}</a>
+        </div>
       </div>
     </footer>
 </body>

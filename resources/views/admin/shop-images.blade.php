@@ -24,9 +24,9 @@
                 </div>
 
                 <div class="card-body">
-                  <div class="col text-right">
+                  <!-- <div class="col text-right">
                     <a class="btn btn-info" type="button" role="button" href="{{ route('admin.shop.images.upload', ['id' => $shop->id]) }}">Upload</a>
-                  </div>
+                  </div> -->
                   <div class="row justify-content-center text-center">
                     <div class="col-3">
                       <h4>Logo</h4>
@@ -73,7 +73,7 @@
                         <img src="#" class="img-fluid" id="modalImagePreview" alt="...">
                       </div>
                     </div>
-                    <form class="" action="#" method="post">
+                    <!-- <form class="" action="#" method="post">
                       @csrf
                       <div class="row">
                         <div class="col-md-12">
@@ -86,7 +86,7 @@
                           <button class="btn btn-danger col-md-6" id="deleteButton" type="submit">Delete</button>
                         </div>
                       </div>
-                    </form>
+                    </form> -->
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

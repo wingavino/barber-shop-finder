@@ -23,11 +23,11 @@
                   @include('admin.shop-nav-tabs')
                 </div>
                 <div class="card-body">
-                  <div class="row justify-content-end text-right">
+                  <!-- <div class="row justify-content-end text-right">
                     <div class="col-md-12">
                       <a class="btn btn-success col-md-2" href="{{ route('admin.shop.services.add', ['id' => $shop->id]) }}" type="button" role="button" name="button">Add New Shop Service</a>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="row">
                     <div class="col-md-12">
@@ -51,10 +51,10 @@
                               <td>{{ $service->category }}</td>
                               <td>₱{{ $service->price }}</td>
 
-                              <td>
+                              <!-- <td>
                                 <a class="btn btn-primary col-md-4" href="{{ route('admin.shop.services.edit', ['id' => $shop->id, 'service_id' => $service->id]) }}" type="button" role="button" name="button">Edit</a>
                                 <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shop.services.delete', ['id' => $shop->id, 'service_id' => $service->id]) }}" data-id="{{ $service->id }}" data-service-id="{{ $service->id }}" data-name="{{ $service->name }}" data-price="{{ $service->price }}">Delete</button>
-                              </td>
+                              </td> -->
                             </tr>
                             @endforeach
                           @endisset

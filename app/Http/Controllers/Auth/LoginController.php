@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\PendingRequest;
 use Carbon\Carbon;
 use Auth;
 
@@ -42,6 +44,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    //Overrides default authenticated() function
+    protected function authenticated(Request $request, $user)
+    {
+      if ($user->banned) {
+        Auth::logout();
+
+        return back()->withErrors(['loginError'=>'Account is currently banned. You may contact saber.shop.finder@gmail.com if you have any questions.']);
+      }
+
+      return redirect()->intended($this->redirectPath());
+    }
+
     //Google Authentication
     public function redirectToGoogle()
     {
@@ -53,7 +67,14 @@ class LoginController extends Controller
     {
       $user = Socialite::driver('google')->stateless()->user();
       $provider_id = 'google';
-      $this->_registerOrLoginUser($user, $provider_id);
+      $user = $this->_registerOrLoginUser($user, $provider_id);
+
+      if ($user->banned) {
+        Auth::logout();
+
+        return redirect()->route('login')->withErrors(['loginError'=>'Account is currently banned. You may contact saber.shop.finder@gmail.com if you have any questions.']);
+      }
+      
       return redirect()->route('home');
     }
 
@@ -72,5 +93,7 @@ class LoginController extends Controller
       }
 
       Auth::login($user);
+
+      return $user;
     }
 }

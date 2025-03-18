@@ -461,7 +461,15 @@ class ShopController extends Controller
       $shop->address = $request->address;
       $shop->lat = $request->lat;
       $shop->lng = $request->lng;
+      $shop->hidden = true;
       $shop->save();
+
+      // Creates Request to add Shop
+      $pending_request = new PendingRequest();
+      $pending_request->user_id = Auth::user()->id;
+      $pending_request->shop_id = $shop->id;
+      $pending_request->request_type = 'add-new-shop';
+      $pending_request->save();
 
       $open_hours_day = $request->input('open_hours_day');
       $open_hours_start = $request->input('open_hours_start');
@@ -654,8 +662,7 @@ class ShopController extends Controller
   {
     $shop = Shop::where('id', '=', $id)->first();
     if ($shop) {
-      $shop->approved = true;
-      $shop->rejected = false;
+      $shop->hidden = false;
       $shop->save();
       $pending_request = PendingRequest::where('shop_id', $id)
                                         ->where('request_type', 'add-new-shop')

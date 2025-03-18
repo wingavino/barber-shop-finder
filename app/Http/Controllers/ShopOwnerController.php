@@ -126,6 +126,13 @@ class ShopOwnerController extends Controller
         Auth::login($user);
         $request->user()->sendEmailVerificationNotification();
       }
+
+      // Creates Request to change Account Type to Shop Owner
+      $pending_request = new PendingRequest();
+      $pending_request->user_id = $user->id;
+      $pending_request->request_type = 'change-user-type';
+      $pending_request->change_to_user_type = 'shopowner';
+      $pending_request->save();
     }
 
     return redirect()->route('home');
@@ -169,11 +176,11 @@ class ShopOwnerController extends Controller
       $user->save();
 
       // Creates Request to change Account Type to Shop Owner
-      // $pending_request = new PendingRequest();
-      // $pending_request->user_id = $user->id;
-      // $pending_request->request_type = 'change-user-type';
-      // $pending_request->change_to_user_type = 'shopowner';
-      // $pending_request->save();
+      $pending_request = new PendingRequest();
+      $pending_request->user_id = $user->id;
+      $pending_request->request_type = 'change-user-type';
+      $pending_request->change_to_user_type = 'shopowner';
+      $pending_request->save();
     }
 
     Auth::login($user);

@@ -91,13 +91,13 @@ $(document).ready(function(){
                 <div class="card-body">
                   <div class="row">
                     <!-- Current Ticket -->
-                    <div class="col-md-6">
+                    <div class="col-md">
                       <div class="card">
                         @if($shop_queue->is_closed)
-                          <div class="card-header bg-light">
+                          <div class="card-header fifth-color">
                             <div class="row">
                               <div class="col-3">
-                                Current Ticket
+                                Now Serving:
                               </div>
                               <div class="col-9 text-right">
                                 <form method="POST" action="{{ route('shopowner.shop.queue.open') }}">
@@ -108,7 +108,7 @@ $(document).ready(function(){
                             </div>
                           </div>
                         @else
-                          <div class="card-header bg-light">
+                          <div class="card-header fifth-color">
                             <div class="row">
                               <div class="col-3">
                                 Current Ticket
@@ -132,22 +132,34 @@ $(document).ready(function(){
 
                         <div class="card-footer">
                           <div class="row text-center">
-                            <div class="col">
+                            <!-- <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.hold') }}">
                                 @csrf
                                 <button class="btn btn-primary" type="submit" name="button">Put on Hold</button>
                               </form>
-                            </div>
-                            <div class="col">
+                            </div> -->
+                            <!-- <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.next.hold') }}">
                                 @csrf
                                 <button class="btn btn-primary" type="submit" name="button">Next from On Hold</button>
+                              </form>
+                            </div> -->
+                            <div class="col">
+                              <form method="POST" action="{{ route('shopowner.shop.queue.cancel') }}">
+                                @csrf
+                                <button class="btn btn-danger" type="submit" name="button">Cancel</button>
+                              </form>
+                            </div>
+                            <div class="col">
+                              <form method="POST" action="{{ route('shopowner.shop.queue.next.notify') }}">
+                                @csrf
+                                <button class="btn btn-primary" type="submit" name="button">Notify</button>
                               </form>
                             </div>
                             <div class="col">
                               <form method="POST" action="{{ route('shopowner.shop.queue.finish') }}">
                                 @csrf
-                                <button class="btn btn-primary" type="submit" name="button">Finished / Next</button>
+                                <button class="btn btn-primary" type="submit" name="button">Next</button>
                               </form>
                             </div>
                           </div>
@@ -156,8 +168,7 @@ $(document).ready(function(){
                     </div>
                     <!-- Current Ticket -->
 
-                    <!-- Next Ticket -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                       <div class="card">
                         <div class="card-header bg-light">
                           <div class="row">
@@ -175,7 +186,6 @@ $(document).ready(function(){
 
                         <div class="card-body text-center">
                           <div class="card-group">
-                            <!-- On Hold -->
                               <div class="card">
                                 <div class="card-header bg-light">
                                   On Hold
@@ -205,8 +215,6 @@ $(document).ready(function(){
                                   </div>
                                 </div>
                               </div>
-                            <!-- On Hold -->
-                            <!-- Next In Queue -->
                               <div class="card">
                                 <div class="card-header bg-light">
                                   Next In Queue
@@ -227,13 +235,11 @@ $(document).ready(function(){
                                   </h3>
                                 </div>
                               </div>
-                            <!-- In Queue -->
                           </div>
                         </div>
 
                       </div>
-                    </div>
-                    <!-- Next Ticket -->
+                    </div>-->
                   </div>
                 </div>
             </div>

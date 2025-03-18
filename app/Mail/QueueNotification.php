@@ -49,6 +49,24 @@ class QueueNotification extends Mailable
           ]);
           break;
 
+        case 'cancel':
+          return $this
+          ->subject('Saber Queue Update')
+          ->markdown('emails.queue-notification-cancel')
+          ->with([
+              'shop_name' => $this->shop_name,
+          ]);
+          break;
+
+        case 'finished':
+          return $this
+          ->subject('Saber Queue Update')
+          ->markdown('emails.queue-notification-finished')
+          ->with([
+              'shop_name' => $this->shop_name,
+          ]);
+          break;
+
         default:
           return $this
           ->subject('Saber Queue Update')

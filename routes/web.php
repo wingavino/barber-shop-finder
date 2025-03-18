@@ -41,7 +41,10 @@ Route::get('/shops/list', [App\Http\Controllers\ShopController::class, 'showShop
 Route::get('/shop/{id}/open_hours', [App\Http\Controllers\ShopController::class, 'showShopOpenHours'])->name('shop.open_hours'); //Shows Shop Open Hours
 Route::get('/shop/{id}/logo', [App\Http\Controllers\ShopController::class, 'showShopLogo'])->name('shop.logo'); //Shows Shop Logo
 Route::get('/shop/{id}/ratings', [App\Http\Controllers\ShopController::class, 'showShopRatings'])->name('shop.ratings'); //Shows Shop Logo
-Route::get('/privacy-policy', [App\Http\Controllers\HomeController::class, 'showPrivacyPolicy'])->name('privacy-policy'); //Shows User's Home Page
+Route::get('/terms', [App\Http\Controllers\HomeController::class, 'showTerms'])->name('terms'); //Shows User Terms and Conditions
+Route::get('/privacy-policy', [App\Http\Controllers\HomeController::class, 'showPrivacyPolicy'])->name('privacy-policy'); //Shows User Privacy Policy
+Route::get('/shopowner/terms', [App\Http\Controllers\HomeController::class, 'showShopOwnerTerms'])->name('shopowner.terms'); //Shows ShopOwner Terms and Conditions
+Route::get('/shopowner/privacy-policy', [App\Http\Controllers\HomeController::class, 'showShopOwnerPrivacyPolicy'])->name('shopowner.privacy-policy'); //Shows ShopOwner Privacy Policy
 
 // Laravel Auth Routes
 Auth::routes(); //Handles functions for Laravel's Authentication
@@ -107,9 +110,11 @@ Route::middleware('isShopOwner')->group(function(){
   Route::post('/shopowner/shop/{id}/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('shopowner.shop.images.logo.upload'); //Handles functions for uploading Shop Logo Image
   Route::get('/shopowner/shop/queue', [App\Http\Controllers\ShopController::class, 'showShopQueueAsOwner'])->name('shopowner.shop.queue'); //Shows Shop's Queue Page for Shopowner
   Route::post('/shopowner/shop/queue/finish', [App\Http\Controllers\TicketController::class, 'finishCurrentTicket'])->name('shopowner.shop.queue.finish'); //Handles functions for finishing/ending Current Queue Ticket
+  Route::post('/shopowner/shop/queue/cancel', [App\Http\Controllers\TicketController::class, 'cancelCurrentTicket'])->name('shopowner.shop.queue.cancel'); //Handles functions for cancelling Current Queue Ticket
   Route::post('/shopowner/shop/queue/hold', [App\Http\Controllers\TicketController::class, 'holdCurrentTicket'])->name('shopowner.shop.queue.hold'); //Handles functions for putting Current Queue Ticket on Hold
   Route::post('/shopowner/shop/queue/open', [App\Http\Controllers\QueueController::class, 'openShopQueue'])->name('shopowner.shop.queue.open'); //Opens Shop Queue for Shopowner
   Route::post('/shopowner/shop/queue/close', [App\Http\Controllers\QueueController::class, 'closeShopQueue'])->name('shopowner.shop.queue.close'); //Close Shop Queue for Shopowner
+  Route::post('/shopowner/shop/queue/notify', [App\Http\Controllers\TicketController::class, 'notifyQueue'])->name('shopowner.shop.queue.notify'); //Handles functions for notifying current ticket & next in line
   Route::post('/shopowner/shop/queue/{id}/next', [App\Http\Controllers\TicketController::class, 'setNextTicket'])->name('shopowner.shop.queue.next'); //Handles functions for manually setting Next Queue Ticket
   Route::post('/shopowner/shop/queue/next/hold', [App\Http\Controllers\TicketController::class, 'setNextTicketFromOnHold'])->name('shopowner.shop.queue.next.hold'); //Handles functions for setting Next Queue Ticket from tickets in the On Hold pool
   Route::post('/shopowner/shop/queue/next/notify', [App\Http\Controllers\TicketController::class, 'notifyNextInLine'])->name('shopowner.shop.queue.next.notify'); //Handles functions for notifying the next in line
@@ -159,7 +164,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home'); //Shows Admin's Home Page
   Route::get('/admin/admins', [App\Http\Controllers\AdminController::class, 'admins'])->name('admin.admins'); //Shows List of Admins Page
   Route::get('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'showAddAdmin'])->name('admin.add'); //Shows Add New Admin Page
-  Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'registerNoLogin'])->name('admin.add'); //Handles functions for Adding/Registering a New Admin
+  Route::post('/admin/admins/add', [App\Http\Controllers\AdminController::class, 'addAdmin'])->name('admin.add'); //Handles functions for Adding/Registering a New Admin
   Route::post('/admin/admins/delete/{id}', [App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('admin.delete'); //Handles functions for deleting an Admin
 
   Route::get('/admin/pending-requests/{status?}', [App\Http\Controllers\AdminController::class, 'showPendingRequestsPage'])->name('admin.pending-requests'); //Shows Pending Requests Page
@@ -172,6 +177,8 @@ Route::middleware('isAdmin')->group(function(){
   Route::post('/admin/shopowners/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'changeUserType'])->name('admin.shopowners.edit'); //Handles functions for changing a User's account type (user/shopowner)
 
   Route::get('/admin/users', [App\Http\Controllers\UserController::class, 'showUsers'])->name('admin.users'); //Shows list of Shopowners Page
+  Route::post('/admin/users/ban/{id}/{ban}', [App\Http\Controllers\UserController::class, 'banUser'])->name('admin.users.ban'); //Handles functions for banning an account
+  Route::post('/admin/users/unban/{id}/{ban}', [App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.users.unban'); //Handles functions for unbanning an account
   // Route::get('/admin/users/add', [App\Http\Controllers\UserController::class, 'showUsersAdd'])->name('admin.users.add'); //Shows Add New Shopowner Page
   // Route::post('/admin/users/add', [App\Http\Controllers\UserController::class, 'registerNoLogin'])->name('admin.users.add'); //Handles functions for adding a New Shopowner as an Admin
   // Route::get('/admin/users/edit/{id}/{type}', [App\Http\Controllers\UserController::class, 'showEditUsers'])->name('admin.users.edit'); //Shows Edit Shopowner Page as an Admin
@@ -188,6 +195,7 @@ Route::middleware('isAdmin')->group(function(){
   Route::get('/admin/shop/{id}/images/upload', [App\Http\Controllers\ImageController::class, 'showUploadImage'])->name('admin.shop.images.upload'); //Shows Shop's Upload Image Page for Shopowner
   Route::post('/admin/shop/{id}/images/upload', [App\Http\Controllers\ImageController::class, 'uploadImage'])->name('admin.shop.images.upload'); //Handles functions for Uploading Shop Image
   Route::post('/admin/shop/{id}/images/logo/upload', [App\Http\Controllers\ImageController::class, 'uploadLogo'])->name('admin.shop.images.logo.upload'); //Handles functions for uploading Shop Logo Image
+  Route::get('/admin/img/shop/{id}/doc', [App\Http\Controllers\ImageController::class, 'showShopDocument'])->name('admin.img.shop.doc'); //Shows Admin's Page for Viewing the shop's Documents
   Route::get('/admin/shop/{id}/reviews', [App\Http\Controllers\ShopController::class, 'showShopReviews'])->name('admin.shop.reviews'); //Shows Shop's Reviews Page for Shopowner
   Route::get('/admin/shop/{id}/services', [App\Http\Controllers\ShopController::class, 'showShopServices'])->name('admin.shop.services'); //Shows Shop's Services Page for Shopowner
   Route::get('/admin/shop/{id}/services/add', [App\Http\Controllers\ShopController::class, 'showAddShopServices'])->name('admin.shop.services.add'); //Shows Add Service Page for Shop

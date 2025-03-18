@@ -95,6 +95,17 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="terms-of-service" value="" required>
+                                    <label class="form-check-label" for="terms-of-service">
+                                        I agree to the <u><a href="{{ route('shopowner.terms') }}" target="_blank">{{ __('Terms of Service') }}</a></u> and <u><a href="{{ route('shopowner.privacy-policy') }}" target="_blank">{{ __('Privacy Policy') }}</a></u>.
+                                    </label>
+                                </div>                                
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0 justify-content-center">
                             <div class="col-md-6 offset-md-2">
                                 <button type="submit" class="btn btn-primary col-md-12">

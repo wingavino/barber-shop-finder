@@ -10,6 +10,15 @@
   var markers = [];
   var weekdays = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const philippines = { lat: 15.48650806221586, lng: 120.97341297443519 };
+  const icon = document.createElement("div");
+  icon.innerHTML = '<i class="fa-solid fa-scissors"></i>'
+
+  const faPin = new PinElement({
+    glyph: icon,
+    glyphColor: "#ff8300",
+    background: "#FFD514",
+    borderColor: "#ff8300",
+  });
 
   async function getShops() {
     let response = await fetch (app_url + '/api/shops');
@@ -141,10 +150,11 @@
         var shop_open_hours = [];
 
 
-        var marker = new google.maps.Marker({
+        var marker = new google.maps.AdvancedMarkerElement({
           position: latlng,
           map: map,
-          title: shop.title
+          title: shop.title,
+          content: faPin.element
         });
 
         markers.push(marker);

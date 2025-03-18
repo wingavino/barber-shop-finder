@@ -11,7 +11,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  <h3 class="text-center mb-5">Upload Business Permit</h3>
+                  <!-- <h3 class="text-center mb-5">Upload Business Permit</h3> -->
+                  @include('shopowner.shop-nav-tabs')
                 </div>
 
                 <div class="card-body">

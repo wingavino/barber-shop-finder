@@ -30,6 +30,11 @@
     </a>
   </li>
   <li class="nav-item">
+    <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.img.shop.doc') ? 'active' : '' }}" href="{{ route('shopowner.img.shop.doc') }}">
+      {{ __('Documents') }}
+    </a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link {{ (Route::currentRouteName() == 'shopowner.shop.settings') ? 'active' : '' }}" href="{{ route('shopowner.shop.settings') }}">
       {{ __('Settings') }}
     </a>

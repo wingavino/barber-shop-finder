@@ -8,12 +8,16 @@
   var app_url = "{{env('APP_URL')}}";
 </script>
 
-<script defer type="text/javascript" src="{{ asset('js/maps/map.js') }}"></script>
 
-<script defer type="text/javascript" src="{{ asset('js/maps/search.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('js/maps/map.js') }}"></script>
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-<script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap&libraries=marker"></script>
+
+
+
+<script type="text/javascript" src="{{ asset('js/maps/search.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/requestAlert.js') }}"></script>
 @endsection

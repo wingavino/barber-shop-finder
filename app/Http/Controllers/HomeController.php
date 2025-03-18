@@ -31,4 +31,19 @@ class HomeController extends Controller
     {
       return view('privacy-policy');
     }
+
+    public function showShopOwnerPrivacyPolicy()
+    {
+      return view('shopowner/privacy-policy');
+    }
+
+    public function showTerms()
+    {
+      return view('terms');
+    }
+
+    public function showShopOwnerTerms()
+    {
+      return view('shopowner/terms');
+    }
 }

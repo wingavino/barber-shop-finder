@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PendingRequest;
+use App\Models\Shop;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -74,6 +75,22 @@ class UserController extends Controller
       return redirect()->route('admin.shopowners');
     }
 
+    public function banUser($id, $ban, Request $request)
+    {
+      $user = User::where('id', '=', $id)->first();
+      if ($user) {
+        $user->banned = $ban;    
+        $user->save();
+
+        $shop = $user->shop;
+        if($shop){
+          $shop->hidden = $ban;
+          $shop->save();
+        }
+      }
+      return redirect()->route('admin.users');
+    }
+
     public function verifyMobile(Request $request)
     {
       $data = $request->validate([
@@ -100,6 +117,14 @@ class UserController extends Controller
       // $data = $request->validate([
       //   'mobile' => ['required', 'string'],
       // ]);
+
+      $twilio_active = env('TWILIO_ACTIVE');
+
+      if(!$twilio_active)
+      {
+        return back();
+      }
+
       $mobile = Auth::user()->mobile;
 
       $token = env('TWILIO_AUTH_TOKEN');

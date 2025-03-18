@@ -36,6 +36,14 @@ class ImageController extends Controller
     return view('shopowner/image-shop-document-upload');
   }
 
+  public function showShopDocument($id)
+  {
+    $shop = Shop::where('id', $id)->first();
+    $user = $shop->user;
+    $logo = Image::where('shop_id', $shop->id)->where('type', 'logo')->first();
+    return view('admin/shop-images-document', ['shop' => $shop, 'logo' => $logo, 'user' => $user]);
+  }
+
   public function uploadImage($id, Request $request)
   {
     $request->validate([

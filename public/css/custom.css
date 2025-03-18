@@ -1,0 +1,92 @@
+.first-color{
+  background: #edede9;
+}
+
+.second-color{
+  background: #d6ccc2;
+}
+
+.third-color{
+  background: #f5ebe0;
+}
+
+.fourth-color{
+  background: #e3d5ca;
+}
+
+.fifth-color{
+  background: #d5bdaf;
+}
+
+.sixth-color{
+  background: #625750;
+}
+
+a, a:hover {
+  color: black;
+}
+
+.card, .modal-header, .modal-footer{
+  background: #d5bdaf;
+}
+
+.card-body, .modal-body, .img-thumbnail{
+  background: #e3d5ca;
+}
+
+.img-thumbnail{
+  background: #d5bdaf;
+  border-color: #d5bdaf;
+}
+
+.nav-tabs .nav-link.active {
+  background: #e3d5ca;
+  border: 2px solid transparent;
+  border-color: #e3d5ca, #e3d5ca, #e3d5ca;
+  color: black;
+  font-weight: bold;
+}
+
+input.form-control {
+  background-color: #edede9;
+}
+
+.list-group-item {
+  background-color: #e3d5ca;
+}
+
+.btn-primary, .btn-info {
+  background: #6f5f5f;
+  border-color: #6f5f5f;
+  color: white;
+}
+
+.btn-primary:link, .btn-info:link {
+  background: #6f5f5f;
+  border-color: #6f5f5f;
+  color: white;
+}
+
+.btn-primary:focus, .btn-info:focus{
+  background: #625750;
+  border-color: #625750;
+  color: white;
+}
+
+.btn-primary:visited, .btn-info:visited{
+  background: #625750;
+  border-color: #625750;
+  color: white;
+}
+
+.btn-primary:hover, .btn-info:hover{
+  background: #625750;
+  border-color: #625750;
+  color: white;
+}
+
+.btn-primary:active, .btn-info:active{
+  background: #625750;
+  border-color: #625750;
+  color: white;
+}

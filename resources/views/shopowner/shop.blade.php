@@ -86,6 +86,15 @@
                         </div>
                       </div>
 
+                      <label for="mobile" class="col col-form-label text-md-center"><h3>{{ __('Contact Info') }}</h3></label>
+                      <div class="form-group row">
+                          <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+
+                          <div class="col-md-6">
+                              <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ $shop->mobile }}" readonly>
+                          </div>
+                      </div>
+
                       <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
                       <div class="form-group row">
                           <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>

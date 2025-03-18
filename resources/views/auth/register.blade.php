@@ -94,6 +94,17 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="terms-of-service" value="" required>
+                                    <label class="form-check-label" for="terms-of-service">
+                                        I agree to the <u><a href="{{ route('terms') }}" target="_blank">{{ __('Terms of Service') }}</a></u> and <u><a href="{{ route('privacy-policy') }}" target="_blank">{{ __('Privacy Policy') }}</a></u>.
+                                    </label>
+                                </div>                                
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0 justify-content-center">
                             <div class="col-md-6 offset-md-2">
@@ -102,6 +113,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

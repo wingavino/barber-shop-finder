@@ -129,7 +129,13 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        // if ($user->banned) {
+        //     Auth::logout();
+    
+        //     return redirect()->route('login')->withErrors(['loginError'=>'Account is currently banned. You may contact saber.shop.finder@gmail.com if you have any questions.']);
+        //   }
+    
+        //   return redirect()->intended($this->redirectPath());
     }
 
     /**

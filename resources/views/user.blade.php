@@ -5,7 +5,23 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3>{{ __('User Details') }}</h3></div>
+                <div class="card-header">
+                    <!-- <h3>{{ __('User Details') }}</h3> -->
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('profile') }}" aria-current="true">
+                                {{ __('User Details') }}
+                            </a>
+                        </li>
+                        @if(Auth::user()->pending_request->where('request_type', 'change-user-type')->first() || Auth::user()-> type == "shopowner")
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('shopowner.img.id') }}">
+                                    {{ __('Documents') }}
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
 
                 <div class="card-body">
                   <form method="POST" action="{{ route('register') }}">

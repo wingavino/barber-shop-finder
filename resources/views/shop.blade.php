@@ -247,11 +247,12 @@ $(document).ready(function(){
             <div class="col-md-12">
                 <div class="col" style="width: 100%; height: 500px">
                   <div id="map" style="width:100%;height:100%"></div>
-                  <script type="text/javascript">
+                <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+                <script type="text/javascript">
                   let map;
                   var shops = [];
                   const philippines = { lat: 15.5000569, lng: 120.9109837 };
-
+                  
                   async function getShops(id) {
                     let response = await fetch ('{{ env("APP_URL")}}/api/shops/' + id);
                     let data = await response.json();
@@ -271,6 +272,13 @@ $(document).ready(function(){
 
 
                   async function initMap() {
+                    const icon = document.createElement("div");
+                    icon.innerHTML = '<i class="fa-solid fa-scissors"></i>'
+
+                    const faPin = new google.maps.marker.PinElement({
+                      glyph: icon,                      
+                    });
+
                     await getShops({{$shop->id}})
                     .then(
                       data => listShops(data)
@@ -279,15 +287,17 @@ $(document).ready(function(){
                     map = new google.maps.Map(document.getElementById("map"), {
                       center: { lat: {{$shop->lat}}, lng: {{$shop->lng}} },
                       zoom: 14,
+                      mapId: 'f1371a49d1f250fc',
                     });
 
                     for (var i = 0; i < shops.length; i++) {
                       var shop = shops[i];
                       var latlng = new google.maps.LatLng(shop.position.lat, shop.position.lng);
-                      var marker = new google.maps.Marker({
+                      var marker = new google.maps.marker.AdvancedMarkerElement({
                         position: latlng,
                         map: map,
                         title: shop.title,
+                        content: faPin.element
                       });
                       google.maps.event.addListener(marker, 'dragend', function(event){
                         // When marker is dragged, do this
@@ -296,8 +306,7 @@ $(document).ready(function(){
                     }
                   }
                 </script>
-                <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-                <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap"></script>
+                <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap&libraries=marker"></script>
               </div>
             </div>
           </div>

@@ -29,16 +29,26 @@ class PendingRequestController extends Controller
         $pending_request->save();
       }
     }
-    return redirect()->route('profile');
+    return redirect()->back();
   }
 
   public function rejectPendingRequest(Request $request, $request_type, $id)
   {
     $pending_request = PendingRequest::where('id', $id)->first();
-    if ($request_type == 'add-new-shop') {
+    if($request_type == 'change-user-type')
+    {
+      $user = User::where('id', $pending_request->user_id)->first(); 
+      if($user->shop)
+      {
+        $shop = $user->shop;
+        $shop->hidden = true;
+        $shop->save();
+      }      
+    }
+
+    if($request_type == 'add-new-shop') {
       $shop = Shop::where('id', $pending_request->shop_id)->first();
-      $shop->approved = false;
-      $shop->rejected = true;
+      $shop->hidden = true;
       $shop->save();
     }
     $pending_request->approved = false;

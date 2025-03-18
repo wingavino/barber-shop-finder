@@ -78,14 +78,14 @@
                         </div>
                       @endforeach
 
-                      <div class="form-group row mb-0">
+                      <!-- <div class="form-group row mb-0">
                         <label for="edit" class="col-md-4 col-form-label"></label>
                         <div class="col-md-6">
                           <a type="button" role="button" href="{{ route('admin.shops.edit', ['id' => $shop->id]) }}" class="btn btn-primary col-md-12">
                             {{ __('Edit') }}
                           </a>
                         </div>
-                      </div>
+                      </div> -->
 
                       <label for="location" class="col col-form-label text-md-center"><h3>{{ __('Location') }}</h3></label>
                       <div class="form-group row">

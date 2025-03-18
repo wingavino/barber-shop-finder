@@ -4,6 +4,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <div id="liveAlertPlaceholder">
+            @error('loginError')
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -43,7 +52,7 @@
                         </div>
 
                         <div class="form-group row justify-content-center">
-                            <div class="col-md-6">
+                            <div class="col-md-6">                                
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 

@@ -11,7 +11,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                  <h3 class="text-center mb-5">Upload ID</h3>
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile') }}">
+                                {{ __('User Details') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('shopowner.img.id') }}" aria-current="true">
+                                {{ __('Documents') }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="card-body">

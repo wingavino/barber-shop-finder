@@ -13,11 +13,11 @@
             <div class="card">
                 <div class="card-header"><h3>{{ __('Shops List') }}</h3></div>
                 <div class="card-body">
-                  <div class="row justify-content-end text-right">
+                  <!-- <div class="row justify-content-end text-right">
                     <div class="col-md-12">
                       <a class="btn btn-success col-md-2" href="{{ route('admin.shops.add') }}" type="button" role="button" name="button">Add New Shop</a>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="row">
                     <div class="col-md-12">
@@ -33,7 +33,7 @@
                             <th scope="col">Shop Name</th>
                             <th scope="col">Shop Address</th>
                             <th scope="col">Owner's Name</th>
-                            <th scope="col">Actions</th>
+                            <!-- <th scope="col">Actions</th> -->
                           </tr>
                         </thead>
                         <tbody id="list">
@@ -48,10 +48,10 @@
                               </td>
                               <td>{{ $value->address }}</td>
                               <td>{{ $value->owner_name }}</td>
-                              <td>
-                                <a class="btn btn-primary col-md-4" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
+                              <!-- <td>
+                                <a class="btn btn-primary col-md" href="{{ route('admin.shops.edit', ['id' => $value->id]) }}" type="button" role="button" name="button">Edit</a>
                                 <button class="btn btn-danger col-md-4" data-toggle="modal" data-target="#deleteModal" data-form-action="{{ route('admin.shops.delete', ['id' => $value->id]) }}" data-id="{{ $value->id }}" data-name="{{ $value->name }}">Delete</button>
-                              </td>
+                              </td> -->
                             </tr>
                             @endforeach
                           @endisset
