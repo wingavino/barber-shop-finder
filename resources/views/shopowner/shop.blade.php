@@ -85,7 +85,13 @@
                           </a>
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label for="owner_name" class="col-md-3 col-form-label text-md-right">{{ __('Owner\'s Name') }}</label>
 
+                        <div class="col-md-9">
+                          <input id="owner_name" type="text" class="form-control @error('owner_name') is-invalid @enderror" name="owner_name" value="{{ $shop->owner_name }}" readonly>
+                        </div>
+                      </div>
                       <label for="mobile" class="col col-form-label text-md-center"><h3>{{ __('Contact Info') }}</h3></label>
                       <div class="form-group row">
                           <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
