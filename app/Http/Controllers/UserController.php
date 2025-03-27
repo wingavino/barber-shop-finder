@@ -118,9 +118,9 @@ class UserController extends Controller
       //   'mobile' => ['required', 'string'],
       // ]);
 
-      $twilio_active = env('TWILIO_ACTIVE');
+      $sms_active = env('SMS_ACTIVE');
 
-      if(!$twilio_active)
+      if(!$sms_active)
       {
         return back();
       }
