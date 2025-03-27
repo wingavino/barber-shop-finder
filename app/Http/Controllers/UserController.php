@@ -98,17 +98,25 @@ class UserController extends Controller
         'mobile' => ['required', 'string'],
       ]);
 
-      $token = env('TWILIO_AUTH_TOKEN');
-      $twilio_sid = env('TWILIO_SID');
-      $twilio_verify_sid = env('TWILIO_VERIFY_SID');
-      $twilio = new Client($twilio_sid, $token);
-      $verification = $twilio->verify->v2->services($twilio_verify_sid)
-        ->verificationChecks
-        ->create($data['verification_code'], array('to' => $data['mobile']));
-      if ($verification->valid) {
-        $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
-        return redirect()->route('home')->with(['message' => 'Phone number verified']);
+      $sms_active = env('SMS_ACTIVE');
+
+      if(!$sms_active)
+      {
+        return back();
       }
+
+      // $token = env('TWILIO_AUTH_TOKEN');
+      // $twilio_sid = env('TWILIO_SID');
+      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
+      // $twilio = new Client($twilio_sid, $token);
+      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
+      //   ->verificationChecks
+      //   ->create($data['verification_code'], array('to' => $data['mobile']));
+      // if ($verification->valid) {
+      //   $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
+      //   return redirect()->route('home')->with(['message' => 'Phone number verified']);
+      // }
+
       return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
     }
 
@@ -127,14 +135,14 @@ class UserController extends Controller
 
       $mobile = Auth::user()->mobile;
 
-      $token = env('TWILIO_AUTH_TOKEN');
-      $twilio_sid = env('TWILIO_SID');
-      $twilio_verify_sid = env('TWILIO_VERIFY_SID');
-      $twilio = new Client($twilio_sid, $token);
+      // $token = env('TWILIO_AUTH_TOKEN');
+      // $twilio_sid = env('TWILIO_SID');
+      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
+      // $twilio = new Client($twilio_sid, $token);
 
-      $verification = $twilio->verify->v2->services($twilio_verify_sid)
-        ->verifications
-        ->create($mobile, 'sms');
+      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
+      //   ->verifications
+      //   ->create($mobile, 'sms');
 
       return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.']);
     }
