@@ -53,7 +53,7 @@ Auth::routes(); //Handles functions for Laravel's Authentication
 Route::get('/mobile/verify', function () {
     return view('auth.verify-mobile');
 })->middleware('auth')->name('verify.mobile');
-Route::post('/mobile/verify/', [App\Http\Controllers\UserController::class, 'verifyMobile'])->middleware('auth')->name('verify.mobile');
+Route::post('/mobile/verify/{pinId}', [App\Http\Controllers\UserController::class, 'verifyMobile'])->middleware('auth')->name('verify.mobile');
 Route::get('/mobile/verify/send', [App\Http\Controllers\UserController::class, 'sendMobileOTP'])->middleware('auth')->name('verify.mobile.send');
 
 // Laravel Auth Email Verification Routes
