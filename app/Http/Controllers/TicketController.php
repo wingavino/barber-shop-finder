@@ -11,6 +11,12 @@ use App\Models\User;
 use App\Mail\QueueNotification;
 use Illuminate\Support\Facades\Mail;
 use Twilio\Rest\Client;
+use Infobip\ApiException;
+use Infobip\Model\SmsRequest;
+use Infobip\Model\SmsDestination;
+use Infobip\Model\SmsMessage;
+use Infobip\Api\SmsApi;
+use Infobip\Model\SmsTextContent;
 use Auth;
 
 class TicketController extends Controller
@@ -272,10 +278,10 @@ class TicketController extends Controller
 
       if ($user->mobile && $user->mobile_verified_at != null) {
         // Send SMS Notification
-        $sid = env('TWILIO_SID');
-        $token = env('TWILIO_AUTH_TOKEN');
-        $twilio_phone_number = env('TWILIO_PHONE_NUMBER');
-        $twilio = new Client($sid, $token);
+        // $sid = env('TWILIO_SID');
+        // $token = env('TWILIO_AUTH_TOKEN');
+        // $twilio_phone_number = env('TWILIO_PHONE_NUMBER');
+        // $twilio = new Client($sid, $token);
 
         switch ($queue_position) {
           case 'current':
@@ -299,15 +305,37 @@ class TicketController extends Controller
           break;
         }
 
-        $message = $twilio
-        ->messages
-        ->create(
-          $user->mobile,
-          [
-            'body' => $body,
-            'from' => $twilio_phone_number,
-          ]
+        $sendSmsApi = new SmsApi(config: $configuration);
+
+        $message = new SmsMessage(
+            destinations: [
+                new SmsDestination(
+                    to: $user->mobile
+                )
+            ],
+            content: new SmsTextContent(
+                text: $body
+            ),
+            sender: 'InfoSMS'
         );
+
+        $request = new SmsRequest(messages: [$message]);
+
+        try {
+            $smsResponse = $sendSmsApi->sendSmsMessages($request);
+        } catch (ApiException $apiException) {
+            // HANDLE THE EXCEPTION
+        }
+
+        // $message = $twilio
+        // ->messages
+        // ->create(
+        //   $user->mobile,
+        //   [
+        //     'body' => $body,
+        //     'from' => $twilio_phone_number,
+        //   ]
+        // );
       }
     }
 }
