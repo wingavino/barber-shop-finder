@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
+use Infobip\Configuration;
+use Infobip\Api\TfaApi;
+use Infobip\Model\TfaApplicationRequest;
+use Infobip\Model\TfaCreateMessageRequest;
+use Infobip\Model\TfaStartAuthenticationRequest;
+use Infobip\Model\TfaVerifyPinRequest;
 use Auth;
 
 class UserController extends Controller
@@ -91,35 +97,6 @@ class UserController extends Controller
       return redirect()->route('admin.users');
     }
 
-    public function verifyMobile(Request $request)
-    {
-      $data = $request->validate([
-        'verification_code' => ['required', 'numeric'],
-        'mobile' => ['required', 'string'],
-      ]);
-
-      $sms_active = env('SMS_ACTIVE');
-
-      if(!$sms_active)
-      {
-        return back();
-      }
-
-      // $token = env('TWILIO_AUTH_TOKEN');
-      // $twilio_sid = env('TWILIO_SID');
-      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
-      // $twilio = new Client($twilio_sid, $token);
-      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
-      //   ->verificationChecks
-      //   ->create($data['verification_code'], array('to' => $data['mobile']));
-      // if ($verification->valid) {
-      //   $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
-      //   return redirect()->route('home')->with(['message' => 'Phone number verified']);
-      // }
-
-      return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
-    }
-
     public function sendMobileOTP()
     {
       // $data = $request->validate([
@@ -135,6 +112,41 @@ class UserController extends Controller
 
       $mobile = Auth::user()->mobile;
 
+      $configuration = new Configuration(
+        host: env('INFOBIP_BASE_URL'),
+        apiKey: env('INFOBIP_API_KEY')
+      );      
+      $tfaApi = new TfaApi(config: $configuration);
+
+      $tfaApplication = $tfaApi->createTfaApplication(
+        new TfaApplicationRequest(name: '2FA application')
+      );
+      $appId = $tfaApplication->getApplicationId();
+
+      $tfaMessageTemplate = $tfaApi
+        ->createTfaMessageTemplate(
+          $appId,
+          new TfaCreateMessageRequest(
+              messageText: 'Your pin is {{pin}}',
+              pinType: TfaPinType::NUMERIC,
+              pinLength: 4
+          )
+      );
+      $messageId = $tfaMessageTemplate->getMessageId();
+
+      $sendCodeResponse = $tfaApi
+        ->sendTfaPinCodeOverSms(
+          new TfaStartAuthenticationRequest(
+              applicationId: $appId,
+              messageId: $messageId,
+              to: $mobile,
+              from: 'InfoSMS',
+          )
+      );
+
+      $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
+      $pinId = $sendCodeResponse->getPinId();
+
       // $token = env('TWILIO_AUTH_TOKEN');
       // $twilio_sid = env('TWILIO_SID');
       // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
@@ -144,6 +156,48 @@ class UserController extends Controller
       //   ->verifications
       //   ->create($mobile, 'sms');
 
-      return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.']);
+      return redirect()->route('verify.mobile', ['pinId' => $pinId])->with(['message' => 'Code sent. Please check your phone.']);
+    }
+
+    public function verifyMobile(Request $request, $pinId)
+    {
+      $data = $request->validate([
+        'verification_code' => ['required', 'numeric'],
+        'mobile' => ['required', 'string'],
+      ]);
+
+      $sms_active = env('SMS_ACTIVE');
+
+      if(!$sms_active)
+      {
+        return back();
+      }
+
+      $configuration = new Configuration(
+        host: env('INFOBIP_BASE_URL'),
+        apiKey: env('INFOBIP_API_KEY')
+      );      
+      $tfaApi = new TfaApi(config: $configuration);
+
+      $verifyResponse = $tfaApi->verifyTfaPhoneNumber($pinId, new TfaVerifyPinRequest(pin: $data['verification_code']));
+      $verified = $verifyResponse->getVerified();
+
+      if ($verified) {
+        $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
+        return redirect()->route('home')->with(['message' => 'Phone number verified']);
+      }
+      // $token = env('TWILIO_AUTH_TOKEN');
+      // $twilio_sid = env('TWILIO_SID');
+      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
+      // $twilio = new Client($twilio_sid, $token);
+      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
+      //   ->verificationChecks
+      //   ->create($data['verification_code'], array('to' => $data['mobile']));
+      // if ($verification->valid) {
+      //   $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
+      //   return redirect()->route('home')->with(['message' => 'Phone number verified']);
+      // }
+
+      return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
     }
 }
