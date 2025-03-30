@@ -14,6 +14,7 @@ use Infobip\Configuration;
 use Infobip\Api\TfaApi;
 use Infobip\Model\TfaApplicationRequest;
 use Infobip\Model\TfaCreateMessageRequest;
+use Infobip\Model\TfaPinType;
 use Infobip\Model\TfaStartAuthenticationRequest;
 use Infobip\Model\TfaVerifyPinRequest;
 use Auth;
