@@ -305,6 +305,10 @@ class TicketController extends Controller
           break;
         }
 
+        $configuration = new Configuration(
+          host: env('INFOBIP_BASE_URL'),
+          apiKey: env('INFOBIP_API_KEY')
+        );
         $sendSmsApi = new SmsApi(config: $configuration);
 
         $message = new SmsMessage(
