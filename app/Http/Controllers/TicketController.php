@@ -316,7 +316,7 @@ class TicketController extends Controller
             content: new SmsTextContent(
                 text: $body
             ),
-            sender: 'InfoSMS'
+            sender: 'ServiceSMS'
         );
 
         $request = new SmsRequest(messages: [$message]);
