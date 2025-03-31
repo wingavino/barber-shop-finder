@@ -126,6 +126,12 @@
                           </div>
                       </div>
                       @endif
+
+                      @if(Auth::user()->type == 'admin')
+                        <a class="btn btn-primary col-md-12" href="{{ Route('tfa.message.template.create'}}">
+                            {{ __('Generate Message Template') }}
+                        </a>
+                      @endif
                   </form>
                 </div>
             </div>
