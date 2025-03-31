@@ -119,10 +119,10 @@ class UserController extends Controller
       );      
       $tfaApi = new TfaApi(config: $configuration);
 
-      $tfaApplication = $tfaApi->createTfaApplication(
-        new TfaApplicationRequest(name: '2FA application')
-      );
-      $appId = $tfaApplication->getApplicationId();
+      // $tfaApplication = $tfaApi->createTfaApplication(
+      //   new TfaApplicationRequest(name: '2FA application')
+      // );
+      $appId = '5C9DDDCBF093C29F627D9DEE8853E25A';
 
       $tfaMessageTemplate = $tfaApi
         ->createTfaMessageTemplate(
