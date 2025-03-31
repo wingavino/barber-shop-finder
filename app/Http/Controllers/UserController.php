@@ -116,14 +116,14 @@ class UserController extends Controller
       $configuration = new Configuration(
         host: env('INFOBIP_BASE_URL'),
         apiKey: env('INFOBIP_API_KEY')
-      );      
+      );
       $tfaApi = new TfaApi(config: $configuration);
 
       // $tfaApplication = $tfaApi->createTfaApplication(
       //   new TfaApplicationRequest(name: '2FA application')
       // );
-      $appId = '5C9DDDCBF093C29F627D9DEE8853E25A';
-      $messageId = '1600CDCE7A723B1740E482C1F70EA64C';
+      $appId = env('INFOBIP_2FA_APPID');
+      $messageId = env('INFOBIP_2FA_MESSAGEID');
 
       $sendCodeResponse = $tfaApi
         ->sendTfaPinCodeOverSms(
@@ -200,7 +200,7 @@ class UserController extends Controller
       );      
       $tfaApi = new TfaApi(config: $configuration);
 
-      $appId = '5C9DDDCBF093C29F627D9DEE8853E25A';
+      $appId = env('INFOBIP_2FA_APPID');
 
       $tfaMessageTemplate = $tfaApi
         ->createTfaMessageTemplate(
