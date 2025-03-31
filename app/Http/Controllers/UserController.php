@@ -223,6 +223,6 @@ class UserController extends Controller
       );
       $messageId = $tfaMessageTemplate->getMessageId();
 
-      return redirect()->route('home', ['messageId' => $messageId]);
+      return redirect()->route('home');
     }
 }
