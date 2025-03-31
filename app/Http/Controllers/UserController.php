@@ -100,10 +100,6 @@ class UserController extends Controller
 
     public function sendMobileOTP()
     {
-      // $data = $request->validate([
-      //   'mobile' => ['required', 'string'],
-      // ]);
-
       $sms_active = env('SMS_ACTIVE');
 
       if(!$sms_active)
@@ -118,10 +114,6 @@ class UserController extends Controller
         apiKey: env('INFOBIP_API_KEY')
       );
       $tfaApi = new TfaApi(config: $configuration);
-
-      // $tfaApplication = $tfaApi->createTfaApplication(
-      //   new TfaApplicationRequest(name: '2FA application')
-      // );
       $appId = env('INFOBIP_2FA_APPID');
       $messageId = env('INFOBIP_2FA_MESSAGEID');
 
@@ -137,15 +129,6 @@ class UserController extends Controller
 
       $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
       $pinId = $sendCodeResponse->getPinId();
-
-      // $token = env('TWILIO_AUTH_TOKEN');
-      // $twilio_sid = env('TWILIO_SID');
-      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
-      // $twilio = new Client($twilio_sid, $token);
-
-      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
-      //   ->verifications
-      //   ->create($mobile, 'sms');
 
       return redirect()->route('verify.mobile', ['pinId' => $pinId])->with(['message' => 'Code sent. Please check your phone.']);
     }
@@ -177,17 +160,6 @@ class UserController extends Controller
         $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
         return redirect()->route('home')->with(['message' => 'Phone number verified']);
       }
-      // $token = env('TWILIO_AUTH_TOKEN');
-      // $twilio_sid = env('TWILIO_SID');
-      // $twilio_verify_sid = env('TWILIO_VERIFY_SID');
-      // $twilio = new Client($twilio_sid, $token);
-      // $verification = $twilio->verify->v2->services($twilio_verify_sid)
-      //   ->verificationChecks
-      //   ->create($data['verification_code'], array('to' => $data['mobile']));
-      // if ($verification->valid) {
-      //   $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
-      //   return redirect()->route('home')->with(['message' => 'Phone number verified']);
-      // }
 
       return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
     }
