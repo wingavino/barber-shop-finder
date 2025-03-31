@@ -201,4 +201,28 @@ class UserController extends Controller
 
       return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
     }
+
+    public function createTfaMessageTemplate()
+    {
+      $configuration = new Configuration(
+        host: env('INFOBIP_BASE_URL'),
+        apiKey: env('INFOBIP_API_KEY')
+      );      
+      $tfaApi = new TfaApi(config: $configuration);
+
+      $appId = '5C9DDDCBF093C29F627D9DEE8853E25A';
+
+      $tfaMessageTemplate = $tfaApi
+        ->createTfaMessageTemplate(
+          $appId,
+          new TfaCreateMessageRequest(
+              messageText: 'Your pin is {{pin}}',
+              pinType: TfaPinType::NUMERIC,
+              pinLength: 4
+          )
+      );
+      $messageId = $tfaMessageTemplate->getMessageId();
+
+      return redirect()->route('home', ['messageId' => $messageId]);
+    }
 }
