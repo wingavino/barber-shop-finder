@@ -55,7 +55,7 @@ Route::get('/mobile/verify', function () {
 })->middleware('auth')->name('verify.mobile');
 Route::post('/mobile/verify/{pinId}', [App\Http\Controllers\UserController::class, 'verifyMobile'])->middleware('auth')->name('verify.mobile');
 Route::post('/mobile/verify/send', [App\Http\Controllers\UserController::class, 'sendMobileOTP'])->middleware('auth')->name('verify.mobile.send');
-Route::get('/mobile/tfa/message/create', [App\Http\Controllers\UserController::class, 'createTfaMessageTemplate'])->middleware('auth')->name('tfa.message.template.create');
+Route::post('/mobile/tfa/message/create', [App\Http\Controllers\UserController::class, 'createTfaMessageTemplate'])->middleware('auth')->name('tfa.message.template.create');
 
 // Laravel Auth Email Verification Routes
 Route::get('/email/verify', function () {
