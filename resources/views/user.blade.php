@@ -127,12 +127,15 @@
                       </div>
                       @endif
 
-                      @if(Auth::user()->type == 'admin')
-                        <a class="btn btn-primary col-md-12" href="{{ Route('tfa.message.template.create') }}">
+                    </form>
+                    @if(Auth::user()->type == 'admin')
+                      <form method="POST" action="{{ route('tfa.message.template.create') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary col-md-12">
                             {{ __('Generate Message Template') }}
-                        </a>
-                      @endif
-                  </form>
+                        </button>
+                      </form>
+                    @endif
                 </div>
             </div>
         </div>
