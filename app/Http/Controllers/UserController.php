@@ -123,17 +123,7 @@ class UserController extends Controller
       //   new TfaApplicationRequest(name: '2FA application')
       // );
       $appId = '5C9DDDCBF093C29F627D9DEE8853E25A';
-
-      $tfaMessageTemplate = $tfaApi
-        ->createTfaMessageTemplate(
-          $appId,
-          new TfaCreateMessageRequest(
-              messageText: 'Your pin is {{pin}}',
-              pinType: TfaPinType::NUMERIC,
-              pinLength: 4
-          )
-      );
-      $messageId = $tfaMessageTemplate->getMessageId();
+      $messageId = '1600CDCE7A723B1740E482C1F70EA64C';
 
       $sendCodeResponse = $tfaApi
         ->sendTfaPinCodeOverSms(
@@ -141,7 +131,7 @@ class UserController extends Controller
               applicationId: $appId,
               messageId: $messageId,
               to: $mobile,
-              from: 'InfoSMS',
+              from: 'ServiceSMS',
           )
       );
 
