@@ -38,7 +38,7 @@
             </div>
           </div>
           <a class="text-dark" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
-            <h5 class="card-title" id="collapseFilterText">Filter -</h5>
+            <h5 class="card-title" id="collapseFilterText">Filterrrr -</h5>
           </a>
         </div>
         <div class="collapse show" id="collapseFilter">
