@@ -48,6 +48,7 @@ class NotificationController extends Controller
 
 		$response = curl_exec($ch);
 		curl_close($ch);
+		echo $response;
     }
 	
 }
