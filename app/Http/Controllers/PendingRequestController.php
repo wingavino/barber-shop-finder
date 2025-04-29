@@ -31,11 +31,13 @@ class PendingRequestController extends Controller
         $pending_request->change_to_user_type = $user_type;
         $pending_request->save();
 		
+		
+      }
+    }
 		$notif = new NotificationController();
 		$msg = "Your Request to $request_type has been Approved";
 		$notif->sms($user->mobile,$msg);
-      }
-    }
+		
     return redirect()->back();
   }
 
