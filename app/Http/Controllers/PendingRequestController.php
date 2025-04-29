@@ -33,17 +33,10 @@ class PendingRequestController extends Controller
 		
 		
       }
-    }
-		?>
-		<script>
-			alert('OK');
-			alert('OK');
-		</script>
-		<?php
-		
-		$notif = new NotificationController();
-		$msg = "Your Request to $request_type has been Approved";
-		$notif->sms($user->mobile,$msg);
+    }	
+		//$notif = new NotificationController();
+		//$msg = "Your Request to $request_type has been Approved";
+		//$notif->sms($user->mobile,$msg);
 		
     return redirect()->back();
   }
