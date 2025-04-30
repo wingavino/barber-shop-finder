@@ -53,6 +53,11 @@ class TicketController extends Controller
           }
         }
       }
+	  ?>
+		<script>
+			alert('OK');
+		</script>
+	  <?php
       return redirect()->back();
     }
 
