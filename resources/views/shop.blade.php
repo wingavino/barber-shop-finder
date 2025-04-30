@@ -68,7 +68,7 @@ $(document).ready(function(){
               <form method="POST" action="#">
                 @csrf
 
-                <label for="open_hours" class="col col-form-label text-md-center"><h3>{{ __('Open Hours') }}</h3></label>
+                <label for="open_hours" class="col col-form-label text-md-center"><h3>{{ __('Open Hoursss') }}</h3></label>
 
                 @foreach($open_hours as $i)
                 <div class="form-group row">
