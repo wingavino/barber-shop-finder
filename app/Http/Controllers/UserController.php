@@ -130,7 +130,7 @@ class UserController extends Controller
       $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
       $pinId = $sendCodeResponse->getPinId();*/
 	  $pintId = "12345";
-		return back()->with(['mobile' => $user['mobile'], 'error' => 'Invalid code entered']);
+		return redirect()->route('home', ['messageId' => $pinId]);
 		//return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
     }
 
