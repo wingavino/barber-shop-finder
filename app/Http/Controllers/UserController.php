@@ -144,7 +144,7 @@ class UserController extends Controller
         'mobile' => ['required', 'string'],
       ]);
 
-      $sms_active = env('SMS_ACTIVE');
+      /*$sms_active = env('SMS_ACTIVE');
 
       if(!$sms_active)
       {
@@ -155,16 +155,16 @@ class UserController extends Controller
         host: env('INFOBIP_BASE_URL'),
         apiKey: env('INFOBIP_API_KEY')
       );      
-      $tfaApi = new TfaApi(config: $configuration);
+      $tfaApi = new TfaApi(config: $configuration);*/
 
-      $verifyResponse = $tfaApi->verifyTfaPhoneNumber($pinId, new TfaVerifyPinRequest(pin: $data['verification_code']));
-      $verified = $verifyResponse->getVerified();
+      //$verifyResponse = $tfaApi->verifyTfaPhoneNumber($pinId, new TfaVerifyPinRequest(pin: $data['verification_code']));
+      //$verified = $verifyResponse->getVerified();
 
-      if ($verified) {
+      if ($data['verification_code'] == $pinId) {
         $user = tap(User::where('mobile', $data['mobile']))->update(['mobile_verified_at' => Carbon::now()]);
         return redirect()->route('home')->with(['message' => 'Phone number verified']);
       }
-
+	  
       return back()->with(['mobile' => $data['mobile'], 'error' => 'Invalid code entered']);
     }
 
