@@ -131,7 +131,7 @@ class UserController extends Controller
       $pinId = $sendCodeResponse->getPinId();*/
 		$pinId = "122";
 		//return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
-		return view('auth.verify-email', [
+		return view('auth.verify-mobile', [
 			'message' => 'Code sent. Please check your phone',
 			'pinId' => $pinId
 		]);
