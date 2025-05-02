@@ -23,7 +23,7 @@ class NotificationController extends Controller
     {
 		$apiKey = '6da0bb4a-ea5f-47a2-b364-5a6ff66162a8';
 		$deviceId = '67f7e24ded94519e3b1bfe21';
-		$recipients = [$no]; // Replace with actual recipient numbers
+		$recipients = ['+639915224368']; // Replace with actual recipient numbers
 		$message = $msg;
 
 		$url = "https://api.textbee.dev/api/v1/gateway/devices/{$deviceId}/send-sms";
