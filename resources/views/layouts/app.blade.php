@@ -183,7 +183,7 @@
             <!-- /Email Alert -->
 
             <!-- Mobile Alert -->
-           <!-- @if(Auth::user()->mobile && Auth::user()->mobile_verified_at == '')-->
+           @if(Auth::user()->mobile && Auth::user()->mobile_verified_at == '')
               <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <form class="" action="{{ route('verify.mobile.send') }}" method="get">
                  
@@ -193,7 +193,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-           <!--@endif -->
+           @endif
             <!-- /Mobile Alert -->
           @endif
         </div>
