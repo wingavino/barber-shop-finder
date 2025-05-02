@@ -129,13 +129,8 @@ class UserController extends Controller
 
       $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
       $pinId = $sendCodeResponse->getPinId();*/
-	  $pintId = "12345";
-		?>
-		<script>
-			alert('OK');
-		</script>
-		<?php
-		//return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
+	  $pintId = 12345;
+		return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
     }
 
     public function verifyMobile(Request $request, $pinId)
