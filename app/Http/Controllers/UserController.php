@@ -100,12 +100,12 @@ class UserController extends Controller
 
     public function sendMobileOTP()
     {
-      $sms_active = env('SMS_ACTIVE');
+      /*$sms_active = env('SMS_ACTIVE');
 
       if(!$sms_active)
       {
         return back();
-      }
+      }*/
 
       $mobile = Auth::user()->mobile;
 
