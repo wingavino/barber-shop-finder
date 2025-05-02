@@ -109,7 +109,7 @@ class UserController extends Controller
 
       $mobile = Auth::user()->mobile;
 
-      $configuration = new Configuration(
+      /*$configuration = new Configuration(
         host: env('INFOBIP_BASE_URL'),
         apiKey: env('INFOBIP_API_KEY')
       );
@@ -127,10 +127,10 @@ class UserController extends Controller
           )
       );
 
-      $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
+      $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";*/
       $pinId = $sendCodeResponse->getPinId();
-
-      return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
+		
+		return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
     }
 
     public function verifyMobile(Request $request, $pinId)
