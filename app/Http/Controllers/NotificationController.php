@@ -13,12 +13,10 @@ class NotificationController extends Controller
       if ($email_address) {
         Mail::to($email_address)->send(new QueueNotification($email_address));
 
-        return new JsonResponse(
-          [
-            'success': => true,
-            'message': => 'Email sent'
-          ]
-        );
+        return new JsonResponse([
+			'success' => true,
+			'message' => 'Email sent'
+		]);
       }
     }
 	public function sms($no,$msg)
