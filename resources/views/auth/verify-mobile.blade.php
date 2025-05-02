@@ -15,7 +15,7 @@
                     @endif
 
                     {{ __('Please enter the OTP sent to your number: ') }}
-                    <form method="POST" action="{{ route('verify.mobile.pin', ['pinId' => 122]) }}">
+                    <form method="POST" action="{{ route('verify.mobile.pin', ['pinId' => $pinId]) }}">
                         @csrf
                         <div class="form-group row">
                           <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile')}}</label>
