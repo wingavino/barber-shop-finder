@@ -107,7 +107,7 @@
                 </div>
             </div>
         </nav>
-
+		<h1>{{ $messageId }}</h1>
         <div id="liveAlertPlaceholder">
           @if(session()->has('message'))
               <div class="alert alert-success alert-dismissible" role="alert">
