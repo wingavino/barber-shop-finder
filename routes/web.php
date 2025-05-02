@@ -29,6 +29,7 @@ use App\Http\Middleware\ShopOwnerMiddleware;
 Route::get('/', function (){
     return redirect()->route('home');
 })->name('index'); //Shows User's Home Page
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); //Shows User's Home Page
 Route::get('/shop/{id}', [App\Http\Controllers\ShopController::class, 'showShop'])->name('shop'); //Shows Shop Page
 Route::get('/shop/{id}/images', [App\Http\Controllers\ShopController::class, 'showShopImages'])->name('shop.images'); //Shows Shop's Images Page
