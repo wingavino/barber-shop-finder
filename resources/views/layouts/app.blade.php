@@ -181,7 +181,7 @@
               @endif
             @endif
             <!-- /Email Alert -->
-
+		@endif
             <!-- Mobile Alert -->
             <!--@if(Auth::user()->mobile && Auth::user()->mobile_verified_at == '')-->
               <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -195,7 +195,7 @@
               </div>
            <!-- @endif-->
             <!-- /Mobile Alert -->
-          @endif
+          
         </div>
 
         <main class="py-4">
