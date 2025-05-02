@@ -186,7 +186,7 @@
             @if(Auth::user()->mobile && Auth::user()->mobile_verified_at == '')
               <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <form class="" action="{{ route('verify.mobile.send') }}" method="get">
-                  @csrf
+                  
                   <strong>Your account's phone number has not been verified. Please click <button class="btn btn-link mx-n2" type="submit">HERE</button> to verify your phone number.</strong>
                 </form>
                 <button type="button" class="close" id="alertDismiss" data-dismiss="alert" aria-label="Close">

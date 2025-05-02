@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Phone Number') }} {{ $pinId }}</div>
+                <div class="card-header">{{ __('Verify Your Phone Number') }}</div>
 
                 <div class="card-body text-center">
                     @if (session('error'))
@@ -20,7 +20,7 @@
                         <div class="form-group row">
                           <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile')}}</label>
                           <div class="col-md-6">
-                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ Auth::user()->mobile }}" placeholder="+639xxxxxxxxx" required>
+                            <input type="text" class="form-control @error('mobile') is-invalid @enderror"  readonly name="mobile" value="{{ Auth::user()->mobile }}" placeholder="+639xxxxxxxxx" required>
                             @error('mobile')
                             <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
