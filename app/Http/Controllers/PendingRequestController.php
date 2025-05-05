@@ -20,9 +20,6 @@ class PendingRequestController extends Controller
     $pending_request = PendingRequest::where('user_id', '=', $id)->
                                         where('request_type', '=', $request_type)->
                                         first();
-	 
-	 $user = User::where('id', $pending_request->user_id)->first(); 
-	 
     if (!$pending_request) {
       $pending_request = new PendingRequest();
       if ($request_type == 'change-user-type') {
@@ -30,11 +27,8 @@ class PendingRequestController extends Controller
         $pending_request->request_type = $request_type;
         $pending_request->change_to_user_type = $user_type;
         $pending_request->save();
-		
-		
       }
-    }	
-		
+    }
     return redirect()->back();
   }
 
