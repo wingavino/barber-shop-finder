@@ -92,7 +92,7 @@ class TicketController extends Controller
           $last_ticket = $shop->queue->ticket->last();
           if ($last_ticket) {
             $shop->queue->next_ticket = $last_ticket->ticket_number;
-            $this->sendNotification($last_ticket->user->email, 'next', $shop);
+            //$this->sendNotification($last_ticket->user->email, 'next', $shop);
           }else {
             $shop->queue->next_ticket = null;
           }
