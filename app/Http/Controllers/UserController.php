@@ -130,7 +130,7 @@ class UserController extends Controller
       $isSuccessful = $sendCodeResponse->getSmsStatus() === "MESSAGE_SENT";
       $pinId = $sendCodeResponse->getPinId();*/
 	  $pinId = rand(10000, 99999);
-	  $pinIdmsg = "Your pin is $otp ~ Saber";
+	  $pinIdmsg = "Your pin is $pinId ~ Saber";
 	 
 	  //$notif->sms($user->mobile,$pinIdmsg);
 		//return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
