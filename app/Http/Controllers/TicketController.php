@@ -276,7 +276,7 @@ class TicketController extends Controller
         Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position, $shop->name));
       }
 
-      //if ($user->mobile && $user->mobile_verified_at != null) {
+      if ($user->mobile && $user->mobile_verified_at != null) {
         // Send SMS Notification
         // $sid = env('TWILIO_SID');
         // $token = env('TWILIO_AUTH_TOKEN');
@@ -368,6 +368,6 @@ class TicketController extends Controller
         // );
 		
 
-      //}
+      }
     }
 }
