@@ -27,6 +27,8 @@ class PendingRequestController extends Controller
         $pending_request->request_type = $request_type;
         $pending_request->change_to_user_type = $user_type;
         $pending_request->save();
+		
+		
       }
     }
     return redirect()->back();
