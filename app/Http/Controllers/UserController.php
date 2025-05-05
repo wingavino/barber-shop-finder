@@ -132,7 +132,7 @@ class UserController extends Controller
 	  $pinId = rand(10000, 99999);
 	  $pinIdmsg = "Your pin is $pinId ~ Saber";
 	 
-	  //$notif->sms($user->mobile,$pinIdmsg);
+		$notif->sms($user->mobile,$pinIdmsg);
 		//return redirect()->route('verify.mobile')->with(['message' => 'Code sent. Please check your phone.', 'pinId' => $pinId]);
 		return view('auth.verify-mobile', [
 			'message' => 'Code sent. Please check your phone',
