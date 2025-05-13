@@ -301,7 +301,7 @@ class TicketController extends Controller
           break;
 
           default:
-          $body = 'You are next to be serviced '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
+          $body = 'You are next to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
           break;
         }
 		
