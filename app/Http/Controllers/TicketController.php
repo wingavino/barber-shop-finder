@@ -285,7 +285,7 @@ class TicketController extends Controller
 
         switch ($queue_position) {
           case 'current':
-          $body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop as soon as possible. ~Saber';
+          $body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
           break;
 
           case 'on_hold':
@@ -301,7 +301,7 @@ class TicketController extends Controller
           break;
 
           default:
-          $body = 'You are next in line to be serviced '.$shop->name.'. Please try to arrive at the shop as soon as possible. ~Saber';
+          $body = 'You are next to be serviced '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
           break;
         }
 		
