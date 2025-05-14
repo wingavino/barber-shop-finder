@@ -303,8 +303,9 @@ class TicketController extends Controller
           break;
 
           default:
-          $body = 'You are next to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
-          break;
+          //$body = 'You are next to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
+            $body = 'Dear Customer, This is a courteous reminder that your service appointment at '.$shop->name.'. is scheduled for today, '.date('F j, Y').'. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.Sincerely, ~Saber';
+		  break;
         }
 		
 		$apiKey = '6da0bb4a-ea5f-47a2-b364-5a6ff66162a8';
