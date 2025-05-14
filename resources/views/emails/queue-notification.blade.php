@@ -1,7 +1,8 @@
 @component('mail::message')
 # Update
-Hi,
-We're just here to inform that you are next in line to be serviced at {{$shop_name}}. Please try to arrive at the shop as soon as possible to avoid being put On Hold.
+Dear Customer, 
+
+This is a courteous reminder that your service appointment at {{$shop_name}} is scheduled for today, {{ \Carbon\Carbon::now()->format('F j, Y') }}. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.
 
 @component('mail::button', ['url' => 'saber.hair'])
 Click here to view the site
