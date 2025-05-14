@@ -275,7 +275,7 @@ class TicketController extends Controller
       if ($user->email_verified_at != null) {
         Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position, $shop->name));
       }
-		$now = new DateTime('now', new DateTimeZone('Asia/Manila'));
+		$now = new DateTime();
 		
       if ($user->mobile && $user->mobile_verified_at != null) {
         // Send SMS Notification
