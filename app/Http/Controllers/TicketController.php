@@ -275,7 +275,8 @@ class TicketController extends Controller
       if ($user->email_verified_at != null) {
         Mail::to($email_address)->send(new QueueNotification($email_address, $queue_position, $shop->name));
       }
-
+		$now = new DateTime('now', new DateTimeZone('Asia/Manila'));
+		
       if ($user->mobile && $user->mobile_verified_at != null) {
         // Send SMS Notification
         // $sid = env('TWILIO_SID');
@@ -285,7 +286,8 @@ class TicketController extends Controller
 
         switch ($queue_position) {
           case 'current':
-          $body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
+          //$body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
+		  $body = 'Dear Customer, This is a courteous reminder that your service appointment at '.$shop->name.'. is scheduled for today, '.$now->format('F j, Y').'. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.Sincerely, ~Saber';
           break;
 
           case 'on_hold':
