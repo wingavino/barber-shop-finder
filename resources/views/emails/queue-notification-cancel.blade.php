@@ -1,7 +1,7 @@
 @component('mail::message')
 # Update
 Hi,
-We're just here to inform you that your ticket at {{$shop_name}} has been canceled. Please try to arrive at the shop as soon as possible next time to avoid being removed from the queue.
+Your Appointment at {{$shop_name}} has been canceled due to late arrival or no show. You may rebook anytime.
 
 @component('mail::button', ['url' => 'saber.hair'])
 Click here to view the site
