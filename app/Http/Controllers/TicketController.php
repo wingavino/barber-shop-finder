@@ -288,7 +288,7 @@ class TicketController extends Controller
           case 'current':
           //$body = 'It is your turn to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
 		  //$body = 'Dear Customer, This is a courteous reminder that your service appointment at '.$shop->name.'. is scheduled for today, '.date('F j, Y').'. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.Sincerely, ~Saber';
-          $body = 'Reminder: Your appointment at '.$shop->name.'. is today, '.date('F j, Y').'. Please arrive on time. ~ Saber'
+          $body = 'Reminder: Your appointment at '.$shop->name.'. is today, '.date('F j, Y').'. Please arrive on time. ~ Saber';
 		  break;
 
           case 'on_hold':
@@ -302,13 +302,13 @@ class TicketController extends Controller
 
           case 'finished':
           //$body = 'Thank you for using Saber during your recent visit at '.$shop->name.'. ~Saber';
-          $body = 'Thanks for visiting '.$shop->name.'! We hope to serve you again soon.'
+          $body = 'Thanks for visiting '.$shop->name.'! We hope to serve you again soon.';
 		  break;
 
           default:
           //$body = 'You are next to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
            //$body = 'Dear Customer, This is a courteous reminder that your service appointment at '.$shop->name.'. is scheduled for today, '.date('F j, Y').'. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.Sincerely, ~Saber';
-		  $body = 'Your appointment at '.$shop->name.' is today. Be on time so we can serve you promptly. Thank you!'
+		  $body = 'Your appointment at '.$shop->name.' is today. Be on time so we can serve you promptly. Thank you!';
 		  break;
         }
 		
