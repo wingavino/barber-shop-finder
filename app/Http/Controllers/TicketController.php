@@ -297,7 +297,7 @@ class TicketController extends Controller
 
           case 'cancel':
           //$body = 'Your ticket at '.$shop->name.' has been canceled. Please try to arrive at the shop as soon as possible next time. ~Saber';
-          $body = 'Your appointment at '.$shop->name.' has been canceled due to late arrival or no-show. You may rebook anytime. ~ Saber'
+          $body = 'Your appointment at '.$shop->name.' has been canceled due to late arrival or no-show. You may rebook anytime. ~ Saber';
 		  break;
 
           case 'finished':
