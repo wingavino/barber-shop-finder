@@ -308,7 +308,7 @@ class TicketController extends Controller
           default:
           //$body = 'You are next to be serviced at '.$shop->name.'. Please try to arrive at the shop at your earliest convenience. ~Saber';
            //$body = 'Dear Customer, This is a courteous reminder that your service appointment at '.$shop->name.'. is scheduled for today, '.date('F j, Y').'. We kindly request that you arrive on time to ensure the efficient and timely delivery of our services. We appreciate your cooperation and look forward to serving you.Sincerely, ~Saber';
-		  $body = 'Your appointment at '.$shop->name.' is today. Be on time so we can serve you promptly. Thank you!';
+		  $body = 'Your appointment at '.$shop->name.' is today, '.date('F j, Y').'. Be on time so we can serve you promptly. Thank you!';
 		  break;
         }
 		
